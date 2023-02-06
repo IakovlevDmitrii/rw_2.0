@@ -1,0 +1,21 @@
+@import '../../styles/const.module';
+
+.container {
+  @extend %container;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 0.75rem;
+
+  article {
+    @extend %container_border;
+
+    @media only screen and ($screen-sm) {
+      margin-bottom: 0;
+    }
+  }
+}
+

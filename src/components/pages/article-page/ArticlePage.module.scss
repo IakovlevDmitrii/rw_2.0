@@ -1,0 +1,7 @@
+@import '../../../styles/const.module';
+
+.container {
+  @extend %container;
+  @extend %container_border;
+  padding-top: 0.75rem;
+}

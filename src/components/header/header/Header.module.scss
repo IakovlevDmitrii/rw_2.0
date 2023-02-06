@@ -1,0 +1,132 @@
+@import '../../../styles/const.module';
+@import '../../../styles/person-details.module';
+
+.header {
+   position: sticky;
+   top: 0;
+   z-index: 2;
+}
+
+.container {
+   @extend %container;
+}
+
+.content {
+   @extend %flex_vertical-center;
+   background-color: $paper-bg;
+   box-shadow: $paper-shadow;
+
+   padding: 0.5rem;
+   font-size: 1rem;
+
+   @media only screen and ($screen-sm) {
+      padding: 0.5rem 2rem;
+   }
+
+      div:first-child {
+      margin-right: auto;
+   }
+
+   div:last-child {
+      margin-left: 1em;
+   }
+}
+.logo {
+   height: 2rem;
+
+   a {
+      @extend %flex_full-center;
+
+      width: 100%;
+      height: 100%;
+
+      &:hover {
+         color: $primary_3;
+      }
+   }
+}
+.authButton {
+   height: 2rem;
+   @extend %flex_full-center;
+
+   padding: 0 0.5rem;
+   cursor: pointer;
+   border-radius: 0.5rem;
+   border: 1px solid transparent;
+
+   &:hover {
+      color: $primary_3;
+      border: 1px solid $primary_3;
+   }
+}
+
+.articleButton {
+   a {
+      @extend %flex_full-center;
+
+      width: 100%;
+      height: 100%;
+      padding: 0.25rem 0.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: $primary_3;
+      border: 1px solid $primary_3;
+      border-radius: 5px;
+
+      &:hover {
+         color: $primary_5;
+         border-color: $primary_5;
+      }
+   }
+}
+
+.person {
+   height: 2rem;
+   margin-left: 0.4rem;
+   margin-right: 0.4rem;
+
+   a {
+      @extend %flex_center;
+      justify-content: space-between;
+
+      width: 100%;
+      height: 100%;
+      padding: 0 0.5rem;
+      border: 1px solid transparent;
+
+      &:hover {
+         color: $primary_3;
+         border: 1px solid $primary_3;
+      }
+   }
+
+   &Name {
+      font-size: 1rem;
+   }
+
+   &Image {
+      width: auto;
+      height: 2rem;
+
+      img {
+         width: 100%;
+         height: 100%;
+         border-radius: 50%;
+      }
+   }
+}
+
+.logOut {
+   height: 2rem;
+   padding: 0 0.5rem;
+   cursor: pointer;
+   border-radius: 2px;
+   color: $primary_5;
+   border: 1px solid $primary_5;
+
+   &:hover {
+      color: $primary_3;
+      border: 1px solid $primary_3;
+   }
+}

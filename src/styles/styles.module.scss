@@ -1,0 +1,28 @@
+@import "./normalize.css";
+@import "./const.module";
+@import "./form.module";
+@import "./person-details.module";
+@import "./article.module";
+@import "./fonts.module";
+
+html {
+  font-size: 12px;
+  @media only screen and ($screen-sm) {font-size: 14px;}
+  @media only screen and ($screen-md) {font-size: 16px;}
+  @media only screen and ($screen-lg) {font-size: 18px;}
+  @media only screen and ($screen-xl) {font-size: 20px;}
+  @media only screen and ($screen-xxl) {font-size: 22px;}
+}
+body {
+  font: {
+    family: 'InterRegular', serif;
+    weight: 400;}
+  color: $brand_primary__5;
+  line-height: 1.2rem;
+  letter-spacing: 0;
+  background-color: #EBEEF3;
+}
+
+body > div {
+  padding-bottom: 2rem;
+}
