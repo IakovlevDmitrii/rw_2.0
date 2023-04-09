@@ -1,6 +1,6 @@
 import {format} from "date-fns";
 
-const getContent = (article) => {
+export const adeptArticle = (article) => {
     const {
         author = {
             image: "",
@@ -32,4 +32,7 @@ const getContent = (article) => {
     };
 }
 
-export default getContent;
+export const adeptArticles = (articles) => {
+    return articles.map(article => adeptArticle(article));
+}
+

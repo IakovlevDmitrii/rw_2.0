@@ -1,4 +1,5 @@
-import {getContent, getResource} from "../../../utils";
+import {getResource} from "../../../utils";
+import {adeptArticle} from "../../../../utils/adept-article";
 
 const updateAnArticle = async (token, slug, detailsToChange) => {
     const requestOptions = {
@@ -13,7 +14,7 @@ const updateAnArticle = async (token, slug, detailsToChange) => {
     };
 
     const response = await getResource(requestOptions);
-    const article = getContent(response.article);
+    const article = adeptArticle(response.article);
 
     return {article};
 };

@@ -79,8 +79,7 @@ function Articles() {
     // };
 
     const listToShow = articles.map(article => {
-        const {slug} = article;
-        return <Article isPreview key={slug} slug={slug} />
+        return <Article isPreview key={article.slug} slug={article.slug} />
     });
 
     if (isFetching) {return <Spinner />;}
@@ -92,12 +91,13 @@ function Articles() {
                 {listToShow}
                 <Pagination
                     current={currentPage}
-                    onChange={page =>  setCurrentPage(page)}
-                    total={articlesCount}
-                />
+                    onChange={page => setCurrentPage(page)}
+                    total={articlesCount} />
             </div>
         </div>
     );
 }
 
-export default  connect( null, {articles: reducer})(Articles)
+export default  connect(
+    null,
+    {articles: reducer})(Articles)

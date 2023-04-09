@@ -1,14 +1,14 @@
-// import {getContent} from "../../services/utils";
 import {
     RECEIVE_ARTICLES,
     REQUEST_ARTICLES,
     SELECT_ARTICLE,
     FAVORITE_ARTICLE,
-    // REMOVE_ARTICLE_FROM_SELECTED,
+    REQUEST_FAVORITE,
 } from "./actions";
 
 const initialState = {
     isArticlesFetching: false,
+    favoriteFetching: [],
     articlesCount: 0,
     selected: '',
     list: [],
@@ -27,26 +27,27 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isArticlesFetching: false,
+                favoriteFetching: [],
                 articlesCount: payload.articlesCount,
                 selected: '',
-                list: payload.articles,
+                list: payload.list,
             }
         case SELECT_ARTICLE:
             return {
                 ...state,
-                selected: payload,
+                selected: payload.slug,
             }
         case FAVORITE_ARTICLE:
-
             return {
                 ...state,
-                list: payload,
+                list: payload.list,
+                favoriteFetching: payload.favoriteFetching,
             }
-        // case REMOVE_ARTICLE_FROM_SELECTED:
-        //     return {
-        //         ...state,
-        //         selected: "",
-        //     }
+        case REQUEST_FAVORITE:
+            return {
+                ...state,
+                favoriteFetching: payload.favoriteFetching,
+            }
         default:
             return state;
     }

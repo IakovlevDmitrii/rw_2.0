@@ -8,23 +8,17 @@ import Author from "../author";
 import {selectArticle, favoriteArticle} from "../articles/actions";
 import favoriteTrueImage from "../description/img/fav-true.svg";
 import favoriteFalseImage from "../description/img/fav-false.svg";
+import favoriteFetchImage from "../description/img/fav-fetch.svg";
 import styles from "./Article.module.scss";
 
-function Article(props) {
-
-    const {
-        slug,
-        isPreview,
-        onDeleteArticle,
-    } = props;
-
+function Article({slug, onDeleteArticle}) {
     const dispatch = useDispatch();
 
     const content = useSelector(state => state.articles.list.find(item => item.slug === slug));
     const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
     const username = useSelector(state => state.authentication.user?.username)
-
-    const isMyArticle = content.author.username === username;
+    const isFavoriteFetching = useSelector(state => state.articles.favoriteFetching.includes(slug));
+    const isPreview = useSelector(state => state.articles.selected !== slug) || false;
 
     const {
         author,
@@ -37,11 +31,15 @@ function Article(props) {
         title,
     } = content;
 
+    const isMyArticle = author.username === username;
+
     const onSelectArticle = () => {
         dispatch(selectArticle(slug))};
 
     const onFavoriteArticle = () => {
-        dispatch(favoriteArticle(slug, favorited));};
+        if(!isFavoriteFetching) {
+            dispatch(favoriteArticle(slug, favorited))}
+    };
 
     let articleTitle = <h3>{title}</h3>;
     if (isPreview) {
@@ -62,8 +60,12 @@ function Article(props) {
         );
     });
 
-    let favoriteImg = <img alt="like" className={styles.favoriteButtonImg}
-            src={favorited ? favoriteTrueImage : favoriteFalseImage} />;
+    const favoriteImgSrc = isFavoriteFetching ? favoriteFetchImage
+        : favorited ? favoriteTrueImage
+        : favoriteFalseImage
+
+    let favoriteImg = <img className={styles.favoriteButtonImg}
+                           alt="like" src={favoriteImgSrc} />;
 
     if (isLoggedIn) {
         favoriteImg = (
@@ -113,12 +115,10 @@ function Article(props) {
 Article.propTypes = {
     slug: PropTypes.string.isRequired,
     onDeleteArticle: PropTypes.func,
-    isPreview: PropTypes.bool,
 };
 
 Article.defaultProps = {
     onDeleteArticle: null,
-    isPreview: false,
 };
 
 export default Article;

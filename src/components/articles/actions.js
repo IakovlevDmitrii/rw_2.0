@@ -1,14 +1,14 @@
 import {API} from "../../api.config";
-import {getContent} from "../../services/utils";
+import {adeptArticle, adeptArticles} from "../../utils/adept-article";
 
 export const REQUEST_ARTICLES = "REQUEST_ARTICLES";
 export const RECEIVE_ARTICLES = "RECEIVE_ARTICLES";
 export const SELECT_ARTICLE = "SELECT_ARTICLE";
 export const FAVORITE_ARTICLE = "FAVORITE_ARTICLE";
-// export const REMOVE_ARTICLE_FROM_SELECTED = "REMOVE_ARTICLE_FROM_SELECTED";
+export const REQUEST_FAVORITE = "REQUEST_FAVORITE";
 
 export const requestArticles = (limit, page) => (dispatch, getState) => {
-    const { user } = getState().authentication;
+    const {user} = getState().authentication;
     const token = user.token || "";
 
     dispatch({type: REQUEST_ARTICLES});
@@ -22,16 +22,11 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
     })
     .then(response => response.json())
     .then(result => {
-        const { articles, articlesCount } = result;
-
-        const newArticles = articles.map(article => getContent(article));
-
         const payload = {
-            articles: newArticles,
-            articlesCount,
+            list: adeptArticles(result.articles),
+            articlesCount: result.articlesCount,
         };
-
-        dispatch(receiveArticles(payload));
+        dispatch(receiveArticles(payload))
     })
     .catch(e => console.log(`[GET ARTICLES] error ${e.toLocaleString()}`))
 }
@@ -45,17 +40,15 @@ export const receiveArticles = payload => {
 }
 
 export const selectArticle = slug => dispatch => {
-    dispatch({type: SELECT_ARTICLE, payload: slug});
+    dispatch({type: SELECT_ARTICLE, payload: {slug}});
 };
 
-// export const removeArticleFromSelected = () => dispatch => {
-//     dispatch({type: REMOVE_ARTICLE_FROM_SELECTED});
-// };
-
 export const favoriteArticle = (slug, favorited) => (dispatch, getState) => {
-    const { user } = getState().authentication;
+    const {user} = getState().authentication;
     const token = user.token || "";
     const articles = getState().articles.list;
+
+    dispatch(requestFavorite(slug));
 
     return fetch( API.ARTICLE.FAVORITE(slug), {
         method: favorited ? "DELETE" : "POST",
@@ -67,18 +60,35 @@ export const favoriteArticle = (slug, favorited) => (dispatch, getState) => {
         .then(response => response.json())
         .then(result => {
             const index = articles.findIndex(article => article.slug === slug);
-            const newArticle = result.article;
+            const newArticle = adeptArticle(result.article);
 
-            const newArticles = [
+            const list = [
                 ...articles.slice(0, index),
                 newArticle,
                 ...articles.slice(index + 1),
             ];
 
+            const favoriteFetching = getState().articles.favoriteFetching;
+            const i = favoriteFetching.indexOf(slug);
+            if (i !== -1) {
+                favoriteFetching.splice(i, 1);
+            }
+
             dispatch({
                 type: FAVORITE_ARTICLE,
-                payload: newArticles,
+                payload: {list, favoriteFetching},
             })
         })
         .catch(e => console.log(`[FAVORITE ARTICLE] error ${e.toLocaleString()}`))
 };
+
+export const requestFavorite = slug => (dispatch, getState) => {
+    const favoriteFetching = getState().articles.favoriteFetching;
+    favoriteFetching.push(slug);
+
+    dispatch({
+        type: REQUEST_FAVORITE,
+        payload: {favoriteFetching},
+        receivedAt: Date.now()
+    });
+}

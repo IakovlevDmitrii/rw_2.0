@@ -11,10 +11,7 @@ import ProtectedRoute from "../protectedRoute";
 import "../../styles/styles.module.scss";
 
 function App() {
-    const isLoggedIn = useSelector((store) => {
-        const {authentication} = store;
-        return authentication.isLoggedIn;
-    });
+    const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
 
     return (
         <Routes>
