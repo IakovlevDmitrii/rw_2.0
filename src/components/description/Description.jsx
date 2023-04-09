@@ -6,7 +6,7 @@ function Description (props) {
     const {
         articleTitle,
         description,
-        favoriteButton,
+        favoriteImg,
         favoritesCount,
         tags,
     } = props;
@@ -19,7 +19,7 @@ function Description (props) {
                         {articleTitle}
                     </div>
                     <div className={styles.favorites}>
-                        {favoriteButton}
+                        {favoriteImg}
                         <div className={styles.favoritesCount}>
                             {favoritesCount}
                         </div>
@@ -39,7 +39,7 @@ function Description (props) {
 Description.propTypes = {
     articleTitle: PropTypes.element.isRequired,
     description: PropTypes.string.isRequired,
-    favoriteButton: PropTypes.element.isRequired,
+    favoriteImg: PropTypes.element.isRequired,
     favoritesCount: PropTypes.number.isRequired,
     tags: PropTypes.arrayOf(
         PropTypes.element.isRequired
