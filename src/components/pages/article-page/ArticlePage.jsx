@@ -100,7 +100,8 @@ function ArticlePage(props) {
         <section>
             <div className={styles.container}>
                 <Article
-                    content={article}
+                    // content={article}
+                    slug={article.slug}
                     isLoggedIn={isLoggedIn}
                     isPreview={false}
                     myArticle={article.author.username === username}
@@ -125,11 +126,13 @@ ArticlePage.defaultProps ={
     username: "",
 }
 
-const mapStateToProps = ({ articleData, authentication }) => {
+const mapStateToProps = ({ articles, authentication }) => {
     const {isLoggedIn, user} = authentication;
+    const selectedArticleSlug = articles.selected;
+    const article = articles.list.find(item => item.slug === selectedArticleSlug)
 
     return {
-        article: articleData.article,
+        article,
         isLoggedIn,
         token: user.token,
         username: user.username,
