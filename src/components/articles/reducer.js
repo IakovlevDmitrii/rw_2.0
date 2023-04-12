@@ -1,13 +1,16 @@
 import {
-    RECEIVE_ARTICLES,
     REQUEST_ARTICLES,
+    RECEIVE_ARTICLES,
     SELECT_ARTICLE,
-    FAVORITE_ARTICLE,
     REQUEST_FAVORITE,
+    FAVORITE_ARTICLE,
+    ARTICLE_CREATION_REQUEST,
+    CREATE_AN_ARTICLE,
 } from "./actions";
 
 const initialState = {
-    isArticlesFetching: false,
+    articlesFetching: false,
+    articleFetching: false,
     favoriteFetching: [],
     articlesCount: 0,
     selected: '',
@@ -21,12 +24,13 @@ export const reducer = (state = initialState, action) => {
         case REQUEST_ARTICLES:
             return {
                 ...state,
-                isArticlesFetching: true
+                articlesFetching: true
             }
         case RECEIVE_ARTICLES:
             return {
                 ...state,
-                isArticlesFetching: false,
+                articlesFetching: false,
+                articleFetching: false,
                 favoriteFetching: [],
                 articlesCount: payload.articlesCount,
                 selected: '',
@@ -47,6 +51,17 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 favoriteFetching: payload.favoriteFetching,
+            }
+        case ARTICLE_CREATION_REQUEST:
+            return {
+                ...state,
+                articleFetching: payload.status,
+            }
+        case CREATE_AN_ARTICLE:
+            return {
+                ...state,
+                list: payload.list,
+                articleFetching: false,
             }
         default:
             return state;

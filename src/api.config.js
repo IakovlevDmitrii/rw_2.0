@@ -8,6 +8,8 @@ export const API = {
 
     ARTICLE: {
         FAVORITE: slug => `${BASE_URL}/articles/${slug}/favorite`,
+        CREATE: () => `${BASE_URL}/articles`,
+        DELETE: slug => `${BASE_URL}/articles/${slug}`,
     },
 
 }

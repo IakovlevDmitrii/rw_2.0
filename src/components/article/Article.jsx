@@ -1,18 +1,19 @@
 import React from 'react';
 import {useSelector, useDispatch} from "react-redux";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import PropTypes from "prop-types";
 import ReactMarkdown from "react-markdown";
 import Description from "../description";
 import Author from "../author";
-import {selectArticle, favoriteArticle} from "../articles/actions";
+import {selectArticle, favoriteArticle, deleteArticle} from "../articles/actions";
 import favoriteTrueImage from "../description/img/fav-true.svg";
 import favoriteFalseImage from "../description/img/fav-false.svg";
 import favoriteFetchImage from "../description/img/fav-fetch.svg";
 import styles from "./Article.module.scss";
 
-function Article({slug, onDeleteArticle}) {
+function Article({slug}) {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const content = useSelector(state => state.articles.list.find(item => item.slug === slug));
     const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
@@ -39,6 +40,11 @@ function Article({slug, onDeleteArticle}) {
     const onFavoriteArticle = () => {
         if(!isFavoriteFetching) {
             dispatch(favoriteArticle(slug, favorited))}
+    };
+
+    const onDeleteArticle = () => {
+        dispatch(deleteArticle(slug))
+            .then(navigate('/articles'))
     };
 
     let articleTitle = <h3>{title}</h3>;
@@ -114,11 +120,6 @@ function Article({slug, onDeleteArticle}) {
 
 Article.propTypes = {
     slug: PropTypes.string.isRequired,
-    onDeleteArticle: PropTypes.func,
-};
-
-Article.defaultProps = {
-    onDeleteArticle: null,
 };
 
 export default Article;
