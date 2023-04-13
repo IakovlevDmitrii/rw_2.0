@@ -98,13 +98,11 @@ export const requestFavorite = slug => (dispatch, getState) => {
 
 export const createAnArticle = content => (dispatch, getState) => {
     const {user} = getState().authentication;
-    const articles = getState().articles.list;
+    const {list} = getState().articles;
 
     const token = user.token || "";
     const data = {
-        article: {
-            ...content,
-        },
+        article: {...content}
     };
     const body = JSON.stringify(data);
 
@@ -128,17 +126,18 @@ export const createAnArticle = content => (dispatch, getState) => {
 
             if(articleDetails) {
                 const newArticle = adeptArticle(articleDetails);
-                articles.push(newArticle);
+                list.push(newArticle);
 
                 dispatch({
                     type: CREATE_AN_ARTICLE,
-                    payload: {list: articles}});
+                    payload: {list}});
             }
 
             dispatch({
                 type: ARTICLE_CREATION_REQUEST,
                 payload: {status: false}
             });
+
             return result
         })
 }
