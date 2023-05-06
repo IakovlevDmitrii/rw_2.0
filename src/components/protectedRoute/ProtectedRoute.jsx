@@ -1,16 +1,17 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import {Navigate} from "react-router-dom";
+import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
 
-function ProtectedRoute ({ isLoggedIn, children }){
-    if (!isLoggedIn) {
-        return <Navigate to="/sign-in" replace />;
-    }
-    return children;
+function ProtectedRoute ({ children }){
+    const isLoggedIn = useSelector(
+        state => state.authentication.isLoggedIn);
+
+    return isLoggedIn ? children : <Navigate to="/sign-in" replace />;
 }
 
 ProtectedRoute.propTypes = {
-    isLoggedIn: PropTypes.bool.isRequired,
     children: PropTypes.element.isRequired,
 }
+
 export default ProtectedRoute;

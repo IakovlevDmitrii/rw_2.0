@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import AuthButton from '../auth-button';
 
-import actionCreators from "../../../store/action-creators";
+import actionCreators from "../../store/action-creators";
 
 import src from "./image/User.png";
 import styles from "./Header.module.scss";
@@ -57,7 +57,7 @@ function Header({isLoggedIn, user, logOut}) {
             <div className={styles.container}>
                 <div className={styles.content}>
                     <div className={styles.logo}>
-                        <Link to="/">
+                        <Link to="/articles">
                             RealWorld blog
                         </Link>
                     </div>

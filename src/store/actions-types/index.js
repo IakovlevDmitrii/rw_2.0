@@ -3,11 +3,11 @@ const articleData = {
   SET_ARTICLE: "SET_ARTICLE",
 };
 
-const articlesData = {
-  LOADING_ARTICLES: "LOADING_ARTICLES",
-  SET_ARTICLES: "SET_ARTICLES",
-  SET_PAGE_NUMBER: "SET_PAGE_NUMBER",
-};
+// const articlesData = {
+//   LOADING_ARTICLES: "LOADING_ARTICLES",
+//   SET_ARTICLES: "SET_ARTICLES",
+//   SET_PAGE_NUMBER: "SET_PAGE_NUMBER",
+// };
 
 const authentication = {
   LOADING_AUTH: "LOADING_AUTH",
@@ -17,7 +17,7 @@ const authentication = {
 
 const actionTypes = {
   articleData,
-  articlesData,
+  // articlesData,
   authentication,
 };
 
