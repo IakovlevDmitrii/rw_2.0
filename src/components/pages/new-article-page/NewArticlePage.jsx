@@ -14,7 +14,7 @@ function NewArticlePage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [hasErrors, setHasErrors] = useState({});
-    const isLoading = useSelector(state => state.articles.articleFetching);
+    const isFetching = useSelector(state => state.articles.articleFetching);
 
     const getInitialValues = () => ({
         title: "",
@@ -73,7 +73,7 @@ function NewArticlePage() {
             })
     };
 
-  if(isLoading) {return <Spinner />}
+  if(isFetching) {return <Spinner />}
 
   return (
       <ProtectedRoute>

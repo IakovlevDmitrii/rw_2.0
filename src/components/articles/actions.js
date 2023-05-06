@@ -3,12 +3,14 @@ import {adeptArticle, adeptArticles} from "../../utils/adept-article";
 
 export const REQUEST_ARTICLES = "REQUEST_ARTICLES";
 export const RECEIVE_ARTICLES = "RECEIVE_ARTICLES";
+export const CHANGE_PAGE = "CHANGE_PAGE";
 export const SELECT_ARTICLE = "SELECT_ARTICLE";
 export const REQUEST_FAVORITE = "REQUEST_FAVORITE";
 export const FAVORITE_ARTICLE = "FAVORITE_ARTICLE";
 export const ARTICLE_CREATION_REQUEST = "ARTICLE_CREATION_REQUEST";
 export const CREATE_AN_ARTICLE = "CREATE_AN_ARTICLE";
-export const DELETE_ARTICLE = "DELETE_ARTICLE";
+export const REQUEST_TO_REMOVE_ARTICLE = "REQUEST_TO_REMOVE_ARTICLE";
+// export const DELETE_ARTICLE = "DELETE_ARTICLE";
 
 export const requestArticles = (limit, page) => (dispatch, getState) => {
     const {user} = getState().authentication;
@@ -29,7 +31,7 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
             list: adeptArticles(result.articles),
             articlesCount: result.articlesCount,
         };
-        dispatch(receiveArticles(payload))
+        dispatch(receiveArticles(payload));
     })
     .catch(e => console.log(`[GET ARTICLES] error ${e.toLocaleString()}`))
 };
@@ -40,6 +42,10 @@ export const receiveArticles = payload => {
         payload: payload,
         receivedAt: Date.now()
     }
+};
+
+export const changePage = page => dispatch => {
+    dispatch({type: CHANGE_PAGE, payload: {page}})
 };
 
 export const selectArticle = slug => dispatch => {
@@ -131,6 +137,8 @@ export const createAnArticle = content => (dispatch, getState) => {
                 dispatch({
                     type: CREATE_AN_ARTICLE,
                     payload: {list}});
+
+                dispatch(selectArticle(articleDetails.slug));
             }
 
             dispatch({
@@ -146,7 +154,12 @@ export const deleteArticle = slug => (dispatch, getState) => {
     const {user} = getState().authentication;
     const token = user.token || "";
 
-    dispatch({type: DELETE_ARTICLE});
+    dispatch({
+        type: REQUEST_TO_REMOVE_ARTICLE,
+        payload: {status: true}
+    });
+
+    // dispatch({type: DELETE_ARTICLE});
 
     return fetch(API.ARTICLE.DELETE(slug), {
         method: "DELETE",
@@ -156,4 +169,8 @@ export const deleteArticle = slug => (dispatch, getState) => {
         },
     })
         .then(response => {!!response.ok})
+        .finally(dispatch({
+            type: REQUEST_TO_REMOVE_ARTICLE,
+            payload: {status: false}
+        }));
 }
