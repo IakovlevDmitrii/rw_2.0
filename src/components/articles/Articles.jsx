@@ -28,7 +28,7 @@ function Articles() {
         [currentPage])
 
     const listToShow = articles.map(article => {
-        return <Article isPreview key={article.slug} slug={article.slug} />
+        return <Article isPreview key={article.slug} content={article}/>
     });
 
     if (isFetching) {return <Spinner />;}

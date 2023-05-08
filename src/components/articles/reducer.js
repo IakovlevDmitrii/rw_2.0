@@ -3,12 +3,11 @@ import {
     RECEIVE_ARTICLES,
     CHANGE_PAGE,
     SELECT_ARTICLE,
-    REQUEST_FAVORITE,
-    FAVORITE_ARTICLE,
     ARTICLE_CREATION_REQUEST,
     CREATE_AN_ARTICLE,
     REQUEST_TO_REMOVE_ARTICLE,
 } from "./actions";
+import {RECEIVE_FAVORITE_CHANGE} from "../article/actions";
 
 const initialState = {
     articleFetching: false,
@@ -50,17 +49,21 @@ export const reducer = (state = initialState, action) => {
                 ...state,
                 selected: payload.slug,
             }
-        case FAVORITE_ARTICLE:
+        case RECEIVE_FAVORITE_CHANGE:
+            let list = [...state.list]
+            let article = list.find(article => article.slug === payload.article.slug)
+            Object.assign(article, payload.article)
+
             return {
                 ...state,
-                list: payload.list,
-                favoriteFetching: payload.favoriteFetching,
+                list: list
+//                favoriteFetching: payload.favoriteFetching,
             }
-        case REQUEST_FAVORITE:
-            return {
-                ...state,
-                favoriteFetching: payload.favoriteFetching,
-            }
+        // case REQUEST_FAVORITE:
+        //     return {
+        //         ...state,
+        //         favoriteFetching: payload.favoriteFetching,
+        //     }
         case ARTICLE_CREATION_REQUEST:
             return {
                 ...state,
