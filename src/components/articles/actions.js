@@ -8,7 +8,6 @@ export const SELECT_ARTICLE = "SELECT_ARTICLE";
 export const ARTICLE_CREATION_REQUEST = "ARTICLE_CREATION_REQUEST";
 export const CREATE_AN_ARTICLE = "CREATE_AN_ARTICLE";
 export const REQUEST_TO_REMOVE_ARTICLE = "REQUEST_TO_REMOVE_ARTICLE";
-// export const DELETE_ARTICLE = "DELETE_ARTICLE";
 
 export const requestArticles = (limit, page) => (dispatch, getState) => {
     const {user} = getState().authentication;
@@ -49,8 +48,6 @@ export const changePage = page => dispatch => {
 export const selectArticle = slug => dispatch => {
     dispatch({type: SELECT_ARTICLE, payload: {slug}});
 };
-
-
 
 export const createAnArticle = content => (dispatch, getState) => {
     const {user} = getState().authentication;
