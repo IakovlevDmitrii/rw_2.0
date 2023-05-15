@@ -5,25 +5,14 @@ import PropTypes from "prop-types";
 import ReactMarkdown from "react-markdown";
 import Description from "../description";
 import Author from "../author";
-import {selectArticle, favoriteArticle, deleteArticle} from "../articles/actions";
+import {selectArticle, deleteArticle} from "../articles/actions";
+import {toggleFavorite} from "./actions";
+import getArticlePropTypes from "../../utils/get-article-prop-types";
 import favoriteTrueImage from "../description/img/fav-true.svg";
 import favoriteFalseImage from "../description/img/fav-false.svg";
-import favoriteFetchImage from "../description/img/fav-fetch.svg";
 import styles from "./Article.module.scss";
-import {toggleFavorite} from "./actions";
+
 function Article({content}) {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
-    // const content = useSelector(state => state.articles.list.find(item => item.slug === slug));
-    const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
-    const username = useSelector(state => state.authentication.user?.username)
-    // const isFavoriteFetching = useSelector(state => state.articles.favoriteFetching.includes(slug));
-    const isPreview = useSelector(state => state.articles.selected !== content.slug) || false;
-
-
-    const [liked, setLiked] = useState(content.favorited)
-
     const {
         author,
         body,
@@ -36,21 +25,29 @@ function Article({content}) {
         title,
     } = content;
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
+    const username = useSelector(state => state.authentication.user?.username);
+    const isPreview = useSelector(state => state.articles.selected !== slug);
+
+    const [liked, setLiked] = useState(favorited);
+
     const isMyArticle = author.username === username;
 
     const onSelectArticle = () => {
         dispatch(selectArticle(slug))};
 
     const onFavoriteArticle = () => {
-        // if(!isFavoriteFetching) {
-            let value = !liked
-            setLiked(value)
-            dispatch(toggleFavorite(content.slug, value))
+        let value = !liked;
+        setLiked(value);
+        dispatch(toggleFavorite(slug, value));
     };
 
     const onDeleteArticle = () => {
         dispatch(deleteArticle(slug))
-            .then(navigate('/articles'))
+            .then(navigate('/articles'));
     };
 
     let articleTitle = <h3>{title}</h3>;
@@ -72,7 +69,7 @@ function Article({content}) {
         );
     });
 
-    const favoriteImgSrc =   liked ? favoriteTrueImage : favoriteFalseImage
+    const favoriteImgSrc = liked ? favoriteTrueImage : favoriteFalseImage;
 
     let favoriteImg = <img className={styles.favoriteButtonImg}
                            alt="like" src={favoriteImgSrc} />;
@@ -93,7 +90,6 @@ function Article({content}) {
         favorited,
         favoritesCount,
         isLoggedIn,
-        // onFavoriteArticle,
         slug,
         tags,
     };
@@ -104,14 +100,14 @@ function Article({content}) {
         image: author.image,
         onDeleteArticle,
         username: author.username,
-    }
+    };
 
     const articleContent = !isPreview && (
         <article className={styles.articleContent}>
             <ReactMarkdown>
                 {body}
             </ReactMarkdown>
-        </article>)
+        </article>);
 
     return (
         <article className={styles.content}>
@@ -122,8 +118,9 @@ function Article({content}) {
     );
 }
 
-// Article.propTypes = {
-//     slug: PropTypes.string.isRequired,
-// };
+Article.propTypes = {
+    content: PropTypes
+        .shape(getArticlePropTypes()).isRequired,
+};
 
 export default Article;
