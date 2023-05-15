@@ -106,8 +106,6 @@ export const deleteArticle = slug => (dispatch, getState) => {
         payload: {status: true}
     });
 
-    // dispatch({type: DELETE_ARTICLE});
-
     return fetch(API.ARTICLE.DELETE(slug), {
         method: "DELETE",
         headers: {
