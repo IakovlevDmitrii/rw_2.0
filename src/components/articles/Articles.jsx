@@ -1,12 +1,10 @@
-import React, {useEffect,
-    // useState
-} from "react";
+import React, {useEffect} from "react";
 import {connect, useDispatch, useSelector} from "react-redux";
 import Article from "../article";
 import Spinner from "../spinner";
 import Pagination from "../pagination";
 import {reducer} from "./reducer";
-import {requestArticles, changePage} from "./actions";
+import {requestArticles} from "./actions";
 import styles from "./Articles.module.scss";
 // import ErrorIndicator from "../errors/error-indicator";
 
@@ -18,13 +16,13 @@ function Articles() {
     const currentPage = useSelector(state => state.articles.currentPage);
 
     // const [hasError, setHasError] = useState(false);
-    // const [currentPage, setCurrentPage] = useState(1);
-    const limit = 5;
+
+    const getArticles = pageNumber => {
+        dispatch(requestArticles(5, pageNumber))
+    };
 
     useEffect(
-       () => {
-           dispatch(requestArticles(limit, currentPage))
-       },
+       () => {getArticles(currentPage)},
         [currentPage])
 
     const listToShow = articles.map(article => {
@@ -40,8 +38,7 @@ function Articles() {
                 {listToShow}
                 <Pagination
                     current={currentPage}
-                    // onChange={page => setCurrentPage(page)}
-                    onChange={page => dispatch(requestArticles(limit, page))}
+                    onChange={page => getArticles(page)}
                     total={articlesCount} />
             </div>
         </div>

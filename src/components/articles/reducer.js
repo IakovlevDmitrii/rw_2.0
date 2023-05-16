@@ -14,7 +14,7 @@ const initialState = {
     articlesCount: 0,
     articlesFetching: false,
     currentPage: 1,
-    favoriteFetching: [],
+    // favoriteFetching: [],
     selected: '',
     list: [],
 };
@@ -33,7 +33,7 @@ export const reducer = (state = initialState, action) => {
                 ...state,
                 articlesFetching: false,
                 articleFetching: false,
-                favoriteFetching: [],
+                // favoriteFetching: [],
                 articlesCount: payload.articlesCount,
                 selected: '',
                 list: payload.list,
