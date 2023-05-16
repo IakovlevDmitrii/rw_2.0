@@ -4,7 +4,7 @@ import Article from "../article";
 import Spinner from "../spinner";
 import Pagination from "../pagination";
 import {reducer} from "./reducer";
-import {requestArticles} from "./actions";
+import {requestArticles, changePage} from "./actions";
 import styles from "./Articles.module.scss";
 // import ErrorIndicator from "../errors/error-indicator";
 
@@ -17,13 +17,10 @@ function Articles() {
 
     // const [hasError, setHasError] = useState(false);
 
-    const getArticles = pageNumber => {
-        dispatch(requestArticles(5, pageNumber))
-    };
-
     useEffect(
-       () => {getArticles(currentPage)},
-        [currentPage])
+       () => {
+           dispatch(requestArticles(5, currentPage))
+       }, [currentPage])
 
     const listToShow = articles.map(article => {
         return <Article isPreview key={article.slug} content={article}/>
@@ -38,7 +35,7 @@ function Articles() {
                 {listToShow}
                 <Pagination
                     current={currentPage}
-                    onChange={page => getArticles(page)}
+                    onChange={page => dispatch(changePage(page))}
                     total={articlesCount} />
             </div>
         </div>

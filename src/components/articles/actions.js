@@ -28,7 +28,6 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
             list: adeptArticles(result.articles),
             articlesCount: result.articlesCount,
         };
-        dispatch(changePage(page));
         dispatch(receiveArticles(payload));
     })
     .catch(e => console.log(`[GET ARTICLES] error ${e.toLocaleString()}`))
