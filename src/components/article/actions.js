@@ -1,13 +1,10 @@
 import {API} from "../../api.config";
 
-// export const REQUEST_FAVORITE = "REQUEST_FAVORITE";
 export const RECEIVE_FAVORITE_CHANGE = "FAVORITE_ARTICLE";
 
 export const toggleFavorite = (slug, flag) => (dispatch, getState) => {
     const {user} = getState().authentication;
     const token = user.token || "";
-
-//    dispatch(requestFavorite(content.slug));
 
     return fetch(API.ARTICLE.FAVORITE(slug), {
         method: flag ? "POST": "DELETE",
@@ -25,14 +22,3 @@ export const toggleFavorite = (slug, flag) => (dispatch, getState) => {
         })
         .catch(e => console.log(`[FAVORITE ARTICLE] error ${e.toLocaleString()}`))
 };
-
-// export const requestFavorite = slug => (dispatch, getState) => {
-//     const favoriteFetching = getState().articles.favoriteFetching;
-//     favoriteFetching.push(slug);
-//
-//     dispatch({
-//         type: REQUEST_FAVORITE,
-//         payload: {favoriteFetching},
-//         receivedAt: Date.now()
-//     });
-// };
