@@ -56,14 +56,8 @@ export const reducer = (state = initialState, action) => {
 
             return {
                 ...state,
-                list: list
-//                favoriteFetching: payload.favoriteFetching,
+                list,
             }
-        // case REQUEST_FAVORITE:
-        //     return {
-        //         ...state,
-        //         favoriteFetching: payload.favoriteFetching,
-        //     }
         case ARTICLE_CREATION_REQUEST:
             return {
                 ...state,
