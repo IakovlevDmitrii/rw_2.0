@@ -1,31 +1,31 @@
-import React from "react";
-// import {connect} from "react-redux";
-import {useSelector} from "react-redux";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import Article from "../../article";
 import Spinner from "../../spinner";
-// import ErrorIndicator from "../../error-indicator";
-// import {reducer} from "../../articles/reducer";
+import {requestArticle} from "./actions";
 import styles from "./ArticlePage.module.scss";
 
 function ArticlePage() {
     const {slug} = useParams();
-    const isFetching = useSelector(state => state.articles.articleFetching);
-    // const [hasError, setHasError] = useState(false);
+    const dispatch = useDispatch();
+    const isFetching = useSelector(state => state.articlePage.isFetching);
+    const articleContent = useSelector(state => state.articlePage.articleContent);
 
-    // if (hasError) {return <ErrorIndicator />;}
+    useEffect(
+        () => {
+            dispatch(requestArticle(slug))
+        },[slug])
+
     if(isFetching) {return <Spinner />}
 
     return (
         <section>
             <div className={styles.container}>
-                <Article slug={slug} />
+                <Article content={articleContent} fullSize/>
             </div>
         </section>
     )
 }
-//
-// export default connect(
-//     null,
-//     {articles: reducer})(ArticlePage);
+
 export default ArticlePage;

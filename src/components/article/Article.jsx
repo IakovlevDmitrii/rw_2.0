@@ -5,14 +5,14 @@ import PropTypes from "prop-types";
 import ReactMarkdown from "react-markdown";
 import Description from "../description";
 import Author from "../author";
-import {selectArticle, deleteArticle} from "../articles/actions";
+import {deleteArticle} from "../pages/article-page/actions";
 import {toggleFavorite} from "./actions";
 import getArticlePropTypes from "../../utils/get-article-prop-types";
 import favoriteTrueImage from "../description/img/fav-true.svg";
 import favoriteFalseImage from "../description/img/fav-false.svg";
 import styles from "./Article.module.scss";
 
-function Article({content}) {
+function Article({content, fullSize}) {
     const {
         author,
         body,
@@ -30,14 +30,10 @@ function Article({content}) {
 
     const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
     const username = useSelector(state => state.authentication.user?.username);
-    const isPreview = useSelector(state => state.articles.selected !== slug);
 
     const [liked, setLiked] = useState(favorited);
 
     const isMyArticle = author.username === username;
-
-    const onSelectArticle = () => {
-        dispatch(selectArticle(slug))};
 
     const onFavoriteArticle = () => {
         let value = !liked;
@@ -51,9 +47,9 @@ function Article({content}) {
     };
 
     let articleTitle = <h3>{title}</h3>;
-    if (isPreview) {
+    if (!fullSize) {
         articleTitle = (
-            <Link to={`/articles/${slug}`} onClick={onSelectArticle}>
+            <Link to={`/articles/${slug}`}>
                 {articleTitle}
             </Link>
         );
@@ -96,13 +92,13 @@ function Article({content}) {
 
     const authorProps = {
         createdAt,
-        editable: !isPreview && isMyArticle,
+        editable: fullSize && isMyArticle,
         image: author.image,
         onDeleteArticle,
         username: author.username,
     };
 
-    const articleContent = !isPreview && (
+    const articleContent = fullSize && (
         <article className={styles.articleContent}>
             <ReactMarkdown>
                 {body}
@@ -121,6 +117,7 @@ function Article({content}) {
 Article.propTypes = {
     content: PropTypes
         .shape(getArticlePropTypes()).isRequired,
+    fullSize: PropTypes.bool.isRequired,
 };
 
 export default Article;

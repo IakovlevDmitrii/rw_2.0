@@ -6,7 +6,7 @@ import ProtectedRoute from "../../protectedRoute";
 import ArticleEditor from "../../article-editor";
 import Spinner from "../../spinner";
 
-import {createAnArticle} from "../../articles/actions";
+import {createAnArticle} from "../article-page/actions";
 import {reducer} from "../../articles/reducer";
 
 function NewArticlePage() {

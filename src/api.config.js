@@ -7,6 +7,7 @@ export const API = {
     },
 
     ARTICLE: {
+        GET: slug => `${BASE_URL}/articles/${slug}`,
         FAVORITE: slug => `${BASE_URL}/articles/${slug}/favorite`,
         CREATE: () => `${BASE_URL}/articles`,
         DELETE: slug => `${BASE_URL}/articles/${slug}`,

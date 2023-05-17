@@ -6,16 +6,13 @@ import Pagination from "../pagination";
 import {reducer} from "./reducer";
 import {requestArticles, changePage} from "./actions";
 import styles from "./Articles.module.scss";
-// import ErrorIndicator from "../errors/error-indicator";
 
 function Articles() {
     const dispatch = useDispatch();
     const articles = useSelector(state => state.articles?.list) || [];
     const articlesCount = useSelector(state => state.articles?.articlesCount) || 0;
-    const isFetching = useSelector(state => state.articles.articlesFetching);
+    const isFetching = useSelector(state => state.articles.isFetching);
     const currentPage = useSelector(state => state.articles.currentPage);
-
-    // const [hasError, setHasError] = useState(false);
 
     useEffect(
        () => {
@@ -23,11 +20,10 @@ function Articles() {
        }, [currentPage])
 
     const listToShow = articles.map(article => {
-        return <Article isPreview key={article.slug} content={article}/>
+        return <Article key={article.slug} content={article} fullSize={false} />
     });
 
     if (isFetching) {return <Spinner />;}
-    // if (hasError) {return <ErrorIndicator />;}
 
     return (
         <div className={styles.container}>
