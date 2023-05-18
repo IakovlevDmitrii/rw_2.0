@@ -41,7 +41,7 @@ export const receiveArticle = articleContent => {
 
 export const createAnArticle = content => (dispatch, getState) => {
     const {user} = getState().authentication;
-    const {list} = getState().articles;
+    const {list} = getState().articlesPage;
 
     const token = user.token || "";
     const data = {

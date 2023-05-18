@@ -1,7 +1,7 @@
 import React from "react";
 import {Routes, Route, Navigate} from "react-router-dom";
 import AppLayout from "../appLayout";
-import Articles from "../articles";
+import Articles from "../pages/articles-page";
 import ArticlePage from "../pages/article-page";
 import NewArticlePage from "../pages/new-article-page";
 import EditArticlePage from "../pages/edit-article-page";

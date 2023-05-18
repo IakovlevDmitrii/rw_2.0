@@ -1,18 +1,18 @@
 import React, {useEffect} from "react";
 import {connect, useDispatch, useSelector} from "react-redux";
-import Article from "../article";
-import Spinner from "../spinner";
-import Pagination from "../pagination";
+import Article from "../../article";
+import Spinner from "../../spinner";
+import Pagination from "../../pagination";
 import {reducer} from "./reducer";
 import {requestArticles, changePage} from "./actions";
-import styles from "./Articles.module.scss";
+import styles from "./ArticlesPage.module.scss";
 
-function Articles() {
+function ArticlesPage() {
     const dispatch = useDispatch();
-    const articles = useSelector(state => state.articles?.list) || [];
-    const articlesCount = useSelector(state => state.articles?.articlesCount) || 0;
-    const isFetching = useSelector(state => state.articles.isFetching);
-    const currentPage = useSelector(state => state.articles.currentPage);
+    const articles = useSelector(state => state.articlesPage?.list) || [];
+    const articlesCount = useSelector(state => state.articlesPage?.articlesCount) || 0;
+    const isFetching = useSelector(state => state.articlesPage.isFetching);
+    const currentPage = useSelector(state => state.articlesPage.currentPage);
 
     useEffect(
        () => {
@@ -40,4 +40,4 @@ function Articles() {
 
 export default connect(
     null,
-    {articles: reducer})(Articles)
+    {articles: reducer})(ArticlesPage)

@@ -7,7 +7,7 @@ import ArticleEditor from "../../article-editor";
 import Spinner from "../../spinner";
 
 import {createAnArticle} from "../article-page/actions";
-import {reducer} from "../../articles/reducer";
+import {reducer} from "../articles-page/reducer";
 
 function NewArticlePage() {
 

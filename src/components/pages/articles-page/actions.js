@@ -1,5 +1,5 @@
-import {API} from "../../api.config";
-import {adeptArticles} from "../../utils/adept-article";
+import {API} from "../../../api.config";
+import {adeptArticles} from "../../../utils/adept-article";
 
 export const REQUEST_ARTICLES = "REQUEST_ARTICLES";
 export const RECEIVE_ARTICLES = "RECEIVE_ARTICLES";

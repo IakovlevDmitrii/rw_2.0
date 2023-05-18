@@ -3,7 +3,7 @@ import {
     RECEIVE_ARTICLES,
     CHANGE_PAGE,
 } from "./actions";
-import {RECEIVE_FAVORITE_CHANGE} from "../article/actions";
+import {RECEIVE_FAVORITE_CHANGE} from "../../article/actions";
 
 const initialState = {
     isFetching: false,
