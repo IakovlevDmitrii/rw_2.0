@@ -35,7 +35,9 @@
 - Learn about authentication and form validation
 ### Mission:
 Implement a blogging platform.  
-[API Documentation](https://api.realworld.io/api-docs/)
+
+[//]: # ([API Documentation]&#40;https://api.realworld.io/api-docs/&#41;)
+[API Documentation](https://bump.sh/gerome-grignon-lp2/doc/realworld)
 
 [Layouts](https://www.figma.com/file/XXBjJXew3xpfbOZUnO9QVB/Blog?node-id=9582%3A0&t=69JJiFh8NvLV86yR-0)
 
