@@ -1,9 +1,10 @@
 import {API} from "../../../api.config";
 import {adeptArticles} from "../../../utils/adept-article";
-
-export const REQUEST_ARTICLES = "REQUEST_ARTICLES";
-export const RECEIVE_ARTICLES = "RECEIVE_ARTICLES";
-export const CHANGE_PAGE = "CHANGE_PAGE";
+import {
+    REQUEST_ARTICLES,
+    RECEIVE_ARTICLES,
+    CHANGE_PAGE_NUMBER,
+} from "./actionTypes";
 
 export const requestArticles = (limit, page) => (dispatch, getState) => {
     const {user} = getState().authentication;
@@ -20,9 +21,11 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
     })
     .then(response => response.json())
     .then(result => {
+        const {articlesCount, articles} = result;
+
         const articlesData = {
-            articlesCount: result.articlesCount,
-            list: adeptArticles(result.articles),
+            articlesCount,
+            articlesList: adeptArticles(articles),
         };
 
         dispatch(receiveArticles(articlesData));
@@ -30,16 +33,16 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
     .catch(e => console.log(`[GET ARTICLES] error ${e.toLocaleString()}`))
 };
 
-export const receiveArticles = ({articlesCount, list}) => {
+export const receiveArticles = ({articlesCount, articlesList}) => {
     return {
         type: RECEIVE_ARTICLES,
-        payload: {articlesCount, list},
+        payload: {articlesCount, articlesList},
     }
 };
 
-export const changePage = page => dispatch => {
+export const changePageNumber = pageNumber => dispatch => {
     dispatch({
-        type: CHANGE_PAGE,
-        payload: {page}
+        type: CHANGE_PAGE_NUMBER,
+        payload: {pageNumber}
     })
 };

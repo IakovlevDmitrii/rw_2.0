@@ -1,15 +1,15 @@
 import {
     REQUEST_ARTICLES,
     RECEIVE_ARTICLES,
-    CHANGE_PAGE,
-} from "./actions";
+    CHANGE_PAGE_NUMBER,
+} from "./actionTypes";
 import {RECEIVE_FAVORITE_CHANGE} from "../../article/actions";
 
 const initialState = {
     isFetching: false,
     currentPage: 1,
     articlesCount: 0,
-    list: [],
+    articlesList: [],
 };
 
 export const reducer = (state = initialState, action) => {
@@ -21,28 +21,32 @@ export const reducer = (state = initialState, action) => {
                 ...state,
                 isFetching: true,
             }
+
         case RECEIVE_ARTICLES:
             return {
                 ...state,
                 isFetching: false,
                 articlesCount: payload.articlesCount,
-                list: payload.list,
+                articlesList: payload.articlesList,
             }
-        case CHANGE_PAGE: {
+
+        case CHANGE_PAGE_NUMBER: {
             return {
                 ...state,
-                currentPage: payload.page,
+                currentPage: payload.pageNumber,
             }
         }
+
         case RECEIVE_FAVORITE_CHANGE:
-            let list = [...state.list]
-            let article = list.find(article => article.slug === payload.article.slug)
+            let articlesList = [...state.articlesList]
+            let article = articlesList.find(article => article.slug === payload.article.slug)
             Object.assign(article, payload.article)
 
             return {
                 ...state,
-                list,
+                articlesList,
             }
+
         default:
             return state;
     }
