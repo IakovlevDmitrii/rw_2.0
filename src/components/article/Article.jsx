@@ -3,13 +3,13 @@ import {useSelector, useDispatch} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import PropTypes from "prop-types";
 import ReactMarkdown from "react-markdown";
-import Description from "../description";
+import ArticleDescription from "../articl-description";
 import ArticleAuthor from "../article-author";
 import {deleteArticle} from "../pages/article-page/actions";
 import {toggleFavorite} from "./actions";
 import getArticlePropTypes from "../../utils/get-article-prop-types";
-import favoriteTrueImage from "../description/img/fav-true.svg";
-import favoriteFalseImage from "../description/img/fav-false.svg";
+import favoriteTrueImage from "./img/fav-true.svg";
+import favoriteFalseImage from "./img/fav-false.svg";
 import styles from "./Article.module.scss";
 
 function Article({content, fullSize}) {
@@ -17,12 +17,11 @@ function Article({content, fullSize}) {
         author,
         body,
         createdAt,
-        description,
+        descriptionText,
         favorited,
         favoritesCount,
         slug,
         tagList,
-        title,
     } = content;
 
     const dispatch = useDispatch();
@@ -46,14 +45,17 @@ function Article({content, fullSize}) {
             .then(navigate('/articles'));
     };
 
-    let articleTitle = <h3>{title}</h3>;
-    if (!fullSize) {
-        articleTitle = (
+    const header = (
+        <h3>{content.title}</h3>
+    );
+
+    const title = fullSize
+        ? header
+        : (
             <Link to={`/articles/${slug}`}>
-                {articleTitle}
+                {header}
             </Link>
         );
-    }
 
     const tags = tagList.map((tag, index) => {
         const key = `${slug}${index}`;
@@ -65,29 +67,38 @@ function Article({content, fullSize}) {
         );
     });
 
-    const favoriteImgSrc = liked ? favoriteTrueImage : favoriteFalseImage;
+    const imageSrc = liked ? favoriteTrueImage : favoriteFalseImage;
 
-    let favoriteImg = <img className={styles.favoriteButtonImg}
-                           alt="like" src={favoriteImgSrc} />;
+    const image = (
+        <img
+            className={styles.favoriteButtonImg}
+            alt="like"
+            src={imageSrc}
+        />
+    );
 
-    if (isLoggedIn) {
-        favoriteImg = (
-            <button className={styles.favoriteButton} type="button"
-                onClick={onFavoriteArticle} disabled={!isLoggedIn}>
-                {favoriteImg}
+    const favoriteImg = isLoggedIn
+        ? (
+            <button
+                className={styles.favoriteButton}
+                type="button"
+                onClick={onFavoriteArticle}
+                disabled={!isLoggedIn}
+            >
+                {image}
             </button>
         )
-    }
+        : image;
 
     const descriptionProps = {
-        articleTitle,
-        description,
+        descriptionText,
         favoriteImg,
         favorited,
         favoritesCount,
         isLoggedIn,
         slug,
         tags,
+        title,
     };
 
     const authorProps = {
@@ -103,11 +114,12 @@ function Article({content, fullSize}) {
             <ReactMarkdown>
                 {body}
             </ReactMarkdown>
-        </article>);
+        </article>
+    );
 
     return (
         <article className={styles.content}>
-            <Description {...descriptionProps} />
+            <ArticleDescription {...descriptionProps} />
             <ArticleAuthor {...authorProps} />
             {articleContent}
         </article>

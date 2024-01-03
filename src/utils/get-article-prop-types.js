@@ -7,7 +7,7 @@ const getArticlePropTypes = () => ({
     }).isRequired,
     body: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
+    descriptionText: PropTypes.string.isRequired,
     favorited: PropTypes.bool.isRequired,
     favoritesCount: PropTypes.number.isRequired,
     slug: PropTypes.string.isRequired,

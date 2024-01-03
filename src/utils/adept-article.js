@@ -23,7 +23,7 @@ export const adeptArticle = (article) => {
         },
         body,
         createdAt: format(new Date(createdAt), "MMMM d, yyyy"),
-        description,
+        descriptionText: description,
         favorited,
         favoritesCount,
         slug,
