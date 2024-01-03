@@ -4,7 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import PropTypes from "prop-types";
 import ReactMarkdown from "react-markdown";
 import Description from "../description";
-import Author from "../author";
+import ArticleAuthor from "../article-author";
 import {deleteArticle} from "../pages/article-page/actions";
 import {toggleFavorite} from "./actions";
 import getArticlePropTypes from "../../utils/get-article-prop-types";
@@ -108,7 +108,7 @@ function Article({content, fullSize}) {
     return (
         <article className={styles.content}>
             <Description {...descriptionProps} />
-            <Author {...authorProps} />
+            <ArticleAuthor {...authorProps} />
             {articleContent}
         </article>
     );

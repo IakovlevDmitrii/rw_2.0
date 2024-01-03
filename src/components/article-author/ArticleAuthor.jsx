@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import attention from "./img/attention.svg";
-import styles from "./Author.module.scss";
+import attentionImageSrc from "./img/attention.svg";
+import styles from "./ArticleAuthor.module.scss";
 
-function Author(props) {
+function ArticleAuthor(props) {
     const {
         createdAt = "",
         editable,
@@ -18,7 +18,7 @@ function Author(props) {
     const popUp = (
         <div className={styles.popUp}>
             <div className={styles.popUpText}>
-                <img src={attention} alt="attention" />
+                <img src={attentionImageSrc} alt="attention image" />
                 <span>Are you sure to delete this article?</span>
             </div>
 
@@ -81,7 +81,7 @@ function Author(props) {
     )
 }
 
-Author.propTypes = {
+ArticleAuthor.propTypes = {
     createdAt: PropTypes.string.isRequired,
     onDeleteArticle: PropTypes.func,
     image: PropTypes.string.isRequired,
@@ -89,8 +89,8 @@ Author.propTypes = {
     editable: PropTypes.bool.isRequired,
 }
 
-Author.defaultProps = {
+ArticleAuthor.defaultProps = {
     onDeleteArticle: null,
 };
 
-export default Author;
+export default ArticleAuthor;
