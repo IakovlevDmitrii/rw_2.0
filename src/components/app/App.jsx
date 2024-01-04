@@ -5,7 +5,7 @@ import HomePage from "../pages/home-page";
 import ArticlePage from "../pages/article-page";
 import NewArticlePage from "../pages/new-article-page";
 import EditArticlePage from "../pages/edit-article-page";
-import SignIn from "../sign-in";
+import SignIn from "../pages/sign-in-page";
 import SignUp from "../sign-up";
 import EditProfile from "../edit-profile";
 import "../../styles/styles.module.scss";
