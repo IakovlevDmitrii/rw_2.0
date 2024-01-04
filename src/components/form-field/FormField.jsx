@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import styles from "../styles/authComponents.module.scss";
+import styles from "../../styles/authComponents.module.scss";
 
 function FormField({
   name,

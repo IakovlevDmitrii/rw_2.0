@@ -8,10 +8,10 @@ import realWorldApiService from "../../services";
 import actionCreators from "../../store/action-creators";
 
 import Spinner from "../spinner";
-import FormField from "../auth-components/components/FormField";
+import FormField from "../form-field/FormField";
 
-import formsConfig from "../auth-components/utils/formsConfig";
-import rules from "../auth-components/utils/rules";
+import formsConfig from "../../utils/formsConfig";
+import rules from "../../utils/rules";
 import styles from "./SignIn.module.scss";
 
 function SignIn({ isLoading, loadingAuth, updateUser }) {
