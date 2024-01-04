@@ -7,7 +7,7 @@ import AuthButton from '../auth-button';
 
 import actionCreators from "../../store/action-creators";
 
-import src from "./image/User.png";
+import userImageDefaultSource from "./img/user-image-default.png";
 import styles from "./Header.module.scss";
 
 function Header({isLoggedIn, user, logOut}) {
@@ -28,7 +28,7 @@ function Header({isLoggedIn, user, logOut}) {
                             </div>
                             <div className={styles.personImage}>
                                 <img
-                                    src={user.image || src}
+                                    src={user.image || userImageDefaultSource}
                                     alt="user's avatar" />
                             </div>
                         </Link>
@@ -69,12 +69,12 @@ function Header({isLoggedIn, user, logOut}) {
 }
 
 Header.propTypes = {
-  user: PropTypes.shape({
-    username: PropTypes.string,
-    image: PropTypes.string,
+  user:       PropTypes.shape({
+    username:   PropTypes.string,
+    image:      PropTypes.string,
   }),
   isLoggedIn: PropTypes.bool.isRequired,
-  logOut: PropTypes.func.isRequired,
+  logOut:     PropTypes.func.isRequired,
 };
 
 Header.defaultProps = {
