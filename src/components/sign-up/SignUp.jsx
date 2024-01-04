@@ -8,7 +8,7 @@ import realWorldApiService from "../../services";
 import actionCreators from "../../store/action-creators";
 
 import Spinner from "../spinner";
-import FormField from "../form-field/FormField";
+import FormField from "../form-field";
 
 import formsConfig from "../../utils/formsConfig";
 import rules from "../../utils/rules";
