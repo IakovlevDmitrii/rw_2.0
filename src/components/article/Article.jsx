@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import PropTypes from "prop-types";
 import ReactMarkdown from "react-markdown";
-import ArticleDescription from "../articl-description";
+import ArticleDescription from "../article-description";
 import ArticleAuthor from "../article-author";
 import {deleteArticle} from "../pages/article-page/actions";
 import {toggleFavorite} from "./actions";
