@@ -1,4 +1,4 @@
-@import '../../../styles/form.module';
+@import 'form.module';
 
 .container {
    max-width: 384px;
@@ -39,7 +39,7 @@
             border-color: #0b76ef;
             background: {
                color: #0b76ef;
-               image: url("images/checkbox-active.svg");
+               image: url("../components/auth-components/styles/images/checkbox-active.svg");
                size: cover;
             };
          }

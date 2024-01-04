@@ -4,15 +4,15 @@ import { connect } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import realWorldApiService from "../../../services";
-import actionCreators from "../../../store/action-creators";
+import realWorldApiService from "../../services";
+import actionCreators from "../../store/action-creators";
 
-import Spinner from "../../spinner";
-import FormField from "./FormField";
+import Spinner from "../spinner";
+import FormField from "../auth-components/components/FormField";
 
-import formsConfig from "../utils/formsConfig";
-import rules from "../utils/rules";
-import styles from "../styles/authComponents.module.scss";
+import formsConfig from "../auth-components/utils/formsConfig";
+import rules from "../auth-components/utils/rules";
+import styles from "./SignIn.module.scss";
 
 function SignIn({ isLoading, loadingAuth, updateUser }) {
   const [registered, setRegistered] = useState(false);
