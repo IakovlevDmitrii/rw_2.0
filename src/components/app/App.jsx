@@ -5,9 +5,9 @@ import HomePage from "../pages/home-page";
 import ArticlePage from "../pages/article-page";
 import NewArticlePage from "../pages/new-article-page";
 import EditArticlePage from "../pages/edit-article-page";
-import {EditProfile} from "../auth-components";
 import SignIn from "../sign-in";
 import SignUp from "../sign-up";
+import EditProfile from "../edit-profile";
 import "../../styles/styles.module.scss";
 
 function App() {
