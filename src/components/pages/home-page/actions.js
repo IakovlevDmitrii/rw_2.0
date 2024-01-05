@@ -1,10 +1,8 @@
-import {API} from "../../../api.config";
-import {adeptArticles} from "../../../utils/adept-article";
-import {
-    REQUEST_ARTICLES,
-    RECEIVE_ARTICLES,
-    CHANGE_PAGE_NUMBER,
-} from "./actionTypes";
+import { API } from "../../../api.config";
+import { adeptArticles } from "../../../utils/adept-article";
+export const REQUEST_ARTICLES = "REQUEST_ARTICLES";
+export const RECEIVE_ARTICLES = "RECEIVE_ARTICLES";
+export const CHANGE_PAGE_NUMBER = "CHANGE_PAGE_NUMBER";
 
 export const requestArticles = (limit, page) => (dispatch, getState) => {
     const {user} = getState().authentication;

@@ -1,10 +1,10 @@
-import React, {useEffect} from "react";
-import {connect, useDispatch, useSelector} from "react-redux";
+import React, { useEffect } from "react";
+import { connect, useDispatch, useSelector } from "react-redux";
 import Article from "../../article";
 import Spinner from "../../spinner";
 import Pagination from "../../pagination";
-import {reducer} from "./reducer";
-import {requestArticles, changePageNumber} from "./actions";
+import { reducer } from "./reducer";
+import { requestArticles, changePageNumber } from "./actions";
 import styles from "./HomePage.module.scss";
 
 function HomePage() {
@@ -32,6 +32,7 @@ function HomePage() {
         <div className={styles.container}>
             <div className={styles.content}>
                 {listToShow}
+
                 <Pagination
                     current={currentPage}
                     onChange={page => dispatch(changePageNumber(page))}
@@ -44,4 +45,4 @@ function HomePage() {
 
 export default connect(
     null,
-    {articles: reducer})(HomePage)
+    {homePage: reducer})(HomePage)

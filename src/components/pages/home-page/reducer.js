@@ -2,8 +2,8 @@ import {
     REQUEST_ARTICLES,
     RECEIVE_ARTICLES,
     CHANGE_PAGE_NUMBER,
-} from "./actionTypes";
-import {RECEIVE_FAVORITE_CHANGE} from "../../article/actions";
+} from "./actions";
+import { RECEIVE_FAVORITE_CHANGE } from "../../article/actions";
 
 const initialState = {
     isFetching: false,
@@ -20,7 +20,7 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isFetching: true,
-            }
+            };
 
         case RECEIVE_ARTICLES:
             return {
@@ -28,13 +28,13 @@ export const reducer = (state = initialState, action) => {
                 isFetching: false,
                 articlesCount: payload.articlesCount,
                 articlesList: payload.articlesList,
-            }
+            };
 
         case CHANGE_PAGE_NUMBER: {
             return {
                 ...state,
                 currentPage: payload.pageNumber,
-            }
+            };
         }
 
         case RECEIVE_FAVORITE_CHANGE:
@@ -45,7 +45,7 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 articlesList,
-            }
+            };
 
         default:
             return state;
