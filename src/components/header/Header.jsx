@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
 import AuthButton from '../auth-button';
 
 import actionCreators from "../../store/action-creators";
@@ -10,7 +9,9 @@ import actionCreators from "../../store/action-creators";
 import userImageDefaultSource from "./img/user-image-default.png";
 import styles from "./Header.module.scss";
 
-function Header({isLoggedIn, user, logOut}) {
+function Header({logOut}) {
+    const user = useSelector(state => state.authentication.user);
+    const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
 
     const selectButtonsForDisplay = () => {
         if (isLoggedIn) {
@@ -29,7 +30,8 @@ function Header({isLoggedIn, user, logOut}) {
                             <div className={styles.personImage}>
                                 <img
                                     src={user.image || userImageDefaultSource}
-                                    alt="user's avatar" />
+                                    alt="user's avatar"
+                                />
                             </div>
                         </Link>
                     </div>
@@ -69,28 +71,13 @@ function Header({isLoggedIn, user, logOut}) {
 }
 
 Header.propTypes = {
-  user:       PropTypes.shape({
-    username:   PropTypes.string,
-    image:      PropTypes.string,
-  }),
-  isLoggedIn: PropTypes.bool.isRequired,
   logOut:     PropTypes.func.isRequired,
 };
-
-Header.defaultProps = {
-  user: {
-    username: "",
-    image: "",
-  },
-};
-
-const mapStateToProps = ({authentication}) => ({
-  user: authentication.user,
-  isLoggedIn: authentication.isLoggedIn,
-});
 
 const mapDispatchToProps = {
   logOut: actionCreators.authentication.logOut,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(
+    null,
+    mapDispatchToProps)(Header);
