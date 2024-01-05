@@ -9,9 +9,9 @@ import Spinner from "../../spinner";
 import FormField from "../../form-field";
 import formsConfig from "../../../utils/formsConfig";
 import rules from "../../../utils/rules";
-import styles from "./SignIn.module.scss";
+import styles from "./SignInPage.module.scss";
 
-function SignIn({ loadingAuth, updateUser }) {
+function SignInPage({ loadingAuth, updateUser }) {
     const isFetching = useSelector(state => state.authentication.isFetching);
     const [registered, setRegistered] = useState(false);
 
@@ -120,7 +120,7 @@ function SignIn({ loadingAuth, updateUser }) {
     );
 }
 
-SignIn.propTypes = {
+SignInPage.propTypes = {
     loadingAuth: PropTypes.func.isRequired,
     updateUser: PropTypes.func.isRequired,
 };
@@ -132,4 +132,4 @@ const mapDispatchToProps = {
 
 export default connect(
     null,
-    mapDispatchToProps)(SignIn);
+    mapDispatchToProps)(SignInPage);
