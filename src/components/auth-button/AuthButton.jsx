@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import styles from "./AuthButton.module.scss";
 
@@ -9,7 +9,7 @@ function AuthButton({ to, label }) {
         <div className={styles.authButton}>
             <NavLink
                 to={to}
-                className={({ isActive }) => (isActive ? styles.active : "")}
+                className={({isActive}) => (isActive ? styles.active : "")}
             >
                 {label}
             </NavLink>
