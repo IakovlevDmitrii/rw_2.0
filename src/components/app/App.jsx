@@ -7,7 +7,7 @@ import NewArticlePage from "../pages/new-article-page";
 import EditArticlePage from "../pages/edit-article-page";
 import SignInPage from "../pages/sign-in-page";
 import SignUpPage from "../pages/sign-up-page";
-import EditProfile from "../edit-profile";
+import EditProfilePage from "../pages/edit-profile";
 import "../../styles/styles.module.scss";
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
                 <Route path='articles/:slug/edit' element={<EditArticlePage />} />
                 <Route path='sign-in'             element={<SignInPage />} />
                 <Route path='sign-up'             element={<SignUpPage />} />
-                <Route path='profile'             element={<EditProfile />} />
+                <Route path='profile'             element={<EditProfilePage />} />
                 <Route path='new-article'         element={<NewArticlePage />}/>
             </Route>
         </Routes>
