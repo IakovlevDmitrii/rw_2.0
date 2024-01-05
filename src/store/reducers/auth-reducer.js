@@ -7,7 +7,7 @@ const {
 } = actionTypes.authentication;
 
 const initialState = {
-  isLoading: false,
+  isFetching: false,
   isLoggedIn: false,
   user: {},
 };
@@ -19,7 +19,7 @@ const authentication = (state = initialState, action) => {
     case LOADING_AUTH:
       return {
         ...state,
-        isLoading: action.payload.status,
+        isFetching: action.payload.status,
       };
 
     case LOG_OUT:
@@ -27,7 +27,7 @@ const authentication = (state = initialState, action) => {
 
     case UPDATE_USER:
       return {
-        isLoading: false,
+        isFetching: false,
         isLoggedIn: true,
         user: action.payload.user,
       };
