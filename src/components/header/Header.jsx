@@ -13,46 +13,41 @@ function Header({logOut}) {
     const user = useSelector(state => state.authentication.user);
     const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
 
-    const selectButtonsForDisplay = () => {
-        if (isLoggedIn) {
-            return (
-                <>
-                    <div className={styles.articleButton}>
-                        <Link to="/new-article">
-                            Create article
-                        </Link>
-                    </div>
-                    <div className={styles.person}>
-                        <Link to="/profile">
-                            <div className={styles.personName}>
-                                {user.username}
-                            </div>
-                            <div className={styles.personImage}>
-                                <img
-                                    src={user.image || userImageDefaultSource}
-                                    alt="user's avatar"
-                                />
-                            </div>
-                        </Link>
-                    </div>
-                    <button
-                        type="button"
-                        className={styles.logOut}
-                        onClick={logOut}
-                    >
-                        Log Out
-                    </button>
-                </>
-            );
-        }
-
-        return (
+    const buttonsForDisplay = isLoggedIn
+        ? (
+            <>
+                <div className={styles.articleButton}>
+                    <Link to="/new-article">
+                        Create article
+                    </Link>
+                </div>
+                <div className={styles.person}>
+                    <Link to="/profile">
+                        <div className={styles.personName}>
+                            {user.username}
+                        </div>
+                        <div className={styles.personImage}>
+                            <img
+                                src={user.image || userImageDefaultSource}
+                                alt="user's avatar"
+                            />
+                        </div>
+                    </Link>
+                </div>
+                <button
+                    type="button"
+                    className={styles.logOut}
+                    onClick={logOut}
+                >
+                    Log Out
+                </button>
+            </>
+        ) : (
             <>
                 <AuthButton to='/sign-in' label='Sign In' />
                 <AuthButton to='/sign-up' label='Sign Up' />
             </>
         );
-    }
 
     return (
         <header className={styles.header}>
@@ -63,7 +58,8 @@ function Header({logOut}) {
                             RealWorld blog
                         </Link>
                     </div>
-                    {selectButtonsForDisplay()}
+
+                    {buttonsForDisplay}
                 </div>
             </div>
         </header>
@@ -71,11 +67,11 @@ function Header({logOut}) {
 }
 
 Header.propTypes = {
-  logOut:     PropTypes.func.isRequired,
+    logOut: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
-  logOut: actionCreators.authentication.logOut,
+    logOut: actionCreators.authentication.logOut,
 };
 
 export default connect(
