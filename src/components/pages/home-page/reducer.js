@@ -19,13 +19,12 @@ export const reducer = (state = initialState, action) => {
         case REQUEST_ARTICLES:
             return {
                 ...state,
-                isFetching: true,
+                isFetching: payload.status,
             };
 
         case RECEIVE_ARTICLES:
             return {
                 ...state,
-                isFetching: false,
                 articlesCount: payload.articlesCount,
                 articlesList: payload.articlesList,
             };

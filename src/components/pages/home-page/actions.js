@@ -8,7 +8,10 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
     const {user} = getState().authentication;
     const token = user.token || "";
 
-    dispatch({type: REQUEST_ARTICLES});
+    dispatch({
+        type: REQUEST_ARTICLES,
+        payload: {status: true},
+    });
 
     return fetch(API.ARTICLES.SUMMARY(limit, page), {
         method: 'GET',
@@ -27,6 +30,11 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
         };
 
         dispatch(receiveArticles(articlesData));
+
+        dispatch({
+            type: REQUEST_ARTICLES,
+            payload: {status: false},
+        });
     })
     .catch(e => console.log(`[GET ARTICLES] error ${e.toLocaleString()}`))
 };
