@@ -6,7 +6,7 @@ import {RECEIVE_FAVORITE_CHANGE} from "../../article/actions";
 
 const initialState = {
     isFetching: false,
-    articleContent: {},
+    article: {},
 };
 
 export const reducer = (state = initialState, action) => {
@@ -17,18 +17,20 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isFetching: true,
-            }
+            };
+
         case RECEIVE_ARTICLE:
             return {
                 ...state,
                 isFetching: false,
-                articleContent: payload.articleContent,
-            }
+                article: payload.article,
+            };
+
         case RECEIVE_FAVORITE_CHANGE:
             return {
                 ...state,
-                articleContent: payload.article,
-            }
+                article: payload.article,
+            };
 /*
         case ARTICLE_CREATION_REQUEST:
             return {

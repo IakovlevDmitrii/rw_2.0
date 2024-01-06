@@ -1,5 +1,5 @@
-import {API} from "../../../api.config";
-import {adeptArticle} from "../../../utils/adept-article";
+import { API } from "../../../api.config";
+import { adeptArticle } from "../../../utils/adept-article";
 
 export const REQUEST_ARTICLE = "REQUEST_ARTICLE";
 export const RECEIVE_ARTICLE = "RECEIVE_ARTICLE";
@@ -7,10 +7,25 @@ export const ARTICLE_CREATION_REQUEST = "ARTICLE_CREATION_REQUEST";
 export const CREATE_AN_ARTICLE = "CREATE_AN_ARTICLE";
 export const REQUEST_TO_REMOVE_ARTICLE = "REQUEST_TO_REMOVE_ARTICLE";
 
+export const getArticle = slug => (dispatch, getState) => {
+    const currentArticle = getState().articlePage.article;
+
+    if(slug !== currentArticle.slug) {
+        const articlesList = getState().homePage.articlesList;
+        const article = articlesList.find(item => item.slug === slug);
+
+        if(article) {
+            dispatch(receiveArticle(article));
+        } else {
+            dispatch(requestArticle(slug));
+        }
+    }
+};
+
 export const requestArticle = slug => (dispatch, getState) => {
     const {user} = getState().authentication;
     const token = user.token || "";
-    const currentArticle = getState().articlePage.articleContent;
+    const currentArticle = getState().articlePage.article;
 
     if(slug !== currentArticle.slug) {
         dispatch({type: REQUEST_ARTICLE});
@@ -32,10 +47,10 @@ export const requestArticle = slug => (dispatch, getState) => {
     }
 };
 
-export const receiveArticle = articleContent => {
+export const receiveArticle = article => {
     return {
         type: RECEIVE_ARTICLE,
-        payload: {articleContent},
+        payload: {article},
     }
 };
 
