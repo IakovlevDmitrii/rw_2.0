@@ -28,7 +28,7 @@ function ArticlePage() {
                 <Article content={article} fullSize/>
             </div>
         </section>
-    )
+    );
 }
 
 export default ArticlePage;
