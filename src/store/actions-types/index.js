@@ -3,22 +3,15 @@ const articleData = {
   SET_ARTICLE: "SET_ARTICLE",
 };
 
-// const articlesData = {
-//   LOADING_ARTICLES: "LOADING_ARTICLES",
-//   SET_ARTICLES: "SET_ARTICLES",
-//   SET_PAGE_NUMBER: "SET_PAGE_NUMBER",
-// };
-
 const authentication = {
-  LOADING_AUTH: "LOADING_AUTH",
   LOG_OUT: "LOG_OUT",
+  REQUEST_AUTHENTICATION: "REQUEST_AUTHENTICATION",
   UPDATE_USER: "UPDATE_USER",
 };
 
-const actionTypes = {
+const actionsTypes = {
   articleData,
-  // articlesData,
   authentication,
 };
 
-export default actionTypes;
+export default actionsTypes;

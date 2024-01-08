@@ -1,9 +1,9 @@
-import actionTypes from "../actions-types";
+import actionsTypes from "../actions-types";
 
 const {
   LOADING_ARTICLE,
   SET_ARTICLE,
-} = actionTypes.articleData;
+} = actionsTypes.articleData;
 
 const loadingArticle = (status) => ({
   type: LOADING_ARTICLE,
