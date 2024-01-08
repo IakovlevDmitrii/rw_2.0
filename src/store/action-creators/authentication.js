@@ -6,11 +6,13 @@ const {
   UPDATE_USER,
 } = actionsTypes.authentication;
 
-const logOut = () => ({
-  type: LOG_OUT,
-});
+const logOut = () => dispatch => {
+  dispatch({
+    type: LOG_OUT,
+  });
+};
 
-const requestAuthentication = (status) => ({
+const requestAuthentication = status => ({
   payload: {status},
   type: REQUEST_AUTHENTICATION,
 });

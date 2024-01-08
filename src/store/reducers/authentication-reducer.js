@@ -1,15 +1,15 @@
 import actionsTypes from "../actions-types";
 
 const {
-  REQUEST_AUTHENTICATION,
   LOG_OUT,
+  REQUEST_AUTHENTICATION,
   UPDATE_USER,
 } = actionsTypes.authentication;
 
 const initialState = {
+  currentUser: {},
   isFetching: false,
   isLoggedIn: false,
-  currentUser: {},
 };
 
 // eslint-disable-next-line default-param-last
@@ -29,9 +29,9 @@ const authentication = (state = initialState, action) => {
 
     case UPDATE_USER:
       return {
+        currentUser: payload.user,
         isFetching: false,
         isLoggedIn: true,
-        currentUser: payload.user,
       };
 
     default:
