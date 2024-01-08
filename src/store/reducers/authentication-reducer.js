@@ -1,25 +1,27 @@
-import actionTypes from "../actions-types";
+import actionsTypes from "../actions-types";
 
 const {
-  LOADING_AUTH,
+  REQUEST_AUTHENTICATION,
   LOG_OUT,
   UPDATE_USER,
-} = actionTypes.authentication;
+} = actionsTypes.authentication;
 
 const initialState = {
   isFetching: false,
   isLoggedIn: false,
-  user: {},
+  currentUser: {},
 };
 
 // eslint-disable-next-line default-param-last
 const authentication = (state = initialState, action) => {
-  switch (action.type) {
+  const { payload, type } = action;
 
-    case LOADING_AUTH:
+  switch (type) {
+
+    case REQUEST_AUTHENTICATION:
       return {
         ...state,
-        isFetching: action.payload.status,
+        isFetching: payload.status,
       };
 
     case LOG_OUT:
@@ -29,7 +31,7 @@ const authentication = (state = initialState, action) => {
       return {
         isFetching: false,
         isLoggedIn: true,
-        user: action.payload.user,
+        currentUser: payload.user,
       };
 
     default:

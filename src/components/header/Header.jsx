@@ -10,7 +10,7 @@ import userImageDefaultSource from "./img/user-image-default.png";
 import styles from "./Header.module.scss";
 
 function Header({logOut}) {
-    const user = useSelector(state => state.authentication.user);
+    const user = useSelector(state => state.authentication.currentUser);
     const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
 
     const buttonsForDisplay = isLoggedIn

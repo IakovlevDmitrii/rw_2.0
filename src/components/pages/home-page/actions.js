@@ -1,16 +1,16 @@
 import { API } from "../../../api.config";
 import { adeptArticles } from "../../../utils/adept-article";
-export const REQUEST_ARTICLES = "REQUEST_ARTICLES";
-export const RECEIVE_ARTICLES = "RECEIVE_ARTICLES";
 export const CHANGE_PAGE_NUMBER = "CHANGE_PAGE_NUMBER";
+export const RECEIVE_ARTICLES = "RECEIVE_ARTICLES";
+export const REQUEST_ARTICLES = "REQUEST_ARTICLES";
 
 export const requestArticles = (limit, page) => (dispatch, getState) => {
-    const {user} = getState().authentication;
-    const token = user.token || "";
+    const {currentUser} = getState().authentication;
+    const token = currentUser.token || "";
 
     dispatch({
-        type: REQUEST_ARTICLES,
         payload: {status: true},
+        type: REQUEST_ARTICLES,
     });
 
     return fetch(API.ARTICLES.SUMMARY(limit, page), {
@@ -30,25 +30,24 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
         };
 
         dispatch(receiveArticles(articlesData));
-
-        dispatch({
-            type: REQUEST_ARTICLES,
-            payload: {status: false},
-        });
     })
     .catch(e => console.log(`[GET ARTICLES] error ${e.toLocaleString()}`))
+    .finally( dispatch({
+        payload: {status: false},
+        type: REQUEST_ARTICLES,
+    }))
 };
 
 export const receiveArticles = ({articlesCount, articlesList}) => {
     return {
-        type: RECEIVE_ARTICLES,
         payload: {articlesCount, articlesList},
+        type: RECEIVE_ARTICLES,
     }
 };
 
 export const changePageNumber = pageNumber => dispatch => {
     dispatch({
+        payload: {pageNumber},
         type: CHANGE_PAGE_NUMBER,
-        payload: {pageNumber}
     })
 };
