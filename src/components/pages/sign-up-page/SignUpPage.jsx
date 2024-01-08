@@ -140,7 +140,7 @@ SignUpPage.propTypes = {
 };
 
 const mapDispatchToProps = {
-    dispatchLoadingAuth: actionCreators.authentication.loadingAuth,
+    dispatchLoadingAuth: actionCreators.authentication.requestAuthentication,
     dispatchUpdateUser: actionCreators.authentication.updateUser,
 };
 

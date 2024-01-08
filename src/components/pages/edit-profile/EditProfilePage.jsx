@@ -137,7 +137,7 @@ EditProfilePage.propTypes = {
 };
 
 const mapDispatchToProps = {
-    loadingAuth: actionCreators.authentication.loadingAuth,
+    loadingAuth: actionCreators.authentication.requestAuthentication,
     updateUser: actionCreators.authentication.updateUser,
 };
 

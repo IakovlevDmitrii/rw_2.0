@@ -1,29 +1,29 @@
-import actionTypes from "../actions-types";
+import actionsTypes from "../actions-types";
 
 const {
-  LOADING_AUTH,
-  UPDATE_USER,
   LOG_OUT,
-} = actionTypes.authentication;
-
-const loadingAuth = (status) => ({
-  type: LOADING_AUTH,
-  payload: { status },
-})
-
-const updateUser = (user) => ({
-  type: UPDATE_USER,
-  payload: { user },
-});
+  REQUEST_AUTHENTICATION,
+  UPDATE_USER,
+} = actionsTypes.authentication;
 
 const logOut = () => ({
   type: LOG_OUT,
 });
 
+const requestAuthentication = (status) => ({
+  payload: {status},
+  type: REQUEST_AUTHENTICATION,
+});
+
+const updateUser = (user) => ({
+  payload: {user},
+  type: UPDATE_USER,
+});
+
 const authentication = {
-  loadingAuth,
-  updateUser,
   logOut,
+  requestAuthentication,
+  updateUser,
 };
 
 export default authentication;
