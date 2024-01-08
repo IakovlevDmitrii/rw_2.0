@@ -26,13 +26,12 @@ function Article({content, fullSize}) {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
-    const username = useSelector(state => state.authentication.user?.username);
+    const currentUser = useSelector(state => state.authentication.currentUser?.username);
+    const isMyArticle = author.username === currentUser;
 
     const [liked, setLiked] = useState(favorited);
 
-    const isMyArticle = author.username === username;
 
     const onFavoriteArticle = () => {
         let value = !liked;

@@ -14,7 +14,7 @@ function ArticlePage() {
 
     useEffect(
         () => {
-            dispatch(getArticle(slug))
+            dispatch(getArticle(slug));
         },[slug]
     )
 

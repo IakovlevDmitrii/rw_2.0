@@ -2,15 +2,15 @@ import {
     REQUEST_ARTICLE,
     RECEIVE_ARTICLE,
 } from "./actions";
-import {RECEIVE_FAVORITE_CHANGE} from "../../article/actions";
+import { RECEIVE_FAVORITE_CHANGE } from "../../article/actions";
 
 const initialState = {
-    isFetching: false,
     article: {},
+    isFetching: false,
 };
 
 export const reducer = (state = initialState, action) => {
-    const {payload, type} = action;
+    const { payload, type  } = action;
 
     switch (type) {
         case REQUEST_ARTICLE:
@@ -21,9 +21,9 @@ export const reducer = (state = initialState, action) => {
 
         case RECEIVE_ARTICLE:
             return {
-                ...state,
-                isFetching: false,
+                // ...state,
                 article: payload.article,
+                isFetching: false,
             };
 
         case RECEIVE_FAVORITE_CHANGE:

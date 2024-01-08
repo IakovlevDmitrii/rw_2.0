@@ -23,8 +23,8 @@ export const getArticle = slug => (dispatch, getState) => {
 };
 
 export const requestArticle = slug => (dispatch, getState) => {
-    const {user} = getState().authentication;
-    const token = user.token || "";
+    const {currentUser} = getState().authentication;
+    const token = currentUser.token || "";
     const currentArticle = getState().articlePage.article;
 
     if(slug !== currentArticle.slug) {
