@@ -10,10 +10,10 @@ function ArticlePage() {
     const {slug} = useParams();
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.articlePage.isFetching);
-    const article = useSelector(state => state.articlePage.article);
+    const article = useSelector(state => state.articlePage?.article);
 
     useEffect(
-        () => {
+        ()=> {
             dispatch(getArticle(slug));
         },[slug]
     )
@@ -25,7 +25,7 @@ function ArticlePage() {
     return (
         <section>
             <div className={styles.container}>
-                <Article content={article} fullSize/>
+                <Article content={article} fullSize />
             </div>
         </section>
     );
