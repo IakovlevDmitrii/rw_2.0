@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -10,7 +10,7 @@ import rules from "../../../utils/rules";
 import styles from "./SignInPage.module.scss";
 
 function SignInPage() {
-    const { fetchingAuthentication, logIn } = actionCreators.authentication;
+    const { logIn } = actionCreators.authentication;
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.authentication.isFetching);
     const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
@@ -21,13 +21,6 @@ function SignInPage() {
         formState: { errors },
         setError,
     } = useForm({});
-
-    useEffect(
-        () => () => {
-            fetchingAuthentication(false);
-        },
-        [fetchingAuthentication]
-    );
 
     const onSubmit = ({ email, password }) => {
         dispatch(logIn(email, password))
