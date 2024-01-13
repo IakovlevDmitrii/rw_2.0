@@ -1,8 +1,8 @@
 import actionsTypes from "../actions-types";
 
 const {
+  FETCHING_AUTHENTICATION,
   LOG_OUT,
-  REQUEST_AUTHENTICATION,
   UPDATE_USER,
 } = actionsTypes.authentication;
 
@@ -18,7 +18,7 @@ const authentication = (state = initialState, action) => {
 
   switch (type) {
 
-    case REQUEST_AUTHENTICATION:
+    case FETCHING_AUTHENTICATION:
       return {
         ...state,
         isFetching: payload.status,

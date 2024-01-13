@@ -7,7 +7,6 @@ import {
   } from "./real-world-api/requests/articles";
 
 import {
-  existingUserLogin,
   registerANewUser,
   updateCurrentUser,
   } from "./real-world-api/requests/authentication";
@@ -26,8 +25,6 @@ class RealWorldApiService {
   };
 
   authentication = {
-    existingUserLogin: (email, password) =>
-        existingUserLogin(email, password),
     registerANewUser: (username, email, password) =>
         registerANewUser(username, email, password),
     updateCurrentUser: (token, detailsToChange) =>

@@ -14,6 +14,6 @@ export const API = {
     },
 
     AUTHENTICATION: {
-        LOGIN: () => `${BASE_URL}/user/login`,
+        LOGIN: () => `${BASE_URL}/users/login`,
     }
 }
