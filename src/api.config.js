@@ -13,4 +13,7 @@ export const API = {
         DELETE: slug => `${BASE_URL}/articles/${slug}`,
     },
 
+    AUTHENTICATION: {
+        LOGIN: () => `${BASE_URL}/user/login`,
+    }
 }
