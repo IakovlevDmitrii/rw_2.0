@@ -8,7 +8,6 @@ import {
 
 import {
   registerANewUser,
-  updateCurrentUser,
   } from "./real-world-api/requests/authentication";
 
 class RealWorldApiService {
@@ -27,8 +26,6 @@ class RealWorldApiService {
   authentication = {
     registerANewUser: (username, email, password) =>
         registerANewUser(username, email, password),
-    updateCurrentUser: (token, detailsToChange) =>
-        updateCurrentUser(token, detailsToChange),
   };
 }
 
