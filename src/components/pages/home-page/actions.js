@@ -2,16 +2,20 @@ import { API } from "../../../api.config";
 import { adeptArticles } from "../../../utils/adept-article";
 export const CHANGE_PAGE_NUMBER = "CHANGE_PAGE_NUMBER";
 export const RECEIVE_ARTICLES = "RECEIVE_ARTICLES";
-export const REQUEST_ARTICLES = "REQUEST_ARTICLES";
+export const FETCHING_ARTICLES = "FETCHING_ARTICLES";
+
+const fetchingArticles = status => dispatch => {
+    dispatch({
+        payload: {status},
+        type: FETCHING_ARTICLES,
+    });
+};
 
 export const requestArticles = (limit, page) => (dispatch, getState) => {
     const { currentUser } = getState().authentication;
     const token = currentUser.token || "";
 
-    dispatch({
-        payload: {status: true},
-        type: REQUEST_ARTICLES,
-    });
+    dispatch(fetchingArticles(true));
 
     return fetch(API.ARTICLES.SUMMARY(limit, page), {
         method: 'GET',
@@ -32,10 +36,9 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
         dispatch(receiveArticles(articlesData));
     })
     .catch(e => console.log(`[GET ARTICLES] error ${e.toLocaleString()}`))
-    .finally( dispatch({
-        payload: {status: false},
-        type: REQUEST_ARTICLES,
-    }))
+    .finally(
+        dispatch(fetchingArticles(false))
+    )
 };
 
 export const receiveArticles = ({articlesCount, articlesList}) => {

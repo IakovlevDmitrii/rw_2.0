@@ -1,5 +1,5 @@
 import {
-    REQUEST_ARTICLES,
+    FETCHING_ARTICLES,
     RECEIVE_ARTICLES,
     CHANGE_PAGE_NUMBER,
 } from "./actions";
@@ -16,7 +16,7 @@ export const reducer = (state = initialState, action) => {
     const {payload, type} = action;
 
     switch (type){
-        case REQUEST_ARTICLES:
+        case FETCHING_ARTICLES:
             return {
                 ...state,
                 isFetching: payload.status,
