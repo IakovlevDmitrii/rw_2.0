@@ -7,6 +7,7 @@
 
 //    "email":"a@a.a",
 //    "username":"iakovlev",
+//    "username":"test",
 //    password: "aaaaaaa"
 
 //    "email":"b@b.b",

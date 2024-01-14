@@ -1,9 +1,7 @@
 import React from "react";
-import { connect, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
-import realWorldApi from "../../../services";
 import actionCreators from "../../../store/action-creators";
 import Spinner from "../../spinner";
 import FormField from "../../form-field";
@@ -11,11 +9,13 @@ import formsConfig from "../../../utils/formsConfig";
 import rules from "../../../utils/rules";
 import styles from "./EditProfilePage.module.scss";
 
-function EditProfilePage({ loadingAuth, updateUser }) {
-    const isFetching = useSelector(state => state.authentication.isFetching);
-    const user = useSelector(state => state.authentication.user);
-    const { email, username, token } = user;
+function EditProfilePage() {
+    const { editProfile } = actionCreators.authentication;
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isFetching = useSelector(state => state.authentication.isFetching);
+    const currentUser = useSelector(state => state.authentication.currentUser);
+    const { email, username } = currentUser;
 
     const {
         register,
@@ -34,36 +34,24 @@ function EditProfilePage({ loadingAuth, updateUser }) {
             }
         }
 
-        loadingAuth(true);
-
-        realWorldApi
-            .authentication
-            .updateCurrentUser(token, detailsToChange)
+        dispatch(editProfile(detailsToChange))
             .then((res) => {
-                const userDetails = res.user;
-                const serverErrors = res.errors;
+                const { isUserUpdated, serverErrors } = res;
 
-                if (userDetails) {
-                    updateUser(userDetails);
+                if (isUserUpdated) {
                     navigate('/articles')
                 }
 
                 if (serverErrors) {
-                    for (const error in serverErrors) {
-                        if (Object.prototype.hasOwnProperty.call(serverErrors, error)) {
-                            setError(error, {
-                                type: "manual",
-                                message: `${error} ${serverErrors[error]}`,
-                            });
-                        }
-                    }
+                    setError("email", {
+                        type: "manual",
+                        message: `Email or password ${serverErrors["email or password"]}`,
+                    });
+                    setError("password", {
+                        type: "manual",
+                        message: `Email or password ${serverErrors["email or password"]}`,
+                    });
                 }
-            })
-            .catch((err) => {
-                throw new Error(err.message);
-            })
-            .finally(() => {
-                loadingAuth(false);
             });
     };
 
@@ -131,16 +119,4 @@ function EditProfilePage({ loadingAuth, updateUser }) {
     );
 }
 
-EditProfilePage.propTypes = {
-    loadingAuth: PropTypes.func.isRequired,
-    updateUser: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = {
-    loadingAuth: actionCreators.authentication.requestAuthentication,
-    updateUser: actionCreators.authentication.updateUser,
-};
-
-export default connect(
-    null,
-    mapDispatchToProps)(EditProfilePage);
+export default EditProfilePage;

@@ -5,7 +5,7 @@ export const RECEIVE_ARTICLES = "RECEIVE_ARTICLES";
 export const REQUEST_ARTICLES = "REQUEST_ARTICLES";
 
 export const requestArticles = (limit, page) => (dispatch, getState) => {
-    const {currentUser} = getState().authentication;
+    const { currentUser } = getState().authentication;
     const token = currentUser.token || "";
 
     dispatch({
