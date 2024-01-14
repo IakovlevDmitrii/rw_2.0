@@ -65,14 +65,13 @@ const logIn = (email, password) => dispatch => {
             const userDetails = res.user;
             const serverErrors = res.errors;
 
-            if (userDetails) {
+            if(userDetails) {
                 dispatch(updateUser(userDetails));
             }
 
-            if (serverErrors) {
+            if(serverErrors) {
                 return serverErrors;
             }
-
         })
         .catch((err) => {
             throw new Error(err.message);
@@ -110,12 +109,12 @@ const editProfile = detailsToChange => (dispatch, getState) => {
             const userDetails = res.user;
             const serverErrors = res.errors;
 
-            if (userDetails) {
+            if(userDetails) {
                 dispatch(updateUser(userDetails));
                 return {isUserUpdated: true};
             }
 
-            if (serverErrors) {
+            if(serverErrors) {
                 return serverErrors;
             }
 

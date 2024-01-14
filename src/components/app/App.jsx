@@ -13,15 +13,15 @@ import "../../styles/styles.module.scss";
 function App() {
     return (
         <Routes>
-            <Route path='/'                       element={<AppLayout />}>
-                <Route path='/'                   element={<Navigate to='articles' />} />
-                <Route path='articles'            element={<HomePage />} />
-                <Route path='articles/:slug/*'    element={<ArticlePage />} />
+            <Route path='/' element={<AppLayout />}>
+                <Route path='/' element={<Navigate to='articles' />} />
+                <Route path='articles' element={<HomePage />} />
+                <Route path='articles/:slug/*' element={<ArticlePage />} />
                 <Route path='articles/:slug/edit' element={<EditArticlePage />} />
-                <Route path='sign-in'             element={<SignInPage />} />
-                <Route path='sign-up'             element={<SignUpPage />} />
-                <Route path='profile'             element={<EditProfilePage />} />
-                <Route path='new-article'         element={<NewArticlePage />}/>
+                <Route path='sign-in' element={<SignInPage />} />
+                <Route path='sign-up' element={<SignUpPage />} />
+                <Route path='profile' element={<EditProfilePage />} />
+                <Route path='new-article' element={<NewArticlePage />} />
             </Route>
         </Routes>
     )

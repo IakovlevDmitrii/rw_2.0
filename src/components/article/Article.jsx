@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
-import {useSelector, useDispatch} from "react-redux";
-import {Link, useNavigate} from "react-router-dom";
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import ReactMarkdown from "react-markdown";
 import ArticleDescription from "../article-description";
 import ArticleAuthor from "../article-author";
-import {deleteArticle} from "../pages/article-page/actions";
-import {toggleFavorite} from "./actions";
+import { deleteArticle } from "../pages/article-page/actions";
+import { toggleFavorite } from "./actions";
 import getArticlePropTypes from "../../utils/get-article-prop-types";
 import favoriteTrueImage from "./img/fav-true.svg";
 import favoriteFalseImage from "./img/fav-false.svg";
@@ -31,7 +31,6 @@ function Article({content, fullSize}) {
     const isMyArticle = author.username === currentUser;
 
     const [liked, setLiked] = useState(favorited);
-
 
     const onFavoriteArticle = () => {
         let value = !liked;
