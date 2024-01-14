@@ -1,9 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { connect, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import realWorldApiService from "../../../services";
 import actionCreators from "../../../store/action-creators";
 import Spinner from "../../spinner";
 import FormField from "../../form-field";
@@ -11,9 +9,12 @@ import formsConfig from "../../../utils/formsConfig";
 import rules from "../../../utils/rules";
 import styles from "./SignUpPage.module.scss";
 
-function SignUpPage({ dispatchLoadingAuth, dispatchUpdateUser }) {
-    const isFetching = useSelector(state => state.authentication.isFetching);
+function SignUpPage() {
+    const { signUp } = actionCreators.authentication;
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isFetching = useSelector(state => state.authentication.isFetching);
+
     const {
         register,
         handleSubmit,
@@ -23,36 +24,24 @@ function SignUpPage({ dispatchLoadingAuth, dispatchUpdateUser }) {
     } = useForm({});
 
     const onSubmit = ({ username, email, password }) => {
-        dispatchLoadingAuth(true);
-
-        realWorldApiService
-            .authentication
-            .registerANewUser(username, email, password)
+        dispatch(signUp(username, email, password))
             .then((res) => {
-                const userDetails = res.user;
-                const serverErrors = res.errors;
+                const { user, errors } = res;
 
-                if (userDetails) {
-                    dispatchUpdateUser(userDetails);
-                    navigate('/articles');
+                if (user) {
+                    navigate('/articles')
                 }
 
-                if (serverErrors) {
-                    for (const error in serverErrors) {
-                        if (Object.prototype.hasOwnProperty.call(serverErrors, error)) {
+                if (errors) {
+                    for (const error in errors) {
+                        if (Object.prototype.hasOwnProperty.call(errors, error)) {
                             setError(error, {
                                 type: "manual",
-                                message: `${error} ${serverErrors[error]}`,
+                                message: `${error} ${errors[error]}`,
                             });
                         }
                     }
                 }
-            })
-            .catch((err) => {
-                throw new Error(err.message);
-            })
-            .finally(() => {
-                dispatchLoadingAuth(false);
             });
     };
 
@@ -114,14 +103,12 @@ function SignUpPage({ dispatchLoadingAuth, dispatchUpdateUser }) {
                     <div className={styles.title}>
                         <h3>Create new account</h3>
                     </div>
-
                     <form onSubmit={handleSubmit(onSubmit)}>
                         {formFields}
                         <button className={styles.formButton} type="submit">
                             Create
                         </button>
                     </form>
-
                     <div className={styles.authLink}>
                         <div>Already have an account?</div>
                         <div className={styles.link}>
@@ -134,16 +121,4 @@ function SignUpPage({ dispatchLoadingAuth, dispatchUpdateUser }) {
     );
 }
 
-SignUpPage.propTypes = {
-    dispatchLoadingAuth: PropTypes.func.isRequired,
-    dispatchUpdateUser: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = {
-    dispatchLoadingAuth: actionCreators.authentication.requestAuthentication,
-    dispatchUpdateUser: actionCreators.authentication.updateUser,
-};
-
-export default connect(
-    null,
-    mapDispatchToProps)(SignUpPage);
+export default SignUpPage;

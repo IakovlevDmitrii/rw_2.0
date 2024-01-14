@@ -11,7 +11,7 @@
 //    password: "aaaaaaa"
 
 //    "email":"b@b.b",
-//    "username":"name",
+//    "username":"nameb",
 //    password: "bbbbbbb"
 
 const BASE_URL = 'https://blog.kata.academy/api';
