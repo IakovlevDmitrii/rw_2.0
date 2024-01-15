@@ -15,6 +15,8 @@ export const toggleFavorite = (slug, favorited) => (dispatch, getState) => {
     })
         .then(response => response.json())
         .then(result => {
+
+            // TODO: add adeptArticle function
             dispatch({
                 type: RECEIVE_FAVORITE_CHANGE,
                 payload: result
