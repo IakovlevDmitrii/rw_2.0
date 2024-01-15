@@ -4,7 +4,7 @@ import styles from "./ArticleDescription.module.scss";
 
 function ArticleDescription (props) {
     const {
-        descriptionText,
+        description,
         favoriteImg,
         favoritesCount,
         tags,
@@ -30,14 +30,14 @@ function ArticleDescription (props) {
                 </div>
             </div>
             <div className={styles.text}>
-                <p>{descriptionText}</p>
+                <p>{description}</p>
             </div>
         </article>
     )
 }
 
 ArticleDescription.propTypes = {
-    descriptionText: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
     favoriteImg: PropTypes.element.isRequired,
     favoritesCount: PropTypes.number.isRequired,
     tags: PropTypes.arrayOf(

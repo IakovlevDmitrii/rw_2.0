@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -10,6 +10,7 @@ import { toggleFavorite } from "./actions";
 import getArticlePropTypes from "../../utils/get-article-prop-types";
 import favoriteTrueImage from "./img/fav-true.svg";
 import favoriteFalseImage from "./img/fav-false.svg";
+import favoriteFetchingImage from "./img/fav-fetch.svg";
 import styles from "./Article.module.scss";
 
 function Article({content, fullSize}) {
@@ -17,7 +18,7 @@ function Article({content, fullSize}) {
         author,
         body,
         createdAt,
-        descriptionText,
+        description,
         favorited,
         favoritesCount,
         slug,
@@ -29,9 +30,18 @@ function Article({content, fullSize}) {
     const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
     const currentUser = useSelector(state => state.authentication.currentUser?.username);
     const isMyArticle = author.username === currentUser;
+    const [isFavoriteFetching, setIsFavoriteFetching] = useState( false);
 
     const onFavoriteArticle = () => {
-        dispatch(toggleFavorite(slug, favorited));
+        setIsFavoriteFetching(true);
+
+        dispatch(toggleFavorite(slug, favorited))
+            // TODO: promise resolved
+            .then(res => {
+                if(res.isFavoriteChanged) {
+                    setIsFavoriteFetching(false);
+                }
+            });
     };
 
     const onDeleteArticle = () => {
@@ -61,7 +71,11 @@ function Article({content, fullSize}) {
         );
     });
 
-    const imageSrc = favorited ? favoriteTrueImage : favoriteFalseImage;
+    const imageSrc = isFavoriteFetching
+        ? favoriteFetchingImage
+        : favorited
+            ? favoriteTrueImage
+            : favoriteFalseImage;
 
     const image = (
         <img
@@ -77,7 +91,7 @@ function Article({content, fullSize}) {
                 className={styles.favoriteButton}
                 type="button"
                 onClick={onFavoriteArticle}
-                disabled={!isLoggedIn}
+                disabled={!isLoggedIn && isFavoriteFetching}
             >
                 {image}
             </button>
@@ -85,7 +99,7 @@ function Article({content, fullSize}) {
         : image;
 
     const descriptionProps = {
-        descriptionText,
+        description,
         favoriteImg,
         favorited,
         favoritesCount,

@@ -19,6 +19,8 @@ export const toggleFavorite = (slug, favorited) => (dispatch, getState) => {
                 type: RECEIVE_FAVORITE_CHANGE,
                 payload: result
             })
+
+            return {isFavoriteChanged: true};
         })
         .catch(e => console.log(`[FAVORITE ARTICLE] error ${e.toLocaleString()}`))
 };
