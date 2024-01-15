@@ -32,7 +32,7 @@ export const adeptArticle = (article) => {
     };
 }
 
-export const adeptArticles = (articles) => {
+export const adeptArticles = articles => {
     return articles.map(article => adeptArticle(article));
 }
 

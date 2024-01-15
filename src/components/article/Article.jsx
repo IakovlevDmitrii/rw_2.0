@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -30,12 +30,8 @@ function Article({content, fullSize}) {
     const currentUser = useSelector(state => state.authentication.currentUser?.username);
     const isMyArticle = author.username === currentUser;
 
-    const [liked, setLiked] = useState(favorited);
-
     const onFavoriteArticle = () => {
-        let value = !liked;
-        setLiked(value);
-        dispatch(toggleFavorite(slug, value));
+        dispatch(toggleFavorite(slug, favorited));
     };
 
     const onDeleteArticle = () => {
@@ -65,7 +61,7 @@ function Article({content, fullSize}) {
         );
     });
 
-    const imageSrc = liked ? favoriteTrueImage : favoriteFalseImage;
+    const imageSrc = favorited ? favoriteTrueImage : favoriteFalseImage;
 
     const image = (
         <img
