@@ -5,7 +5,6 @@ const articleData = {
 
 const authentication = {
   FETCHING_AUTHENTICATION: "FETCHING_AUTHENTICATION",
-  LOG_OUT: "LOG_OUT",
   UPDATE_USER: "UPDATE_USER",
 };
 

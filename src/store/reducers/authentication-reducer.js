@@ -1,8 +1,8 @@
 import actionsTypes from "../actions-types";
+import {LOG_OUT} from "../../components/header/actions";
 
 const {
   FETCHING_AUTHENTICATION,
-  LOG_OUT,
   UPDATE_USER,
 } = actionsTypes.authentication;
 
@@ -14,7 +14,7 @@ const initialState = {
 
 // eslint-disable-next-line default-param-last
 const authentication = (state = initialState, action) => {
-  const { payload, type } = action;
+  const {payload, type} = action;
 
   switch (type) {
 

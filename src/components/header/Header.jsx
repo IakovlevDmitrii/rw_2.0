@@ -1,13 +1,12 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {Link} from "react-router-dom";
 import AuthButton from '../auth-button';
-import actionCreators from "../../store/action-creators";
+import {logOut} from "./actions";
 import userImageDefaultSource from "./img/user-image-default.png";
 import styles from "./Header.module.scss";
 
 function Header() {
-    const { logOut } = actionCreators.authentication;
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state.authentication.currentUser);
     const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);

@@ -1,9 +1,9 @@
-import { API } from "../../api.config";
+import {API} from "../../api.config";
 import actionsTypes from "../actions-types";
 
 const {
     FETCHING_AUTHENTICATION,
-    LOG_OUT,
+    // LOG_OUT,
     UPDATE_USER,
 } = actionsTypes.authentication;
 
@@ -14,14 +14,14 @@ const fetchingAuthentication = status => dispatch => {
     });
 };
 
-const logOut = () => dispatch => {
-    dispatch({
-        type: LOG_OUT,
-    });
-};
+// const logOut = () => dispatch => {
+//     dispatch({
+//         type: LOG_OUT,
+//     });
+// };
 
 const editProfile = detailsToChange => (dispatch, getState) => {
-    const { token } = getState().authentication.currentUser;
+    const token = getState().authentication.currentUser.token;
 
     dispatch(fetchingAuthentication(true));
 
@@ -69,7 +69,6 @@ const updateUser = user => dispatch => {
 
 const authentication = {
     fetchingAuthentication,
-    logOut,
     editProfile,
     updateUser,
 };
