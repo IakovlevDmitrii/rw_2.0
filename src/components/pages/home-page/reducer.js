@@ -4,6 +4,7 @@ import {
     CHANGE_PAGE_NUMBER,
 } from "./actions";
 import { RECEIVE_FAVORITE_CHANGE } from "../../article/actions";
+import { CREATE_AN_ARTICLE } from "../article-page/actions";
 
 const initialState = {
     isFetching: false,
@@ -29,12 +30,11 @@ export const reducer = (state = initialState, action) => {
                 articlesList: payload.articlesList,
             };
 
-        case CHANGE_PAGE_NUMBER: {
+        case CHANGE_PAGE_NUMBER:
             return {
                 ...state,
                 currentPage: payload.pageNumber,
             };
-        }
 
         case RECEIVE_FAVORITE_CHANGE:
             let articlesList = [...state.articlesList]
@@ -44,6 +44,12 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 articlesList,
+            };
+
+        case CREATE_AN_ARTICLE:
+            return {
+                ...state,
+                articlesList: payload.articlesList,
             };
 
         default:

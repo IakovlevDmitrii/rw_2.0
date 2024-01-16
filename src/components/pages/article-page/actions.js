@@ -1,9 +1,9 @@
 import { API } from "../../../api.config";
 import { adeptArticle } from "../../../utils/adept-article";
 
-export const REQUEST_ARTICLE = "REQUEST_ARTICLE";
+export const ARTICLE_FETCHING = "ARTICLE_FETCHING";
 export const RECEIVE_ARTICLE = "RECEIVE_ARTICLE";
-export const ARTICLE_CREATION_REQUEST = "ARTICLE_CREATION_REQUEST";
+export const ARTICLE_CREATION_FETCHING = "ARTICLE_CREATION_FETCHING";
 export const CREATE_AN_ARTICLE = "CREATE_AN_ARTICLE";
 export const REQUEST_TO_REMOVE_ARTICLE = "REQUEST_TO_REMOVE_ARTICLE";
 
@@ -20,6 +20,11 @@ export const getArticle = slug => (dispatch, getState) => {
             dispatch(requestArticle(slug));
         }
     }
+
+    dispatch({
+        type: ARTICLE_FETCHING,
+        payload: {status: false},
+    })
 };
 
 export const requestArticle = slug => (dispatch, getState) => {
@@ -28,7 +33,10 @@ export const requestArticle = slug => (dispatch, getState) => {
     const currentArticle = getState().articlePage.article;
 
     if(slug !== currentArticle.slug) {
-        dispatch({type: REQUEST_ARTICLE});
+        dispatch({
+            type: ARTICLE_FETCHING,
+            payload: {status: true},
+        });
 
         return fetch(API.ARTICLE.GET(slug), {
             method: 'GET',
@@ -44,6 +52,12 @@ export const requestArticle = slug => (dispatch, getState) => {
                 dispatch(receiveArticle(article));
             })
             .catch(e => console.log(`[GET ARTICLE] error ${e.toLocaleString()}`))
+            .finally(
+                dispatch({
+                    type: ARTICLE_FETCHING,
+                    payload: {status: false},
+                })
+            )
     }
 };
 
@@ -55,18 +69,18 @@ export const receiveArticle = article => {
 };
 
 export const createAnArticle = content => (dispatch, getState) => {
-    const {user} = getState().authentication;
-    const {list} = getState().articlesPage;
+    const currentUser = getState().authentication.currentUser;
+    const articlesList = getState().homePage.articlesList;
 
-    const token = user.token || "";
+    const token = currentUser.token || "";
     const data = {
-        article: {...content}
+        article: {...content},
     };
     const body = JSON.stringify(data);
 
     dispatch({
-        type: ARTICLE_CREATION_REQUEST,
-        payload: {status: true}
+        type: ARTICLE_CREATION_FETCHING,
+        payload: {status: true},
     });
 
     return fetch(API.ARTICLE.CREATE(), {
@@ -80,35 +94,37 @@ export const createAnArticle = content => (dispatch, getState) => {
         .then(response => response.json())
         .then(result => {
             const articleDetails = result.article;
-            // const serverErrors = result.errors;
 
             if(articleDetails) {
                 const newArticle = adeptArticle(articleDetails);
-                list.push(newArticle);
+                articlesList.push(newArticle);
 
                 dispatch({
                     type: CREATE_AN_ARTICLE,
-                    payload: {list}});
+                    payload: {articlesList},
+                });
 
-                dispatch(selectArticle(articleDetails.slug));
+                dispatch(receiveArticle(articleDetails));
             }
-
-            dispatch({
-                type: ARTICLE_CREATION_REQUEST,
-                payload: {status: false}
-            });
 
             return result
         })
+        .catch(e => console.log(`[CREAT ARTICLE] error ${e.toLocaleString()}`))
+        .finally(
+            dispatch({
+                type: ARTICLE_CREATION_FETCHING,
+                payload: {status: false},
+            })
+        )
 };
 
 export const deleteArticle = slug => (dispatch, getState) => {
-    const {user} = getState().authentication;
-    const token = user.token || "";
+    const currentUser = getState().authentication.currentUser;
+    const token = currentUser.token || "";
 
     dispatch({
         type: REQUEST_TO_REMOVE_ARTICLE,
-        payload: {status: true}
+        payload: {status: true},
     });
 
     return fetch(API.ARTICLE.DELETE(slug), {
@@ -121,6 +137,6 @@ export const deleteArticle = slug => (dispatch, getState) => {
         .then(response => {!!response.ok})
         .finally(dispatch({
             type: REQUEST_TO_REMOVE_ARTICLE,
-            payload: {status: false}
+            payload: {status: false},
         }));
 };

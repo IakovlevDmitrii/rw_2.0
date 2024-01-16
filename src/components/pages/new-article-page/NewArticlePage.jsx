@@ -1,20 +1,17 @@
 import React, { useState, useEffect, useMemo } from "react";
-import {connect, useDispatch, useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom";
-
+import { connect, useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import ProtectedRoute from "../../protectedRoute";
 import ArticleEditor from "../../article-editor";
 import Spinner from "../../spinner";
-
-import {createAnArticle} from "../article-page/actions";
-import {reducer} from "../home-page/reducer";
+import { createAnArticle } from "../article-page/actions";
+import { reducer } from "../home-page/reducer";
 
 function NewArticlePage() {
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isFetching = useSelector(state => state.articlePage.isFetching);
     const [hasErrors, setHasErrors] = useState({});
-    const isFetching = useSelector(state => state.articles.articleFetching);
 
     const getInitialValues = () => ({
         title: "",
@@ -26,16 +23,15 @@ function NewArticlePage() {
     const initialValues = useMemo(() => getInitialValues(), []);
     const [defaultValues, setDefaultValues] = useState(initialValues);
 
-  useEffect(
-() => () => {
-        setDefaultValues(initialValues);
-    },
-[initialValues]
-  );
+    useEffect(
+        () => () => {
+            setDefaultValues(initialValues);
+        },
+        [initialValues]
+    );
 
-    const onSubmit = (newArticleContent) => {
-
-            dispatch(createAnArticle(newArticleContent))
+    const onSubmit = newArticleContent => {
+        dispatch(createAnArticle(newArticleContent))
             .then((res) => {
                 const articleDetails = res.article;
                 const serverErrors = res.errors;
@@ -73,20 +69,23 @@ function NewArticlePage() {
             })
     };
 
-  if(isFetching) {return <Spinner />}
+    if(isFetching) {
+        return <Spinner />
+    }
 
-  return (
-      <ProtectedRoute>
-          <ArticleEditor
-              title="Create new article"
-              onFormSubmit={onSubmit}
-              defaultValues={defaultValues}
-              hasErrors={ hasErrors }
-          />
-      </ProtectedRoute>
-  );
+    return (
+        <ProtectedRoute>
+            <ArticleEditor
+                title="Create new article"
+                onFormSubmit={onSubmit}
+                defaultValues={defaultValues}
+                hasErrors={ hasErrors }
+            />
+        </ProtectedRoute>
+    );
 }
 
 export default connect(
     null,
-    {articles: reducer})(NewArticlePage)
+    {articles: reducer}
+)(NewArticlePage)
