@@ -1,7 +1,5 @@
 import {API} from "../../../api.config";
-import actionCreators from "../../../store/action-creators";
-
-const {fetchingAuthentication, updateUser} = actionCreators.authentication;
+import {fetchingAuthentication, updateUser} from "../../../store/actions";
 
 export const signIn = (email, password) => dispatch => {
     dispatch(fetchingAuthentication(true));
@@ -19,7 +17,7 @@ export const signIn = (email, password) => dispatch => {
         }),
     })
         .then(response => response.json())
-        .then((res) => {
+        .then(res => {
             const userDetails = res.user;
             const serverErrors = res.errors;
 

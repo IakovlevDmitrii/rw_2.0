@@ -1,7 +1,5 @@
 import {API} from "../../../api.config";
-import actionCreators from "../../../store/action-creators";
-
-const {fetchingAuthentication, updateUser} = actionCreators.authentication;
+import {fetchingAuthentication, updateUser} from "../../../store/actions";
 
 export const signUp = (username, email, password) => dispatch => {
     dispatch(fetchingAuthentication(true));
