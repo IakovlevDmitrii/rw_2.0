@@ -7,7 +7,7 @@ import NewArticlePage from "../pages/new-article-page";
 import EditArticlePage from "../pages/edit-article-page";
 import SignInPage from "../pages/sign-in-page";
 import SignUpPage from "../pages/sign-up-page";
-import EditProfilePage from "../pages/edit-profile";
+import EditProfilePage from "../pages/edit-profile-page";
 import "../../styles/styles.module.scss";
 
 function App() {

@@ -1,21 +1,20 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import actionCreators from "../../../store/action-creators";
+import {useDispatch, useSelector} from "react-redux";
+import {useForm} from "react-hook-form";
+import {useNavigate} from "react-router-dom";
 import Spinner from "../../spinner";
 import FormField from "../../form-field";
+import {editProfile} from "./actions";
 import formsConfig from "../../../utils/formsConfig";
 import rules from "../../../utils/rules";
 import styles from "./EditProfilePage.module.scss";
 
 function EditProfilePage() {
-    const { editProfile } = actionCreators.authentication;
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const isFetching = useSelector(state => state.authentication.isFetching);
     const currentUser = useSelector(state => state.authentication.currentUser);
-    const { email, username } = currentUser;
+    const {email, username} = currentUser;
 
     const {
         register,
@@ -24,7 +23,7 @@ function EditProfilePage() {
         setError,
     } = useForm();
 
-    const onSubmit = (data) => {
+    const onSubmit = data => {
         const detailsToChange = {};
 
         // Если в data есть заполненные поля сохраним их в detailsToChange
@@ -36,13 +35,13 @@ function EditProfilePage() {
 
         dispatch(editProfile(detailsToChange))
             .then((res) => {
-                const { isUserUpdated, serverErrors } = res;
+                const {isUserUpdated, serverErrors} = res;
 
-                if (isUserUpdated) {
+                if(isUserUpdated) {
                     navigate('/articles')
                 }
 
-                if (serverErrors) {
+                if(serverErrors) {
                     setError("email", {
                         type: "manual",
                         message: `Email or password ${serverErrors["email or password"]}`,
@@ -75,13 +74,13 @@ function EditProfilePage() {
     };
 
     const formFields = formsConfig.editProfile.map((fieldDetails) => {
-        const { name } = fieldDetails;
+        const {name} = fieldDetails;
         const addedFieldDetails = fieldDetails;
 
-        if (name === "username") {
+        if(name === "username") {
             addedFieldDetails.placeholder = username;
         }
-        if (name === "email") {
+        if(name === "email") {
             addedFieldDetails.placeholder = email;
         }
 
@@ -96,7 +95,7 @@ function EditProfilePage() {
         );
     });
 
-    if (isFetching) {
+    if(isFetching) {
         return <Spinner />;
     }
 
