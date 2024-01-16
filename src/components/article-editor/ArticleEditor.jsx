@@ -2,7 +2,6 @@ import React from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-
 import styles from "./ArticleEditor.module.scss";
 
 function ArticleEditor({ title, onFormSubmit, defaultValues, hasErrors }) {
