@@ -1,4 +1,4 @@
-import BASE_URL from "./services/utils/base-url";
+import BASE_URL from "./utils/base-url";
 
 export const API = {
 
