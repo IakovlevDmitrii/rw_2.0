@@ -1,8 +1,8 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, Navigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import actionCreators from "../../../store/action-creators";
+import {useDispatch, useSelector} from "react-redux";
+import {Link, Navigate} from "react-router-dom";
+import {useForm} from "react-hook-form";
+import {signIn} from "./actions";
 import Spinner from "../../spinner";
 import FormField from "../../form-field";
 import formsConfig from "../../../utils/formsConfig";
@@ -10,7 +10,6 @@ import rules from "../../../utils/rules";
 import styles from "./SignInPage.module.scss";
 
 function SignInPage() {
-    const { logIn } = actionCreators.authentication;
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.authentication.isFetching);
     const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
@@ -18,15 +17,15 @@ function SignInPage() {
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: {errors},
         setError,
     } = useForm({});
 
-    const onSubmit = ({ email, password }) => {
-        dispatch(logIn(email, password))
+    const onSubmit = ({email, password}) => {
+        dispatch(signIn(email, password))
             .then((serverErrors) => {
 
-                if (serverErrors) {
+                if(serverErrors) {
                     setError("email", {
                         type: "manual",
                         message: `Email or password ${serverErrors["email or password"]}`,
@@ -61,7 +60,7 @@ function SignInPage() {
         />
     ));
 
-    if (isFetching) {
+    if(isFetching) {
         return <Spinner />;
     }
 
