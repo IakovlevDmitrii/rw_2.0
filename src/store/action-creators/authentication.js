@@ -3,7 +3,6 @@ import actionsTypes from "../actions-types";
 
 const {
     FETCHING_AUTHENTICATION,
-    // LOG_OUT,
     UPDATE_USER,
 } = actionsTypes.authentication;
 
@@ -13,12 +12,6 @@ const fetchingAuthentication = status => dispatch => {
         type: FETCHING_AUTHENTICATION,
     });
 };
-
-// const logOut = () => dispatch => {
-//     dispatch({
-//         type: LOG_OUT,
-//     });
-// };
 
 const editProfile = detailsToChange => (dispatch, getState) => {
     const token = getState().authentication.currentUser.token;
