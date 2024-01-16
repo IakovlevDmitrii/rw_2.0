@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import actionCreators from "../../../store/action-creators";
+import {signUp} from "./actions";
 import Spinner from "../../spinner";
 import FormField from "../../form-field";
 import formsConfig from "../../../utils/formsConfig";
@@ -10,7 +10,6 @@ import rules from "../../../utils/rules";
 import styles from "./SignUpPage.module.scss";
 
 function SignUpPage() {
-    const { signUp } = actionCreators.authentication;
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const isFetching = useSelector(state => state.authentication.isFetching);
