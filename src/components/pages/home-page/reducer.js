@@ -3,8 +3,8 @@ import {
     RECEIVE_ARTICLES,
     CHANGE_PAGE_NUMBER,
 } from "./actions";
-import { RECEIVE_FAVORITE_CHANGE } from "../../article/actions";
-import { CREATE_AN_ARTICLE } from "../article-page/actions";
+import {RECEIVE_FAVORITE_CHANGE} from "../../article/actions";
+import {CREATE_AN_ARTICLE} from "../new-article-page/actions";
 
 const initialState = {
     isFetching: false,

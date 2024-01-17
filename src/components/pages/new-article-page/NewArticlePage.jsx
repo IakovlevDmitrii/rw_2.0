@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, {useState, useEffect, useMemo} from "react";
+import {connect, useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
 import ProtectedRoute from "../../protectedRoute";
 import ArticleEditor from "../../article-editor";
 import Spinner from "../../spinner";
-import { createAnArticle } from "../article-page/actions";
-import { reducer } from "../home-page/reducer";
+import {createAnArticle} from "./actions";
+import {reducer} from "../home-page/reducer";
 
 function NewArticlePage() {
     const dispatch = useDispatch();
@@ -17,7 +17,7 @@ function NewArticlePage() {
         title: "",
         description: "",
         body: "",
-        tagList: [{ value: "" }],
+        tagList: [{value: ""}],
     });
 
     const initialValues = useMemo(() => getInitialValues(), []);
@@ -32,31 +32,31 @@ function NewArticlePage() {
 
     const onSubmit = newArticleContent => {
         dispatch(createAnArticle(newArticleContent))
-            .then((res) => {
+            .then(res => {
                 const articleDetails = res.article;
                 const serverErrors = res.errors;
 
-                if (articleDetails) {
+                if(articleDetails) {
                     navigate(`/articles/${articleDetails.slug}`)
                 }
 
-                if (serverErrors) {
+                if(serverErrors) {
                     let newDefaultValues = {};
 
                     // tagList в newArticleData это массив строк вида ['a', 'b']
                     // а в defaultValues надо сохранить tagList в виде [ {value: 'a'}, {value: 'b'} ]
                     if (newArticleContent.tagList) {
-                        const { tagList, ...rest } = newArticleContent;
-                        newDefaultValues = { ...rest };
+                        const {tagList, ...rest} = newArticleContent;
+                        newDefaultValues = {...rest};
 
                         newDefaultValues.tagList = [];
                         tagList.forEach((tag) => {
-                            newDefaultValues.tagList.push({ value: tag });
+                            newDefaultValues.tagList.push({value: tag});
                         });
                     } else {
                         newDefaultValues = {
                             ...newArticleContent,
-                            tagList: [{ value: "" }],
+                            tagList: [{value: ""}],
                         };
                     }
 
@@ -79,7 +79,7 @@ function NewArticlePage() {
                 title="Create new article"
                 onFormSubmit={onSubmit}
                 defaultValues={defaultValues}
-                hasErrors={ hasErrors }
+                hasErrors={hasErrors}
             />
         </ProtectedRoute>
     );

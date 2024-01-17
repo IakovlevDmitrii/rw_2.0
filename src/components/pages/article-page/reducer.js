@@ -1,17 +1,13 @@
-import {
-    ARTICLE_FETCHING,
-    RECEIVE_ARTICLE,
-    ARTICLE_CREATION_FETCHING,
-} from "./actions";
-import { RECEIVE_FAVORITE_CHANGE } from "../../article/actions";
-
+import {ARTICLE_FETCHING, RECEIVE_ARTICLE} from "./actions";
+import {RECEIVE_FAVORITE_CHANGE} from "../../article/actions";
+import {ARTICLE_CREATION_FETCHING} from "../new-article-page/actions";
 const initialState = {
     article: {},
     isFetching: true,
 };
 
 export const reducer = (state = initialState, action) => {
-    const { payload, type  } = action;
+    const {payload, type } = action;
 
     switch (type) {
         case ARTICLE_FETCHING:
@@ -38,13 +34,6 @@ export const reducer = (state = initialState, action) => {
                 isFetching: payload.status,
             };
 
-/*
-        case REQUEST_TO_REMOVE_ARTICLE:
-            return {
-                ...state,
-                articleFetching: payload.status,
-            }
-*/
         default:
             return state;
     }

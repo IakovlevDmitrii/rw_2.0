@@ -1,8 +1,8 @@
-import { createStore, applyMiddleware, compose } from "redux";
+import {createStore, applyMiddleware, compose} from "redux";
 import thunkMiddleware from "redux-thunk";
 
 import reducer from "./reducers";
-import { loadFromLocalStorage, saveToLocalStorage } from "../utils";
+import {loadFromLocalStorage, saveToLocalStorage} from "../utils";
 import {createLogger} from "redux-logger";
 
 const composeEnhancers =
@@ -16,7 +16,6 @@ const store = createStore(
   reducer,
   loadFromLocalStorage(),
   composeEnhancers(applyMiddleware(thunkMiddleware, loggerMiddleware)),
-
 );
 
 store.subscribe(() => saveToLocalStorage(store.getState()));
