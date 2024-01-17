@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import Article from "../../article";
 import Spinner from "../../spinner";
 import Pagination from "../../pagination";
-import { reducer } from "./reducer";
-import { requestArticles, changePageNumber } from "./actions";
+import {requestArticles, changePageNumber} from "./actions";
 import styles from "./HomePage.module.scss";
 
 function HomePage() {
@@ -24,7 +23,7 @@ function HomePage() {
         <Article key={article.slug} content={article} fullSize={false} />
     ));
 
-    if (isFetching) {
+    if(isFetching) {
         return <Spinner />;
     }
 
@@ -43,6 +42,4 @@ function HomePage() {
     );
 }
 
-export default connect(
-    null,
-    {homePage: reducer})(HomePage)
+export default HomePage;

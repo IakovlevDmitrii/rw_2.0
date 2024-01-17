@@ -7,7 +7,7 @@ import {RECEIVE_FAVORITE_CHANGE} from "../../article/actions";
 import {CREATE_AN_ARTICLE} from "../new-article-page/actions";
 
 const initialState = {
-    isFetching: false,
+    isFetching: true,
     currentPage: 1,
     articlesCount: 0,
     articlesList: [],
@@ -37,7 +37,7 @@ export const reducer = (state = initialState, action) => {
             };
 
         case RECEIVE_FAVORITE_CHANGE:
-            let articlesList = [...state.articlesList]
+            let articlesList = [...state.articlesList];
             let article = articlesList.find(article => article.slug === payload.article.slug)
             Object.assign(article, payload.article)
 
