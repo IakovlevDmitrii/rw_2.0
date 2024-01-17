@@ -18,13 +18,13 @@ export const signUp = (username, email, password) => dispatch => {
         }),
     })
         .then(response => response.json())
-        .then((res) => {
+        .then(res => {
             if(res.user) {
                 dispatch(updateUser(res.user));
             }
             return res;
         })
-        .catch((err) => {
+        .catch(err => {
             throw new Error(err.message);
         })
         .finally(() => {
