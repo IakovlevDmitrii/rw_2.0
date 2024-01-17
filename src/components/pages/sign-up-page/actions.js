@@ -27,7 +27,7 @@ export const signUp = (username, email, password) => dispatch => {
         .catch(err => {
             throw new Error(err.message);
         })
-        .finally(() => {
-            dispatch(fetchingAuthentication(false));
-        });
+        .finally(
+            dispatch(fetchingAuthentication(false))
+        );
 };

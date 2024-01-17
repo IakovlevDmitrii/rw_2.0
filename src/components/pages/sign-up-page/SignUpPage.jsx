@@ -1,7 +1,7 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import {useDispatch, useSelector} from "react-redux";
+import {Link, useNavigate} from "react-router-dom";
+import {useForm} from "react-hook-form";
 import {signUp} from "./actions";
 import Spinner from "../../spinner";
 import FormField from "../../form-field";
@@ -17,23 +17,23 @@ function SignUpPage() {
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: {errors},
         setError,
         watch,
     } = useForm({});
 
-    const onSubmit = ({ username, email, password }) => {
+    const onSubmit = ({username, email, password}) => {
         dispatch(signUp(username, email, password))
-            .then((res) => {
-                const { user, errors } = res;
+            .then(res => {
+                const {user, errors} = res;
 
-                if (user) {
+                if(user) {
                     navigate('/articles')
                 }
 
-                if (errors) {
-                    for (const error in errors) {
-                        if (Object.prototype.hasOwnProperty.call(errors, error)) {
+                if(errors) {
+                    for(const error in errors) {
+                        if(Object.prototype.hasOwnProperty.call(errors, error)) {
                             setError(error, {
                                 type: "manual",
                                 message: `${error} ${errors[error]}`,
@@ -70,11 +70,11 @@ function SignUpPage() {
         },
     };
 
-    const formFields = formsConfig.singUp.map((fieldDetails) => {
-        const { name } = fieldDetails;
+    const formFields = formsConfig.singUp.map(fieldDetails => {
+        const {name} = fieldDetails;
         const addedFieldDetails = fieldDetails;
 
-        if (name === "agreement") {
+        if(name === "agreement") {
             addedFieldDetails.extraClassName = styles.agreement;
             addedFieldDetails.id = "agreement";
             addedFieldDetails.labelBehind = true;
@@ -91,7 +91,7 @@ function SignUpPage() {
         );
     });
 
-    if (isFetching) {
+    if(isFetching) {
         return <Spinner />;
     }
 
