@@ -1,4 +1,4 @@
-import BASE_URL from "./utils/base-url";
+const BASE_URL = 'https://blog.kata.academy/api';
 
 export const API = {
 
@@ -18,5 +18,5 @@ export const API = {
         SIGN_UP: () => `${BASE_URL}/users`,
         LOGIN: () => `${BASE_URL}/users/login`,
         EDIT: () => `${BASE_URL}/user`,
-    }
+    },
 }

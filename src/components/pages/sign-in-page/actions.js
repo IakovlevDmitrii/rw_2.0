@@ -29,10 +29,10 @@ export const signIn = (email, password) => dispatch => {
                 return serverErrors;
             }
         })
-        .catch((err) => {
+        .catch(err => {
             throw new Error(err.message);
         })
-        .finally(() => {
-            dispatch(fetchingAuthentication(false));
-        });
+        .finally(
+            dispatch(fetchingAuthentication(false))
+        );
 };

@@ -3,14 +3,14 @@ export const UPDATE_USER = "UPDATE_USER";
 
 export const fetchingAuthentication = status => dispatch => {
     dispatch({
-        payload: {status},
         type: FETCHING_AUTHENTICATION,
+        payload: {status},
     });
 };
 
 export const updateUser = user => dispatch => {
     dispatch({
-        payload: {user},
         type: UPDATE_USER,
+        payload: {user},
     });
 };
