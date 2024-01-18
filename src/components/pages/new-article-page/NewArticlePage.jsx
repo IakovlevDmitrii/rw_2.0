@@ -64,9 +64,6 @@ function NewArticlePage() {
                     setHasErrors(serverErrors);
                 }
             })
-            .catch((err) => {
-                throw new Error(err.message);
-            })
     };
 
     if(isFetching) {
