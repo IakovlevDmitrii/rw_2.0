@@ -1,6 +1,7 @@
 import {ARTICLE_FETCHING, RECEIVE_ARTICLE} from "./actions";
 import {RECEIVE_FAVORITE_CHANGE} from "../../article/actions";
 import {ARTICLE_CREATION_FETCHING} from "../new-article-page/actions";
+import {REQUEST_TO_REMOVE_ARTICLE} from "../../article/actions";
 
 const initialState = {
     article: {},
@@ -34,6 +35,12 @@ export const reducer = (state = initialState, action) => {
                 ...state,
                 isFetching: payload.status,
             };
+
+        case REQUEST_TO_REMOVE_ARTICLE:
+            return {
+                ...state,
+                isFetching: payload.status,
+            }
 
         default:
             return state;
