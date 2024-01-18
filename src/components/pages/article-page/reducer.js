@@ -1,13 +1,14 @@
 import {ARTICLE_FETCHING, RECEIVE_ARTICLE} from "./actions";
 import {RECEIVE_FAVORITE_CHANGE} from "../../article/actions";
 import {ARTICLE_CREATION_FETCHING} from "../new-article-page/actions";
+
 const initialState = {
     article: {},
-    isFetching: true,
+    isFetching: false,
 };
 
 export const reducer = (state = initialState, action) => {
-    const {payload, type } = action;
+    const {payload, type} = action;
 
     switch (type) {
         case ARTICLE_FETCHING:
