@@ -37,11 +37,8 @@ function Article({content, fullSize}) {
         setIsFavoriteFetching(true);
 
         dispatch(toggleFavorite(slug, favorited))
-            // TODO: promise resolved
-            .then(res => {
-                if(res.isFavoriteChanged) {
-                    setIsFavoriteFetching(false);
-                }
+            .finally(() => {
+                setIsFavoriteFetching(false)
             });
     };
 

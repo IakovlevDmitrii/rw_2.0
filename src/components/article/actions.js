@@ -23,7 +23,7 @@ export const toggleFavorite = (slug, favorited) => (dispatch, getState) => {
                 payload: {article: adeptArticle(result.article)}
             })
 
-            return {isFavoriteChanged: true};
+            return true;
         })
         .catch(e => console.log(`[FAVORITE ARTICLE] error ${e.toLocaleString()}`))
 };

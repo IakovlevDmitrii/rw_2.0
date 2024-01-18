@@ -60,7 +60,7 @@ Implement a blogging platform.
 >> - Prettier
 >> - Husky
 
-### Solution can be seen [here](https://rw-psi.vercel.app/articles)
+### Solution can be seen [here](https://rw-2-0.vercel.app/)
 
 ---
 _Created_:  
