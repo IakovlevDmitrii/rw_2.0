@@ -1,6 +1,6 @@
 import {format} from "date-fns";
 
-export const adeptArticle = (article) => {
+export const adeptArticle = article => {
     const {
         author = {
             image: "",
