@@ -35,9 +35,12 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
         };
 
         dispatch(receiveArticles(articlesData));
+        dispatch(fetchingArticles(false));
     })
-    .catch(e => console.log(`[GET ARTICLES] error ${e.toLocaleString()}`))
-    .finally(dispatch(fetchingArticles(false)));
+    .catch(e => {
+        console.log(`[GET ARTICLES] error ${e.toLocaleString()}`);
+        dispatch(fetchingArticles(false));
+    })
 };
 
 export const receiveArticles = ({articlesCount, articlesList}) => {
