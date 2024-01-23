@@ -24,15 +24,14 @@ export const signIn = (email, password) => dispatch => {
             if(userDetails) {
                 dispatch(updateUser(userDetails));
             }
-
             if(serverErrors) {
                 return serverErrors;
             }
-        })
-        .catch(err => {
-            throw new Error(err.message);
-        })
-        .finally(
+
             dispatch(fetchingAuthentication(false))
-        );
+        })
+        .catch(e => {
+            console.log(`[SIGN IN] error ${e.toLocaleString()}`);
+            dispatch(fetchingAuthentication(false))
+        })
 };
