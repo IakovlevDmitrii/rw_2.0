@@ -5,7 +5,7 @@ import ProtectedRoute from "../../protectedRoute";
 import ArticleEditor from "../../article-editor";
 import Spinner from "../../spinner";
 import {createAnArticle} from "./actions";
-import {reducer} from "../home-page/reducer";
+import {reducer} from "../articles-page/reducer";
 
 function NewArticlePage() {
     const dispatch = useDispatch();
