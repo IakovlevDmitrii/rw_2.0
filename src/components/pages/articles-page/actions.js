@@ -1,5 +1,5 @@
-import { API } from "../../../api.config";
-import { adeptArticles } from "../../../utils/adept-article";
+import {API} from "../../../api.config";
+import {adeptArticles} from "../../../utils/adept-article";
 
 export const CHANGE_PAGE_NUMBER = "CHANGE_PAGE_NUMBER";
 export const FETCHING_ARTICLES = "FETCHING_ARTICLES";
@@ -13,7 +13,7 @@ const fetchingArticles = status => dispatch => {
 };
 
 export const requestArticles = (limit, page) => (dispatch, getState) => {
-    const currentUser = getState().authentication.currentUser;
+    const currentUser = getState().common.currentUser;
     const token = currentUser.token || "";
 
     dispatch(fetchingArticles(true));

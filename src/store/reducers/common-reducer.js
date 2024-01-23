@@ -1,5 +1,6 @@
 import {FETCHING_AUTHENTICATION, UPDATE_USER} from "../actions";
 import {LOG_OUT} from "../../components/header/actions";
+import {FETCHING_ARTICLES} from "../../components/pages/articles-page/actions";
 
 const initialState = {
     currentUser: {},
@@ -8,10 +9,16 @@ const initialState = {
 };
 
 // eslint-disable-next-line default-param-last
-const authentication = (state = initialState, action) => {
-    const {payload, type} = action;
+export const reducer = (state = initialState, action) => {
+    const { payload, type } = action;
 
     switch (type) {
+        case FETCHING_ARTICLES:
+            return {
+                ...state,
+                isFetching: payload.status,
+            };
+
         case FETCHING_AUTHENTICATION:
             return {
                 ...state,
@@ -19,7 +26,11 @@ const authentication = (state = initialState, action) => {
             };
 
         case LOG_OUT:
-            return initialState;
+            return {
+                currentUser: {},
+                isFetching: state.isFetching,
+                isLoggedIn: false,
+            }
 
         case UPDATE_USER:
             return {
@@ -32,5 +43,3 @@ const authentication = (state = initialState, action) => {
             return state;
     }
 };
-
-export default authentication;

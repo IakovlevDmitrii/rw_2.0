@@ -8,8 +8,8 @@ import styles from "./Header.module.scss";
 
 function Header() {
     const dispatch = useDispatch();
-    const currentUser = useSelector(state => state.authentication.currentUser);
-    const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
+    const currentUser = useSelector(state => state.common.currentUser);
+    const isLoggedIn = useSelector(state => state.common.isLoggedIn);
 
     const buttonsForDisplay = isLoggedIn ? (
         <>

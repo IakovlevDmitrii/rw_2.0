@@ -27,8 +27,8 @@ function Article({content, fullSize}) {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
-    const currentUser = useSelector(state => state.authentication.currentUser?.username);
+    const isLoggedIn = useSelector(state => state.common.isLoggedIn);
+    const currentUser = useSelector(state => state.common.currentUser?.username);
     const isMyArticle = author.username === currentUser;
     const [isFavoriteFetching, setIsFavoriteFetching] = useState( false);
     const [isFetching, setIsFetching] = useState(false);

@@ -6,7 +6,7 @@ export const RECEIVE_FAVORITE_CHANGE = "RECEIVE_FAVORITE_CHANGE";
 export const REQUEST_TO_REMOVE_ARTICLE = "REQUEST_TO_REMOVE_ARTICLE";
 
 export const toggleFavorite = (slug, favorited) => (dispatch, getState) => {
-    const currentUser = getState().authentication.currentUser;
+    const currentUser = getState().common.currentUser;
     const token = currentUser.token || "";
 
     return fetch(API.ARTICLE.FAVORITE(slug), {
@@ -29,7 +29,7 @@ export const toggleFavorite = (slug, favorited) => (dispatch, getState) => {
 };
 
 export const deleteArticle = slug => (dispatch, getState) => {
-    const currentUser = getState().authentication.currentUser;
+    const currentUser = getState().common.currentUser;
     const token = currentUser.token || "";
 
     dispatch({
