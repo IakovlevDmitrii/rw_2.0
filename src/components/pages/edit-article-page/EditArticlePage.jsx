@@ -4,7 +4,6 @@ import {useNavigate} from "react-router-dom";
 import {useParams} from "react-router-dom";
 import Spinner from "../../spinner";
 import ArticleEditor from "../../article-editor";
-import ProtectedRoute from "../../protectedRoute";
 import {updateArticle} from "./actions";
 import {ARTICLE_FETCHING} from "../article-page/actions";
 
@@ -81,14 +80,12 @@ function EditArticlePage() {
     }
 
     return (
-        <ProtectedRoute>
-            <ArticleEditor
-                title="Edit article"
-                onFormSubmit={onSubmit}
-                defaultValues={newArticleContent || contentToChange}
-                hasErrors={hasErrors}
-            />
-        </ProtectedRoute>
+        <ArticleEditor
+            title="Edit article"
+            onFormSubmit={onSubmit}
+            defaultValues={newArticleContent || contentToChange}
+            hasErrors={hasErrors}
+        />
     );
 }
 
