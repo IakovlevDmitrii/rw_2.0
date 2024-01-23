@@ -1,20 +1,20 @@
 import {
+    CHANGE_PAGE_NUMBER,
     FETCHING_ARTICLES,
     RECEIVE_ARTICLES,
-    CHANGE_PAGE_NUMBER,
 } from "./actions";
-import {RECEIVE_FAVORITE_CHANGE} from "../../article/actions";
-import {CREATE_AN_ARTICLE} from "../new-article-page/actions";
+import { RECEIVE_FAVORITE_CHANGE } from "../../article/actions";
+import { CREATE_AN_ARTICLE } from "../new-article-page/actions";
 
 const initialState = {
-    isFetching: false,
-    currentPage: 1,
     articlesCount: 0,
-    articlesList: [],
+    currentPage: 1,
+    isFetching: false,
+    list: [],
 };
 
-export const reducer = (state = initialState, action) => {
-    const {payload, type} = action;
+export const reducer = (state = initialState, action)=> {
+    const { payload, type } = action;
 
     switch (type){
         case FETCHING_ARTICLES:
@@ -27,7 +27,7 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 articlesCount: payload.articlesCount,
-                articlesList: payload.articlesList,
+                list: payload.list,
             };
 
         case CHANGE_PAGE_NUMBER:
@@ -37,19 +37,19 @@ export const reducer = (state = initialState, action) => {
             };
 
         case RECEIVE_FAVORITE_CHANGE:
-            let articlesList = [...state.articlesList];
-            let article = articlesList.find(article => article.slug === payload.article.slug)
+            let list = [...state.list];
+            let article = list.find(item => item.slug === payload.article.slug)
             Object.assign(article, payload.article)
 
             return {
                 ...state,
-                articlesList,
+                list,
             };
 
         case CREATE_AN_ARTICLE:
             return {
                 ...state,
-                articlesList: payload.articlesList,
+                list: payload.list,
             };
 
         default:

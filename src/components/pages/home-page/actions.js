@@ -1,14 +1,14 @@
-import {API} from "../../../api.config";
-import {adeptArticles} from "../../../utils/adept-article";
+import { API } from "../../../api.config";
+import { adeptArticles } from "../../../utils/adept-article";
 
+export const CHANGE_PAGE_NUMBER = "CHANGE_PAGE_NUMBER";
 export const FETCHING_ARTICLES = "FETCHING_ARTICLES";
 export const RECEIVE_ARTICLES = "RECEIVE_ARTICLES";
-export const CHANGE_PAGE_NUMBER = "CHANGE_PAGE_NUMBER";
 
 const fetchingArticles = status => dispatch => {
     dispatch({
         type: FETCHING_ARTICLES,
-        payload: {status},
+        payload: { status },
     });
 };
 
@@ -27,11 +27,11 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
     })
         .then(response => response.json())
         .then(result => {
-            const {articlesCount, articles} = result;
+            const { articlesCount, articles } = result;
 
             const articlesData = {
                 articlesCount,
-                articlesList: adeptArticles(articles),
+                list: adeptArticles(articles),
             };
 
             dispatch(receiveArticles(articlesData));
@@ -43,16 +43,16 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
         })
 };
 
-export const receiveArticles = ({articlesCount, articlesList}) => {
+export const receiveArticles = ({ articlesCount, list }) => {
     return {
         type: RECEIVE_ARTICLES,
-        payload: {articlesCount, articlesList},
+        payload: { articlesCount, list },
     };
 };
 
 export const changePageNumber = pageNumber => dispatch => {
     dispatch({
         type: CHANGE_PAGE_NUMBER,
-        payload: {pageNumber},
+        payload: { pageNumber },
     });
 };

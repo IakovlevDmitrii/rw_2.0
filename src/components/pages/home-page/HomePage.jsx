@@ -1,31 +1,21 @@
-import React, {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Article from "../../article";
 import Spinner from "../../spinner";
 import Pagination from "../../pagination";
-import {requestArticles, changePageNumber, RECEIVE_ARTICLES} from "./actions";
+import { requestArticles, changePageNumber } from "./actions";
 import styles from "./HomePage.module.scss";
 
 function HomePage() {
     const dispatch = useDispatch();
-    const articlesList = useSelector(state => state.homePage.articlesList) || [];
-    const articlesCount = useSelector(state => state.homePage.articlesCount) || 0;
-    const isFetching = useSelector(state => state.homePage.isFetching);
-    const currentPage = useSelector(state => state.homePage.currentPage);
-    const isEmptyListOfArticle = Object.keys(articlesList).length === 0;
+    const articlesList = useSelector(state => state.articles.list) || [];
+    const articlesCount = useSelector(state => state.articles.articlesCount) || 0;
+    const isFetching = useSelector(state => state.articles.isFetching);
+    const currentPage = useSelector(state => state.articles.currentPage);
 
     useEffect(
        () => {
            dispatch(requestArticles(5, currentPage));
-
-           return () => {
-               dispatch({
-                   type: RECEIVE_ARTICLES,
-                   payload: {
-                       articlesCount: 1,
-                       articlesList: [],                   },
-               })
-           };
        }, [currentPage]
     )
 
@@ -33,7 +23,7 @@ function HomePage() {
         <Article key={article.slug} content={article} fullSize={false} />
     ));
 
-    if(isFetching || isEmptyListOfArticle) {
+    if(isFetching) {
         return <Spinner />;
     }
 
