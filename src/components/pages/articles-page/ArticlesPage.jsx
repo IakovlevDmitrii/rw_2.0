@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import Article from "../../article";
 import Spinner from "../../spinner";
 import Pagination from "../../pagination";
-import { requestArticles, changePageNumber } from "./actions";
-import styles from "./HomePage.module.scss";
+import {requestArticles, changePageNumber} from "./actions";
+import styles from "./ArticlesPage.module.scss";
 
-function HomePage() {
+function ArticlesPage() {
     const dispatch = useDispatch();
     const articlesList = useSelector(state => state.articles.list) || [];
     const articlesCount = useSelector(state => state.articles.articlesCount) || 0;
-    const isFetching = useSelector(state => state.articles.isFetching);
+    const isFetching = useSelector(state => state.common.isFetching);
     const currentPage = useSelector(state => state.articles.currentPage);
 
     useEffect(
@@ -42,4 +42,4 @@ function HomePage() {
     );
 }
 
-export default HomePage;
+export default ArticlesPage;
