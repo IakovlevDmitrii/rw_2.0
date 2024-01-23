@@ -6,19 +6,18 @@ export const ARTICLE_CREATION_FETCHING = "ARTICLE_CREATION_FETCHING";
 export const CREATE_AN_ARTICLE = "CREATE_AN_ARTICLE";
 
 export const createAnArticle = content => (dispatch, getState) => {
+    dispatch({
+        type: ARTICLE_CREATION_FETCHING,
+        payload: {status: true},
+    });
+
     const currentUser = getState().authentication.currentUser;
     const articlesList = getState().homePage.articlesList;
-
     const token = currentUser.token || "";
     const data = {
         article: {...content},
     };
     const body = JSON.stringify(data);
-
-    dispatch({
-        type: ARTICLE_CREATION_FETCHING,
-        payload: {status: true},
-    });
 
     return fetch(API.ARTICLE.CREATE(), {
         method: 'POST',
@@ -42,15 +41,20 @@ export const createAnArticle = content => (dispatch, getState) => {
                 });
 
                 dispatch(receiveArticle(articleDetails));
+
+                dispatch({
+                    type: ARTICLE_CREATION_FETCHING,
+                    payload: {status: false},
+                })
             }
 
             return result
         })
-        .catch(e => console.log(`[CREAT ARTICLE] error ${e.toLocaleString()}`))
-        .finally(
+        .catch(e => {
+            console.log(`[CREAT ARTICLE] error ${e.toLocaleString()}`);
             dispatch({
                 type: ARTICLE_CREATION_FETCHING,
                 payload: {status: false},
             })
-        )
+        })
 };

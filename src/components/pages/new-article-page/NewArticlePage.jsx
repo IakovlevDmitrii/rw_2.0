@@ -26,6 +26,7 @@ function NewArticlePage() {
     useEffect(
         () => () => {
             setDefaultValues(initialValues);
+            setHasErrors({});
         },
         [initialValues]
     );
