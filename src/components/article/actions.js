@@ -48,15 +48,20 @@ export const deleteArticle = slug => (dispatch, getState) => {
             dispatch({
                 type: RECEIVE_ARTICLE,
                 payload: {article: {}},
-            })
+            });
 
-            return true;
-        })
-        .catch(e => console.log(`[DELETE ARTICLE] error ${e.toLocaleString()}`))
-        .finally(() => {
             dispatch({
                 type: REQUEST_TO_REMOVE_ARTICLE,
                 payload: {status: false},
-            })
-        });
+            });
+
+            return true;
+        })
+        .catch(e => {
+            console.log(`[DELETE ARTICLE] error ${e.toLocaleString()}`);
+            dispatch({
+                type: REQUEST_TO_REMOVE_ARTICLE,
+                payload: {status: false},
+            });
+        })
 };

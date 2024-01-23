@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import PropTypes from "prop-types";
@@ -33,11 +33,16 @@ function Article({content, fullSize}) {
     const [isFavoriteFetching, setIsFavoriteFetching] = useState( false);
     const [isFetching, setIsFetching] = useState(false);
 
+    useEffect(() => () => {
+        setIsFavoriteFetching(false);
+        setIsFetching(false);
+    });
+
     const onFavoriteArticle = () => {
         setIsFavoriteFetching(true);
 
         dispatch(toggleFavorite(slug, favorited))
-            .finally(() => {
+            .then(() => {
                 setIsFavoriteFetching(false)
             });
     };
@@ -47,11 +52,9 @@ function Article({content, fullSize}) {
 
         dispatch(deleteArticle(slug))
             .then(() => {
+                setIsFetching(false);
                 navigate('/articles')
             })
-            .finally(() => {
-                setIsFetching(false);
-            });
     };
 
     const header = (
