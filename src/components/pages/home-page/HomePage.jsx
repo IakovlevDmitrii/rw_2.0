@@ -8,10 +8,11 @@ import styles from "./HomePage.module.scss";
 
 function HomePage() {
     const dispatch = useDispatch();
-    const articlesList = useSelector(state => state.homePage?.articlesList) || [];
-    const articlesCount = useSelector(state => state.homePage?.articlesCount) || 0;
+    const articlesList = useSelector(state => state.homePage.articlesList) || [];
+    const articlesCount = useSelector(state => state.homePage.articlesCount) || 0;
     const isFetching = useSelector(state => state.homePage.isFetching);
     const currentPage = useSelector(state => state.homePage.currentPage);
+    const isEmptyListOfArticle = Object.keys(articlesList).length === 0;
 
     useEffect(
        () => {
@@ -23,7 +24,7 @@ function HomePage() {
         <Article key={article.slug} content={article} fullSize={false} />
     ));
 
-    if(isFetching) {
+    if(isFetching || isEmptyListOfArticle) {
         return <Spinner />;
     }
 

@@ -7,7 +7,7 @@ import {RECEIVE_FAVORITE_CHANGE} from "../../article/actions";
 import {CREATE_AN_ARTICLE} from "../new-article-page/actions";
 
 const initialState = {
-    isFetching: true,
+    isFetching: false,
     currentPage: 1,
     articlesCount: 0,
     articlesList: [],
