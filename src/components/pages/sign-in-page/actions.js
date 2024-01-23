@@ -23,12 +23,12 @@ export const signIn = (email, password) => dispatch => {
 
             if(userDetails) {
                 dispatch(updateUser(userDetails));
+                dispatch(fetchingAuthentication(false))
             }
             if(serverErrors) {
+                dispatch(fetchingAuthentication(false))
                 return serverErrors;
             }
-
-            dispatch(fetchingAuthentication(false))
         })
         .catch(e => {
             console.log(`[SIGN IN] error ${e.toLocaleString()}`);

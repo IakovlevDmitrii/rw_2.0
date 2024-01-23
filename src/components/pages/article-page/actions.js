@@ -5,17 +5,13 @@ export const ARTICLE_FETCHING = "ARTICLE_FETCHING";
 export const RECEIVE_ARTICLE = "RECEIVE_ARTICLE";
 
 export const getArticle = slug => (dispatch, getState) => {
-    const currentArticle = getState().articlePage.article;
+    const articlesList = getState().homePage.articlesList;
+    const article = articlesList.find(item => item.slug === slug);
 
-    if(slug !== currentArticle.slug) {
-        const articlesList = getState().homePage.articlesList;
-        const article = articlesList.find(item => item.slug === slug);
-
-        if(article) {
-            dispatch(receiveArticle(article));
-        } else {
-            dispatch(requestArticle(slug));
-        }
+    if(article) {
+        dispatch(receiveArticle(article));
+    } else {
+        dispatch(requestArticle(slug));
     }
 
     dispatch({

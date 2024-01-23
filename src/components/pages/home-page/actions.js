@@ -25,22 +25,22 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
             Authorization: `Token ${token}`,
         },
     })
-    .then(response => response.json())
-    .then(result => {
-        const {articlesCount, articles} = result;
+        .then(response => response.json())
+        .then(result => {
+            const {articlesCount, articles} = result;
 
-        const articlesData = {
-            articlesCount,
-            articlesList: adeptArticles(articles),
-        };
+            const articlesData = {
+                articlesCount,
+                articlesList: adeptArticles(articles),
+            };
 
-        dispatch(receiveArticles(articlesData));
-        dispatch(fetchingArticles(false));
-    })
-    .catch(e => {
-        console.log(`[GET ARTICLES] error ${e.toLocaleString()}`);
-        dispatch(fetchingArticles(false));
-    })
+            dispatch(receiveArticles(articlesData));
+            dispatch(fetchingArticles(false));
+        })
+        .catch(e => {
+            console.log(`[GET ARTICLES] error ${e.toLocaleString()}`);
+            dispatch(fetchingArticles(false));
+        })
 };
 
 export const receiveArticles = ({articlesCount, articlesList}) => {

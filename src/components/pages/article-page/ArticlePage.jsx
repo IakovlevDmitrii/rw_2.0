@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import Article from "../../article";
 import Spinner from "../../spinner";
-import {getArticle} from "./actions";
+import {getArticle, RECEIVE_ARTICLE} from "./actions";
 import styles from "./ArticlePage.module.scss";
 
 function ArticlePage() {
@@ -15,6 +15,13 @@ function ArticlePage() {
     useEffect(
         ()=> {
             dispatch(getArticle(slug));
+
+            return () => {
+                dispatch({
+                    type: RECEIVE_ARTICLE,
+                    payload: {article: {}},
+                })
+            };
         },[slug]
     )
 

@@ -5,7 +5,7 @@ import {REQUEST_TO_REMOVE_ARTICLE} from "../../article/actions";
 
 const initialState = {
     article: {},
-    isFetching: true,
+    isFetching: false,
 };
 
 export const reducer = (state = initialState, action) => {

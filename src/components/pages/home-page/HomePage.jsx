@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import Article from "../../article";
 import Spinner from "../../spinner";
 import Pagination from "../../pagination";
-import {requestArticles, changePageNumber} from "./actions";
+import {requestArticles, changePageNumber, RECEIVE_ARTICLES} from "./actions";
 import styles from "./HomePage.module.scss";
 
 function HomePage() {
@@ -16,7 +16,16 @@ function HomePage() {
 
     useEffect(
        () => {
-           dispatch(requestArticles(5, currentPage))
+           dispatch(requestArticles(5, currentPage));
+
+           return () => {
+               dispatch({
+                   type: RECEIVE_ARTICLES,
+                   payload: {
+                       articlesCount: 1,
+                       articlesList: [],                   },
+               })
+           };
        }, [currentPage]
     )
 

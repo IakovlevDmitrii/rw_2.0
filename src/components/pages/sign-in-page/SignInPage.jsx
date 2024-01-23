@@ -23,8 +23,7 @@ function SignInPage() {
 
     const onSubmit = ({email, password}) => {
         dispatch(signIn(email, password))
-            .then((serverErrors) => {
-
+            .then(serverErrors => {
                 if(serverErrors) {
                     setError("email", {
                         type: "manual",
@@ -35,7 +34,6 @@ function SignInPage() {
                         message: `Email or password ${serverErrors["email or password"]}`,
                     });
                 }
-
             })
     };
 
