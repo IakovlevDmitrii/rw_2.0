@@ -12,7 +12,7 @@ import styles from "./SignUpPage.module.scss";
 function SignUpPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const isFetching = useSelector(state => state.authentication.isFetching);
+    const isFetching = useSelector(state => state.common.isFetching);
 
     const {
         register,

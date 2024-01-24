@@ -41,8 +41,8 @@ export const reducer = (state = initialState, action) => {
 
         case UPDATE_USER:
             return {
-                ...state,
                 currentUser: payload.user,
+                isFetching: false,
                 isLoggedIn: true,
             };
 

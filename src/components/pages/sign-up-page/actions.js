@@ -22,12 +22,11 @@ export const signUp = (username, email, password) => dispatch => {
             if(res.user) {
                 dispatch(updateUser(res.user));
             }
+            dispatch(fetchingAuthentication(false));
+
             return res;
         })
-        .catch(err => {
-            throw new Error(err.message);
+        .catch(e => {
+            console.log(`[SIGN UP] error ${e.toLocaleString()}`);
         })
-        .finally(
-            dispatch(fetchingAuthentication(false))
-        );
 };
