@@ -5,15 +5,15 @@ import {useParams} from "react-router-dom";
 import Spinner from "../../spinner";
 import ArticleEditor from "../../article-editor";
 import {updateArticle} from "./actions";
-import {ARTICLE_FETCHING} from "../article-page/actions";
+import {FETCHING_ARTICLE} from "../article-page/actions";
 
 function EditArticlePage() {
     const {slug} =useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const currentArticle = useSelector(state => state.articlePage.article);
-    const currentUser = useSelector(state => state.authentication.currentUser);
-    const isFetching = useSelector(state => state.articlePage.isFetching);
+    const currentArticle = useSelector(state => state.articles.list.find(item =>item.slug === slug));
+    const currentUser = useSelector(state => state.common.currentUser);
+    const isFetching = useSelector(state => state.common.isFetching);
     const [hasErrors, setHasErrors] = useState({});
     const [newArticleContent, setNewArticleContent] = useState("");
 
@@ -37,15 +37,15 @@ function EditArticlePage() {
         }
 
         dispatch({
-            type: ARTICLE_FETCHING,
+            type: FETCHING_ARTICLE,
             payload: {status: false},
         });
 
         return () => {
             setNewArticleContent("");
             dispatch({
-                type: ARTICLE_FETCHING,
-                payload: {status: true},
+                type: FETCHING_ARTICLE,
+                payload: {status: false},
             });
         };
     }, []);
