@@ -3,6 +3,7 @@ import {LOG_OUT} from "../../components/header/actions";
 import {FETCHING_ARTICLES} from "../../components/pages/articles-page/actions";
 import {FETCHING_ARTICLE} from "../../components/pages/article-page/actions";
 import {FETCHING_ARTICLE_CREATION} from "../../components/pages/new-article-page/actions";
+import {REQUEST_TO_REMOVE_ARTICLE} from "../../components/article/actions";
 
 const initialState = {
     currentUser: {},
@@ -34,6 +35,12 @@ export const reducer = (state = initialState, action) => {
             };
 
         case FETCHING_ARTICLE_CREATION:
+            return {
+                ...state,
+                isFetching: payload.status,
+            };
+
+        case REQUEST_TO_REMOVE_ARTICLE:
             return {
                 ...state,
                 isFetching: payload.status,

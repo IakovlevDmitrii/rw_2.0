@@ -1,5 +1,4 @@
 import {API} from "../../api.config";
-import {RECEIVE_ARTICLE} from "../pages/article-page/actions";
 import {adeptArticle} from "../../utils/adept-article";
 
 export const RECEIVE_FAVORITE_CHANGE = "RECEIVE_FAVORITE_CHANGE";
@@ -46,11 +45,6 @@ export const deleteArticle = slug => (dispatch, getState) => {
     })
         .then(() => {
             dispatch({
-                type: RECEIVE_ARTICLE,
-                payload: {article: {}},
-            });
-
-            dispatch({
                 type: REQUEST_TO_REMOVE_ARTICLE,
                 payload: {status: false},
             });
@@ -59,9 +53,5 @@ export const deleteArticle = slug => (dispatch, getState) => {
         })
         .catch(e => {
             console.log(`[DELETE ARTICLE] error ${e.toLocaleString()}`);
-            dispatch({
-                type: REQUEST_TO_REMOVE_ARTICLE,
-                payload: {status: false},
-            });
         })
 };
