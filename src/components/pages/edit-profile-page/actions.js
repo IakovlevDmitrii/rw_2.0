@@ -2,7 +2,7 @@ import {API} from "../../../api.config";
 import {fetchingAuthentication, updateUser} from "../../../store/actions";
 
 export const editProfile = detailsToChange => (dispatch, getState) => {
-    const token = getState().authentication.currentUser.token;
+    const token = getState().common.currentUser.token;
 
     dispatch(fetchingAuthentication(true));
 
@@ -19,7 +19,7 @@ export const editProfile = detailsToChange => (dispatch, getState) => {
         }),
     })
         .then(response => response.json())
-        .then((res) => {
+        .then(res => {
             const userDetails = res.user;
             const serverErrors = res.errors;
 
@@ -32,10 +32,7 @@ export const editProfile = detailsToChange => (dispatch, getState) => {
                 return serverErrors;
             }
         })
-        .catch((err) => {
-            throw new Error(err.message);
+        .catch(e => {
+            console.log(`[EDIT PROFILE] error ${e.toLocaleString()}`);
         })
-        .finally(() => {
-            dispatch(fetchingAuthentication(false));
-        });
 };

@@ -12,8 +12,8 @@ import styles from "./EditProfilePage.module.scss";
 function EditProfilePage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const isFetching = useSelector(state => state.authentication.isFetching);
-    const currentUser = useSelector(state => state.authentication.currentUser);
+    const isFetching = useSelector(state => state.common.isFetching);
+    const currentUser = useSelector(state => state.common.currentUser);
     const {email, username} = currentUser;
 
     const {
