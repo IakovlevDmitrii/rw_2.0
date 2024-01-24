@@ -11,8 +11,8 @@ import styles from "./SignInPage.module.scss";
 
 function SignInPage() {
     const dispatch = useDispatch();
-    const isFetching = useSelector(state => state.authentication.isFetching);
-    const isLoggedIn = useSelector(state => state.authentication.isLoggedIn);
+    const isFetching = useSelector(state => state.common.isFetching);
+    const isLoggedIn = useSelector(state => state.common.isLoggedIn);
 
     const {
         register,
@@ -21,7 +21,7 @@ function SignInPage() {
         setError,
     } = useForm({});
 
-    const onSubmit = ({email, password}) => {
+    const onSubmit = ({ email, password }) => {
         dispatch(signIn(email, password))
             .then(serverErrors => {
                 if(serverErrors) {

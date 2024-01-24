@@ -1,6 +1,7 @@
 import {FETCHING_AUTHENTICATION, UPDATE_USER} from "../actions";
 import {LOG_OUT} from "../../components/header/actions";
 import {FETCHING_ARTICLES} from "../../components/pages/articles-page/actions";
+import {FETCHING_ARTICLE} from "../../components/pages/article-page/actions";
 
 const initialState = {
     currentUser: {},
@@ -14,6 +15,12 @@ export const reducer = (state = initialState, action) => {
 
     switch (type) {
         case FETCHING_ARTICLES:
+            return {
+                ...state,
+                isFetching: payload.status,
+            };
+
+        case FETCHING_ARTICLE:
             return {
                 ...state,
                 isFetching: payload.status,
