@@ -28,18 +28,19 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
         .then(response => response.json())
         .then(result => {
             const { articlesCount, articles } = result;
-
+            const list = adeptArticles(articles);
             const articlesData = {
                 articlesCount,
-                list: adeptArticles(articles),
+                list,
             };
-
             dispatch(receiveArticles(articlesData));
             dispatch(fetchingArticles(false));
         })
         .catch(e => {
             console.log(`[GET ARTICLES] error ${e.toLocaleString()}`);
-            dispatch(fetchingArticles(false));
+            return {
+                hasError: true,
+            };
         })
 };
 

@@ -1,15 +1,10 @@
-import {
-    CHANGE_PAGE_NUMBER,
-    FETCHING_ARTICLES,
-    RECEIVE_ARTICLES,
-} from "./actions";
-import { RECEIVE_FAVORITE_CHANGE } from "../../article/actions";
-import { CREATE_AN_ARTICLE } from "../new-article-page/actions";
+import {CHANGE_PAGE_NUMBER, RECEIVE_ARTICLES} from "./actions";
+import {RECEIVE_FAVORITE_CHANGE} from "../../article/actions";
+import {CREATE_AN_ARTICLE} from "../new-article-page/actions";
 
 const initialState = {
     articlesCount: 0,
     currentPage: 1,
-    isFetching: false,
     list: [],
 };
 
@@ -17,12 +12,6 @@ export const reducer = (state = initialState, action)=> {
     const { payload, type } = action;
 
     switch (type){
-        case FETCHING_ARTICLES:
-            return {
-                ...state,
-                isFetching: payload.status,
-            };
-
         case RECEIVE_ARTICLES:
             return {
                 ...state,
