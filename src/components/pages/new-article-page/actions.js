@@ -2,17 +2,17 @@ import {API} from "../../../api.config";
 import {adeptArticle} from "../../../utils/adept-article";
 import {receiveArticle} from "../article-page/actions";
 
-export const ARTICLE_CREATION_FETCHING = "ARTICLE_CREATION_FETCHING";
+export const FETCHING_ARTICLE_CREATION = "FETCHING_ARTICLE_CREATION";
 export const CREATE_AN_ARTICLE = "CREATE_AN_ARTICLE";
 
 export const createAnArticle = content => (dispatch, getState) => {
     dispatch({
-        type: ARTICLE_CREATION_FETCHING,
+        type: FETCHING_ARTICLE_CREATION,
         payload: {status: true},
     });
 
-    const currentUser = getState().authentication.currentUser;
-    const articlesList = getState().homePage.articlesList;
+    const currentUser = getState().common.currentUser;
+    const articlesList = getState().articles.list;
     const token = currentUser.token || "";
     const data = {
         article: {...content},
@@ -37,13 +37,13 @@ export const createAnArticle = content => (dispatch, getState) => {
 
                 dispatch({
                     type: CREATE_AN_ARTICLE,
-                    payload: {articlesList},
+                    payload: {list: articlesList},
                 });
 
                 dispatch(receiveArticle(articleDetails));
 
                 dispatch({
-                    type: ARTICLE_CREATION_FETCHING,
+                    type: FETCHING_ARTICLE_CREATION,
                     payload: {status: false},
                 })
             }
@@ -52,9 +52,5 @@ export const createAnArticle = content => (dispatch, getState) => {
         })
         .catch(e => {
             console.log(`[CREAT ARTICLE] error ${e.toLocaleString()}`);
-            dispatch({
-                type: ARTICLE_CREATION_FETCHING,
-                payload: {status: false},
-            })
         })
 };

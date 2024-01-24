@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 function ProtectedRoute ({ children }){
     const isLoggedIn = useSelector(
-        state => state.authentication.isLoggedIn);
+        state => state.common.isLoggedIn);
 
     return isLoggedIn ? children : <Navigate to="/sign-in" replace />;
 }

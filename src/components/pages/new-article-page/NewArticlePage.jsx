@@ -10,7 +10,7 @@ import {reducer} from "../articles-page/reducer";
 function NewArticlePage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const isFetching = useSelector(state => state.articlePage.isFetching);
+    const isFetching = useSelector(state => state.common.isFetching);
     const [hasErrors, setHasErrors] = useState({});
 
     const getInitialValues = () => ({
