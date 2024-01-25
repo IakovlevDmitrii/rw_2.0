@@ -1,43 +1,34 @@
-import React, {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {useParams} from "react-router-dom";
-import Article from "../../article";
-import Spinner from "../../spinner";
-import {getArticle, RECEIVE_ARTICLE} from "./actions";
-import styles from "./ArticlePage.module.scss";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import Article from '../../article';
+import Spinner from '../../spinner';
+import { getArticle } from './actions';
+import styles from './ArticlePage.module.scss';
 
 function ArticlePage() {
-    const {slug} = useParams();
-    const dispatch = useDispatch();
-    const isFetching = useSelector(state => state.articlePage.isFetching);
-    const article = useSelector(state => state.articlePage?.article);
+  const { slug } = useParams();
+  const dispatch = useDispatch();
+  const isFetching = useSelector((state) => state.common.isFetching);
+  const article = useSelector((state) => state.articles.list.find((item) => item.slug === slug));
 
-    useEffect(
-        ()=> {
-            dispatch(getArticle(slug));
+  useEffect(() => {
+    dispatch(getArticle(slug));
+  }, [dispatch, slug]);
 
-            return () => {
-                dispatch({
-                    type: RECEIVE_ARTICLE,
-                    payload: {article: {}},
-                })
-            };
-        },[slug]
-    )
+  const emptyArticle = Object.keys(article).length === 0;
 
-    const emptyArticle = Object.keys(article).length === 0;
+  if (isFetching || emptyArticle) {
+    return <Spinner />;
+  }
 
-    if(isFetching || emptyArticle) {
-        return <Spinner />
-    }
-
-    return (
-        <section>
-            <div className={styles.container}>
-                <Article content={article} fullSize />
-            </div>
-        </section>
-    );
+  return (
+    <section>
+      <div className={styles.container}>
+        <Article content={article} fullSize />
+      </div>
+    </section>
+  );
 }
 
 export default ArticlePage;

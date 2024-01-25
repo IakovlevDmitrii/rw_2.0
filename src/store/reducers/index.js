@@ -1,10 +1,10 @@
-import {combineReducers} from "redux";
-import {reducer as common } from "./common-reducer";
-import {reducer as articles} from "../../components/pages/articles-page/reducer";
+import { combineReducers } from 'redux';
+import commonReducer from './common-reducer';
+import articlesReducer  from '../../components/pages/articles-page/reducer';
 
 const reducer = combineReducers({
-    articles,
-    common,
+  articles: articlesReducer,
+  common: commonReducer,
 });
 
 export default reducer;

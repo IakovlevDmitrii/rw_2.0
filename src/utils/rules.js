@@ -32,6 +32,7 @@ const email = () => ({
 });
 
 const match = (toCompare, errorText) => ({
+  // eslint-disable-next-line consistent-return
   validate: (value) => {
     if(value !== toCompare) {
       return errorText;
