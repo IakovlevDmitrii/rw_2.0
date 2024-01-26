@@ -10,7 +10,6 @@ import { toggleFavorite, deleteArticle } from './actions';
 import getArticlePropTypes from '../../utils/get-article-prop-types';
 import favoriteTrueImage from './img/fav-true.svg';
 import favoriteFalseImage from './img/fav-false.svg';
-import favoriteFetchingImage from './img/fav-fetch.svg';
 import styles from './Article.module.scss';
 
 export default function Article({ content, fullSize }) {
@@ -60,13 +59,7 @@ export default function Article({ content, fullSize }) {
     );
   });
 
-  let imageSrc = favoriteFalseImage;
-
-  if (isFavoriteFetching) {
-    imageSrc = favoriteFetchingImage;
-  } else if (favorited) {
-    imageSrc = favoriteTrueImage;
-  }
+  const imageSrc = favorited ? favoriteTrueImage : favoriteFalseImage;
 
   const image = <img className={styles.favoriteButtonImg} alt="like" src={imageSrc} />;
 

@@ -40,7 +40,7 @@ function Header() {
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.logo}>
-            <Link to="/articles">RealWorld blog</Link>
+            <Link to="/">RealWorld blog</Link>
           </div>
           {buttonsForDisplay}
         </div>
