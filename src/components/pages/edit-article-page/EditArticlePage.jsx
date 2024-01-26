@@ -1,80 +1,79 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate,useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Spinner from '../../spinner';
 import ArticleEditor from '../../article-editor';
 import updateArticle from './actions';
 import { FETCHING_ARTICLE } from '../article-page/actions';
 
 function EditArticlePage() {
-  const { slug } =useParams();
+  const { slug } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const currentArticle = useSelector(state => state.articles.list.find(item =>item.slug === slug));
-  const currentUser = useSelector(state => state.common.currentUser);
-  const isFetching = useSelector(state => state.common.isFetching);
+  const currentArticle = useSelector((state) => state.articles.list.find((item) => item.slug === slug));
+  const currentUser = useSelector((state) => state.common.currentUser);
+  const isFetching = useSelector((state) => state.common.isFetching);
   const [hasErrors, setHasErrors] = useState({});
-  const [newArticleContent, setNewArticleContent] = useState("");
+  const [newArticleContent, setNewArticleContent] = useState('');
 
   const isMyArticle = currentArticle.author.username === currentUser.username;
-  const {body, description, title} = currentArticle;
-  const contentToChange = {body, description, title};
+  const { body, description, title } = currentArticle;
+  const contentToChange = { body, description, title };
 
-  if(currentArticle.tagList) {
+  if (currentArticle.tagList) {
     contentToChange.tagList = [];
 
-    currentArticle.tagList.forEach(tag => {
+    currentArticle.tagList.forEach((tag) => {
       contentToChange.tagList.push({ value: tag });
     });
   } else {
-    contentToChange.tagList = [{ value: "" }];
+    contentToChange.tagList = [{ value: '' }];
   }
 
   useEffect(() => {
-    if(!isMyArticle){
+    if (!isMyArticle) {
       navigate(`/articles/${slug}`);
     }
 
     dispatch({
       type: FETCHING_ARTICLE,
-      payload: {status: false},
+      payload: { status: false },
     });
 
     return () => {
-      setNewArticleContent("");
+      setNewArticleContent('');
       dispatch({
         type: FETCHING_ARTICLE,
-        payload: {status: false},
+        payload: { status: false },
       });
     };
   }, [dispatch, isMyArticle, navigate, slug]);
 
-  const onSubmit = detailsToChange => {
-    dispatch(updateArticle(currentArticle.slug, detailsToChange))
-      .then(res => {
-        const articleDetails = res.article;
-        const serverErrors = res.errors;
+  const onSubmit = (detailsToChange) => {
+    dispatch(updateArticle(currentArticle.slug, detailsToChange)).then((res) => {
+      const articleDetails = res.article;
+      const serverErrors = res.errors;
 
-        if(articleDetails) {
-          navigate(`/articles/${currentArticle.slug}`);
-        }
+      if (articleDetails) {
+        navigate(`/articles/${currentArticle.slug}`);
+      }
 
-        if(serverErrors) {
-          const {tagList, ...rest} = detailsToChange;
-          const newArticle = {...rest};
-          newArticle.tagList = [];
+      if (serverErrors) {
+        const { tagList, ...rest } = detailsToChange;
+        const newArticle = { ...rest };
+        newArticle.tagList = [];
 
-          tagList.forEach((tag) => {
-            newArticle.tagList.push({value: tag});
-          });
+        tagList.forEach((tag) => {
+          newArticle.tagList.push({ value: tag });
+        });
 
-          setNewArticleContent(newArticle);
-          setHasErrors(serverErrors);
-        }
-      })
+        setNewArticleContent(newArticle);
+        setHasErrors(serverErrors);
+      }
+    });
   };
 
-  if(isFetching || !isMyArticle) {
+  if (isFetching || !isMyArticle) {
     return <Spinner />;
   }
 

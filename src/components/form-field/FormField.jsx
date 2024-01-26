@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import styles from "../../styles/authComponents.module.scss";
+import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import styles from '../../styles/authComponents.module.scss';
 
 function FormField({
   name,
@@ -16,8 +16,7 @@ function FormField({
   id,
   autocomplete,
 }) {
-  const getSubInput = (inputName) =>
-    errors[inputName] && <span>{errors[inputName].message}</span>;
+  const getSubInput = (inputName) => errors[inputName] && <span>{errors[inputName].message}</span>;
 
   const elements = {
     label: <label htmlFor={name}>{label}</label>,
@@ -71,9 +70,9 @@ FormField.propTypes = {
 FormField.defaultProps = {
   placeholder: null,
   labelBehind: false,
-  extraClassName: "",
+  extraClassName: '',
   id: null,
-  autocomplete: "off",
+  autocomplete: 'off',
 };
 
 export default FormField;

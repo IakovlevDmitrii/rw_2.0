@@ -1,19 +1,19 @@
-import { format } from "date-fns";
+import { format } from 'date-fns';
 
-export const adeptArticle = article => {
+export const adeptArticle = (article) => {
   const {
     author = {
-      image: "",
-      username: "",
+      image: '',
+      username: '',
     },
-    body = "",
-    createdAt = "",
-    description = "",
+    body = '',
+    createdAt = '',
+    description = '',
     favorited = false,
     favoritesCount = 0,
-    slug = "",
-    tagList = [""],
-    title = "",
+    slug = '',
+    tagList = [''],
+    title = '',
   } = article;
 
   return {
@@ -22,7 +22,7 @@ export const adeptArticle = article => {
       username: author.username,
     },
     body,
-    createdAt: format(new Date(createdAt), "MMMM d, yyyy"),
+    createdAt: format(new Date(createdAt), 'MMMM d, yyyy'),
     description,
     favorited,
     favoritesCount,
@@ -30,6 +30,6 @@ export const adeptArticle = article => {
     tagList,
     title,
   };
-}
+};
 
-export const adeptArticles = articles => articles.map(article => adeptArticle(article))
+export const adeptArticles = (articles) => articles.map((article) => adeptArticle(article));

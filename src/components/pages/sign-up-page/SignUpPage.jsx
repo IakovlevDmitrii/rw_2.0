@@ -12,71 +12,70 @@ import styles from './SignUpPage.module.scss';
 function SignUpPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isFetching = useSelector(state => state.common.isFetching);
+  const isFetching = useSelector((state) => state.common.isFetching);
 
   const {
     register,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
     setError,
     watch,
   } = useForm({});
 
-  const onSubmit = ({ username, email, password} ) => {
-    dispatch(signUp(username, email, password))
-      .then(res => {
-        const { user, errors } = res; // eslint-disable-line
+  const onSubmit = ({ username, email, password }) => {
+    dispatch(signUp(username, email, password)).then((res) => {
+      const { user, errors } = res; // eslint-disable-line
 
-        if(user) {
-          navigate('/articles')
-        }
+      if (user) {
+        navigate('/articles');
+      }
 
-        if(errors) {
-          for(const error in errors) {
-            if(Object.prototype.hasOwnProperty.call(errors, error)) {
-              setError(error, {
-                type: "manual",
-                message: `${error} ${errors[error]}`,
-              });
-            }
+      if (errors) {
+        for (const error in errors) {
+          if (Object.prototype.hasOwnProperty.call(errors, error)) {
+            setError(error, {
+              type: 'manual',
+              message: `${error} ${errors[error]}`,
+            });
           }
         }
-      });
+      }
+    });
   };
 
   const validationRules = {
     username: {
-      ...rules.required("Username"),
-      ...rules.minMaxLength("Username", 3, 20),
+      ...rules.required('Username'),
+      ...rules.minMaxLength('Username', 3, 20),
     },
 
     email: {
-      ...rules.required("Email"),
+      ...rules.required('Email'),
       ...rules.email(),
     },
 
     password: {
-      ...rules.required("Password"),
-      ...rules.minMaxLength("Password", 6, 40),
+      ...rules.required('Password'),
+      ...rules.minMaxLength('Password', 6, 40),
     },
 
     passwordConfirmation: {
-      ...rules.required("Repeat Password"),
-      ...rules.match(watch('password'), "Your passwords do no match"),
+      ...rules.required('Repeat Password'),
+      ...rules.match(watch('password'), 'Your passwords do no match'),
     },
 
     agreement: {
-      ...rules.required("Agreement"),
+      ...rules.required('Agreement'),
     },
   };
 
-  const formFields = formsConfig.singUp.map(fieldDetails => {
+  const formFields = formsConfig.singUp.map((fieldDetails) => {
     const { name } = fieldDetails;
     const addedFieldDetails = fieldDetails;
 
-    if(name === "agreement") {
+    if (name === 'agreement') {
       addedFieldDetails.extraClassName = styles.agreement;
-      addedFieldDetails.id = "agreement";
+      addedFieldDetails.id = 'agreement';
       addedFieldDetails.labelBehind = true;
     }
 
@@ -91,7 +90,7 @@ function SignUpPage() {
     );
   });
 
-  if(isFetching) {
+  if (isFetching) {
     return <Spinner />;
   }
 

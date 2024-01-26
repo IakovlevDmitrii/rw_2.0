@@ -12,8 +12,8 @@ import styles from './EditProfilePage.module.scss';
 function EditProfilePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isFetching = useSelector(state => state.common.isFetching);
-  const currentUser = useSelector(state => state.common.currentUser);
+  const isFetching = useSelector((state) => state.common.isFetching);
+  const currentUser = useSelector((state) => state.common.currentUser);
   const { email, username } = currentUser;
 
   const {
@@ -23,7 +23,7 @@ function EditProfilePage() {
     setError,
   } = useForm();
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     const detailsToChange = {};
 
     // Если в data есть заполненные поля сохраним их в detailsToChange
@@ -33,39 +33,38 @@ function EditProfilePage() {
       }
     }
 
-    dispatch(editProfile(detailsToChange))
-      .then((res) => {
-        const {isUserUpdated, serverErrors} = res;
+    dispatch(editProfile(detailsToChange)).then((res) => {
+      const { isUserUpdated, serverErrors } = res;
 
-        if(isUserUpdated) {
-          navigate('/articles')
-        }
+      if (isUserUpdated) {
+        navigate('/articles');
+      }
 
-        if(serverErrors) {
-          setError("email", {
-            type: "manual",
-            message: `Email or password ${serverErrors["email or password"]}`,
-          });
-          setError("password", {
-            type: "manual",
-            message: `Email or password ${serverErrors["email or password"]}`,
-          });
-        }
-      });
+      if (serverErrors) {
+        setError('email', {
+          type: 'manual',
+          message: `Email or password ${serverErrors['email or password']}`,
+        });
+        setError('password', {
+          type: 'manual',
+          message: `Email or password ${serverErrors['email or password']}`,
+        });
+      }
+    });
   };
 
   const validationRules = {
     username: {
-      ...rules.required("Username"),
+      ...rules.required('Username'),
     },
 
     email: {
-      ...rules.required("Email"),
+      ...rules.required('Email'),
       ...rules.email(),
     },
 
     password: {
-      ...rules.minMaxLength("Password", 6, 40),
+      ...rules.minMaxLength('Password', 6, 40),
     },
 
     avatar: {
@@ -77,10 +76,10 @@ function EditProfilePage() {
     const { name } = fieldDetails;
     const addedFieldDetails = fieldDetails;
 
-    if(name === "username") {
+    if (name === 'username') {
       addedFieldDetails.placeholder = username;
     }
-    if(name === "email") {
+    if (name === 'email') {
       addedFieldDetails.placeholder = email;
     }
 
@@ -95,7 +94,7 @@ function EditProfilePage() {
     );
   });
 
-  if(isFetching) {
+  if (isFetching) {
     return <Spinner />;
   }
 

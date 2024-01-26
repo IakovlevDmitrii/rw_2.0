@@ -9,50 +9,39 @@ import styles from './ArticlesPage.module.scss';
 
 function ArticlesPage() {
   const dispatch = useDispatch();
-  const articlesList = useSelector(state => state.articles.list);
-  const articlesCount = useSelector(state => state.articles.articlesCount);
-  const currentPage = useSelector(state => state.articles.currentPage);
+  const articlesList = useSelector((state) => state.articles.list);
+  const articlesCount = useSelector((state) => state.articles.articlesCount);
+  const currentPage = useSelector((state) => state.articles.currentPage);
   const [isFetching, setIsFetching] = useState(true);
   const [hasError, setHasError] = useState(false);
 
-  useEffect(
-    () => {
+  useEffect(() => {
+    setIsFetching(true);
+
+    dispatch(requestArticles(5, currentPage)).then((res) => (res ? setIsFetching(false) : setHasError(true)));
+
+    return () => {
       setIsFetching(true);
+      setHasError(false);
+    };
+  }, [currentPage, dispatch]);
 
-      dispatch(requestArticles(5, currentPage))
-        .then(res => (
-          res ? setIsFetching(false) : setHasError(true)
-        ))
-
-      return () => {
-        setIsFetching(true);
-        setHasError(false);
-      };
-    }, [currentPage, dispatch]
-  )
-
-  if(hasError) {
-    return <ErrorIndicator errorMessage="Ошибка при получении данных с сервера" />
+  if (hasError) {
+    return <ErrorIndicator errorMessage="Ошибка при получении данных с сервера" />;
   }
 
-  if(isFetching) {
+  if (isFetching) {
     return <Spinner />;
   }
 
-  const listToShow = articlesList.map(article => (
-    <Article key={article.slug} content={article} fullSize={false} />
-  ));
+  const listToShow = articlesList.map((article) => <Article key={article.slug} content={article} fullSize={false} />);
 
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         {listToShow}
 
-        <Pagination
-          current={currentPage}
-          onChange={page => dispatch(changePageNumber(page))}
-          total={articlesCount}
-        />
+        <Pagination current={currentPage} onChange={(page) => dispatch(changePageNumber(page))} total={articlesCount} />
       </div>
     </div>
   );

@@ -1,36 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
-import ReactMarkdown from "react-markdown";
-import ArticleDescription from "../article-description";
-import ArticleAuthor from "../article-author";
-import Spinner from "../spinner";
-import { toggleFavorite, deleteArticle } from "./actions";
-import getArticlePropTypes from "../../utils/get-article-prop-types";
-import favoriteTrueImage from "./img/fav-true.svg";
-import favoriteFalseImage from "./img/fav-false.svg";
-import favoriteFetchingImage from "./img/fav-fetch.svg";
-import styles from "./Article.module.scss";
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import ReactMarkdown from 'react-markdown';
+import ArticleDescription from '../article-description';
+import ArticleAuthor from '../article-author';
+import Spinner from '../spinner';
+import { toggleFavorite, deleteArticle } from './actions';
+import getArticlePropTypes from '../../utils/get-article-prop-types';
+import favoriteTrueImage from './img/fav-true.svg';
+import favoriteFalseImage from './img/fav-false.svg';
+import favoriteFetchingImage from './img/fav-fetch.svg';
+import styles from './Article.module.scss';
 
-function Article({ content, fullSize }) {
-  const {
-    author,
-    body,
-    createdAt,
-    description,
-    favorited,
-    favoritesCount,
-    slug,
-    tagList,
-  } = content;
+export default function Article({ content, fullSize }) {
+  const { author, body, createdAt, description, favorited, favoritesCount, slug, tagList } = content;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isLoggedIn = useSelector(state => state.common.isLoggedIn);
-  const currentUser = useSelector(state => state.common.currentUser?.username); // eslint-disable-line
+  const isLoggedIn = useSelector((state) => state.common.isLoggedIn);
+  const currentUser = useSelector((state) => state.common.currentUser.username) || {};
   const isMyArticle = author.username === currentUser;
-  const [isFavoriteFetching, setIsFavoriteFetching] = useState( false);
+  const [isFavoriteFetching, setIsFavoriteFetching] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => () => {
@@ -41,33 +32,23 @@ function Article({ content, fullSize }) {
   const onFavoriteArticle = () => {
     setIsFavoriteFetching(true);
 
-    dispatch(toggleFavorite(slug, favorited))
-      .then(() => {
-        setIsFavoriteFetching(false)
-      });
+    dispatch(toggleFavorite(slug, favorited)).then(() => {
+      setIsFavoriteFetching(false);
+    });
   };
 
   const onDeleteArticle = () => {
     setIsFetching(true);
 
-    dispatch(deleteArticle(slug))
-      .then(() => {
-        setIsFetching(false);
-        navigate('/articles')
-      })
+    dispatch(deleteArticle(slug)).then(() => {
+      setIsFetching(false);
+      navigate('/articles');
+    });
   };
 
-  const header = (
-    <h3>{content.title}</h3>
-  );
+  const header = <h3>{content.title}</h3>;
 
-  const title = fullSize
-    ? header
-    : (
-      <Link to={`/articles/${slug}`}>
-        {header}
-      </Link>
-    );
+  const title = fullSize ? header : <Link to={`/articles/${slug}`}>{header}</Link>;
 
   const tags = tagList.map((tag, index) => {
     const key = `${slug}${index}`;
@@ -81,32 +62,26 @@ function Article({ content, fullSize }) {
 
   let imageSrc = favoriteFalseImage;
 
-  if(isFavoriteFetching) {
+  if (isFavoriteFetching) {
     imageSrc = favoriteFetchingImage;
-  } else if(favorited) {
+  } else if (favorited) {
     imageSrc = favoriteTrueImage;
   }
 
-  const image = (
-    <img
-      className={styles.favoriteButtonImg}
-      alt="like"
-      src={imageSrc}
-    />
-  );
+  const image = <img className={styles.favoriteButtonImg} alt="like" src={imageSrc} />;
 
-  const favoriteImg = isLoggedIn
-    ? (
-      <button
-        className={styles.favoriteButton}
-        type="button"
-        onClick={onFavoriteArticle}
-        disabled={!isLoggedIn && isFavoriteFetching}
-      >
-        {image}
-      </button>
-    )
-    : image;
+  const favoriteImg = isLoggedIn ? (
+    <button
+      className={styles.favoriteButton}
+      type="button"
+      onClick={onFavoriteArticle}
+      disabled={!isLoggedIn && isFavoriteFetching}
+    >
+      {image}
+    </button>
+  ) : (
+    image
+  );
 
   const descriptionProps = {
     description,
@@ -129,16 +104,12 @@ function Article({ content, fullSize }) {
 
   const articleContent = fullSize && (
     <article className={styles.articleContent}>
-      <ReactMarkdown>
-        {body}
-      </ReactMarkdown>
+      <ReactMarkdown>{body}</ReactMarkdown>
     </article>
   );
 
-  if(isFetching) {
-    return (
-      <Spinner />
-    )
+  if (isFetching) {
+    return <Spinner />;
   }
 
   return (
@@ -151,9 +122,6 @@ function Article({ content, fullSize }) {
 }
 
 Article.propTypes = {
-  content: PropTypes
-    .shape(getArticlePropTypes()).isRequired,
+  content: PropTypes.shape(getArticlePropTypes()).isRequired,
   fullSize: PropTypes.bool.isRequired,
 };
-
-export default Article;
