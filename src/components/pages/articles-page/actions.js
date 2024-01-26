@@ -10,7 +10,7 @@ export const receiveArticles = ({ articlesCount, list }) => ({
 });
 
 export const requestArticles = (limit, page) => (dispatch, getState) => {
-  const {currentUser} = getState().common;
+  const { currentUser } = getState().common;
   const token = currentUser.token || "";
 
   return fetch(API.ARTICLES.SUMMARY(limit, page), {
@@ -22,23 +22,23 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
   })
     .then(response => response.json())
     .then(result => {
-      const { articlesCount, articles } = result;
-      const list = adeptArticles(articles);
-      const articlesData = {
-        articlesCount,
-        list,
-      };
-      dispatch(receiveArticles(articlesData));
+      const { articlesCount, articles, errors } = result;
 
-      return {
-        isArticlesReceived: true
-      };
+      if(errors) {
+        console.log(`[GET ARTICLES] error ${errors.toLocaleString()}`);// eslint-disable-line
+      } else {
+        const list = adeptArticles(articles);
+
+        dispatch(receiveArticles({
+          articlesCount, list }));
+      }
+
+      return !!articles;
     })
     .catch(err => {
       console.log(`[GET ARTICLES] error ${err.toLocaleString()}`);// eslint-disable-line
-      return {
-        hasError: true,
-      };
+
+      return false;
     })
 };
 

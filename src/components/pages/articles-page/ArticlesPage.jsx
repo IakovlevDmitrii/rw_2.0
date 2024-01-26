@@ -20,18 +20,12 @@ function ArticlesPage() {
       setIsFetching(true);
 
       dispatch(requestArticles(5, currentPage))
-        .then(res => {
-          if(res.isArticlesReceived) {
-            setIsFetching(false);
-          }
-        })
-        .catch(res => {
-          if(res.hasError) {
-            setHasError(true);
-          }
-        });
+        .then(res => (
+          res ? setIsFetching(false) : setHasError(true)
+        ))
 
       return () => {
+        setIsFetching(true);
         setHasError(false);
       };
     }, [currentPage, dispatch]
@@ -40,6 +34,7 @@ function ArticlesPage() {
   if(hasError) {
     return <ErrorIndicator errorMessage="Ошибка при получении данных с сервера" />
   }
+
   if(isFetching) {
     return <Spinner />;
   }
