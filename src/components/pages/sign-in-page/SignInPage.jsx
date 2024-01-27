@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import signIn from './actions';
 import Spinner from '../../spinner';
@@ -11,6 +11,7 @@ import styles from './SignInPage.module.scss';
 
 function SignInPage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isFetching = useSelector((state) => state.common.isFetchingAuthentication);
   const isLoggedIn = useSelector((state) => state.common.isLoggedIn);
 
@@ -22,7 +23,13 @@ function SignInPage() {
   } = useForm({});
 
   const onSubmit = ({ email, password }) => {
-    dispatch(signIn(email, password)).then((serverErrors) => {
+    dispatch(signIn(email, password)).then((res) => {
+      if (res.user) {
+        navigate('/articles');
+      }
+
+      const serverErrors = res.errors;
+
       if (serverErrors) {
         setError('email', {
           type: 'manual',

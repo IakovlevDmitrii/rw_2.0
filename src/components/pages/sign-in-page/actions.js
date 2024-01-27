@@ -18,15 +18,12 @@ const signIn = (email, password) => dispatch => {
   })
     .then(response => response.json())
     .then(res => {
-      const userDetails = res.user;
-      const serverErrors = res.errors;
-
-      if(userDetails) {
-        dispatch(updateUser(userDetails));
+      if(res.user) {
+        dispatch(updateUser(res.user));
       }
       dispatch(fetchingAuthentication(false));
-      
-      return serverErrors;
+
+      return res;
     })
     .catch(err => {
       console.log(`[SIGN IN] error ${err.toLocaleString()}`); // eslint-disable-line
