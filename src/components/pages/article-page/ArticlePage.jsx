@@ -1,24 +1,40 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Article from '../../article';
 import Spinner from '../../spinner';
-import { getArticle } from './actions';
+import ErrorIndicator from '../../error-indicator';
+import { requestArticle } from './actions';
 import styles from './ArticlePage.module.scss';
 
 function ArticlePage() {
   const { slug } = useParams();
   const dispatch = useDispatch();
-  const isFetching = useSelector((state) => state.common.isFetching);
-  const article = useSelector((state) => state.articles.list.find((item) => item.slug === slug));
+  const [isFetching, setIsFetching] = useState(true);
+  const [hasError, setHasError] = useState(false);
+  const { list } = useSelector((state) => state.articles);
+  const article = list.find((item) => item.slug === slug);
+  const isArticle = !!article.slug;
 
   useEffect(() => {
-    dispatch(getArticle(slug));
-  }, [dispatch, slug]);
+    if (isArticle) {
+      setIsFetching(false);
+    } else {
+      setIsFetching(true);
+      dispatch(requestArticle(slug)).then((res) => (res ? setIsFetching(false) : setHasError(true)));
+    }
 
-  const emptyArticle = Object.keys(article).length === 0;
+    return () => {
+      setIsFetching(true);
+      setHasError(false);
+    };
+  }, [dispatch, slug, isArticle]);
 
-  if (isFetching || emptyArticle) {
+  if (hasError) {
+    return <ErrorIndicator />;
+  }
+
+  if (isFetching) {
     return <Spinner />;
   }
 
