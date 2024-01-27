@@ -1,5 +1,5 @@
 import API from '../../../api.config';
-import { adeptArticle } from '../../../utils/adept-article';
+import { adaptArticle } from '../../../utils/adapt-article';
 
 export const FETCHING_ARTICLE = "FETCHING_ARTICLE";
 export const RECEIVE_ARTICLE = "RECEIVE_ARTICLE";
@@ -22,7 +22,7 @@ export const requestArticle = (slug) => (dispatch, getState) => {
   })
     .then(response => response.json())
     .then(result => {
-      const adaptedArticle = adeptArticle(result.article);
+      const adaptedArticle = adaptArticle(result.article);
       dispatch(receiveArticle(adaptedArticle));
 
       return true;

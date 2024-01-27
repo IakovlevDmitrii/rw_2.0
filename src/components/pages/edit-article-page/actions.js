@@ -1,6 +1,6 @@
 import API from '../../../api.config';
 import { FETCHING_ARTICLE, RECEIVE_ARTICLE } from '../article-page/actions';
-import { adeptArticle } from '../../../utils/adept-article';
+import { adaptArticle } from '../../../utils/adapt-article';
 
 const updateArticle = (slug, detailsToChange) => (dispatch, getState) => {
   const { token } = getState().common.currentUser;
@@ -22,7 +22,7 @@ const updateArticle = (slug, detailsToChange) => (dispatch, getState) => {
   })
     .then(response => response.json())
     .then(res => {
-      const article = adeptArticle(res.article);
+      const article = adaptArticle(res.article);
 
       if(article) {
         dispatch({

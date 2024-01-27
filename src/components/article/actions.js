@@ -1,5 +1,5 @@
 import API from "../../api.config";
-import { adeptArticle } from "../../utils/adept-article";
+import { adaptArticle } from "../../utils/adapt-article";
 
 export const RECEIVE_FAVORITE_CHANGE = "RECEIVE_FAVORITE_CHANGE";
 export const REQUEST_TO_REMOVE_ARTICLE = "REQUEST_TO_REMOVE_ARTICLE";
@@ -19,7 +19,7 @@ export const toggleFavorite = (slug, favorited) => (dispatch, getState) => {
     .then(result => {
       dispatch({
         type: RECEIVE_FAVORITE_CHANGE,
-        payload: {article: adeptArticle(result.article)}
+        payload: {article: adaptArticle(result.article)}
       })
 
       return true;

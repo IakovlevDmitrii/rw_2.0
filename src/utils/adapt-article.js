@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 
-export const adeptArticle = (article) => {
+export const adaptArticle = (article) => {
   const {
     author = {
       image: '',
@@ -32,4 +32,4 @@ export const adeptArticle = (article) => {
   };
 };
 
-export const adeptArticles = (articles) => articles.map((article) => adeptArticle(article));
+export const adaptArticles = (articles) => articles.map((article) => adaptArticle(article));

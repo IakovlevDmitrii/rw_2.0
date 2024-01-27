@@ -17,7 +17,6 @@ function ArticlesPage() {
 
   useEffect(() => {
     setIsFetching(true);
-
     dispatch(requestArticles(5, currentPage)).then((res) => (res ? setIsFetching(false) : setHasError(true)));
 
     return () => {

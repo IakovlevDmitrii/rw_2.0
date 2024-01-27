@@ -1,5 +1,5 @@
 import API from '../../../api.config';
-import { adeptArticles } from '../../../utils/adept-article';
+import { adaptArticles } from '../../../utils/adapt-article';
 
 export const CHANGE_PAGE_NUMBER = "CHANGE_PAGE_NUMBER";
 export const RECEIVE_ARTICLES = "RECEIVE_ARTICLES";
@@ -27,7 +27,7 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
       if(errors) {
         console.log(`[GET ARTICLES] error ${errors.toLocaleString()}`);// eslint-disable-line
       } else {
-        const list = adeptArticles(articles);
+        const list = adaptArticles(articles);
 
         dispatch(receiveArticles({
           articlesCount, list }));

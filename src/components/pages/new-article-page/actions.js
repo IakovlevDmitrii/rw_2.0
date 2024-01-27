@@ -1,5 +1,5 @@
 import API from '../../../api.config';
-import { adeptArticle } from '../../../utils/adept-article';
+import { adaptArticle } from '../../../utils/adapt-article';
 import { receiveArticle } from '../article-page/actions';
 
 export const FETCHING_ARTICLE_CREATION = "FETCHING_ARTICLE_CREATION";
@@ -32,7 +32,7 @@ export const createAnArticle = content => (dispatch, getState) => {
       const articleDetails = result.article;
 
       if(articleDetails) {
-        const newArticle = adeptArticle(articleDetails);
+        const newArticle = adaptArticle(articleDetails);
         articlesList.push(newArticle);
 
         dispatch({
