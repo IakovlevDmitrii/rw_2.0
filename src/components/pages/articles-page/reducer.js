@@ -1,7 +1,7 @@
 import { CHANGE_PAGE_NUMBER, RECEIVE_ARTICLES } from './actions';
 import { RECEIVE_FAVORITE_CHANGE } from '../../article/actions';
 import { CREATE_AN_ARTICLE } from '../new-article-page/actions';
-import { RECEIVE_ARTICLE } from '../article-page/actions';
+import { RECEIVE_ARTICLE, RECEIVE_AN_ARTICLE_NOT_FROM_THE_LIST } from '../article-page/actions';
 
 const initialState = {
   articlesCount: 0,
@@ -21,6 +21,12 @@ const articlesReducer = (state = initialState, action)=> {
         list: payload.list,
       };
 
+    case CHANGE_PAGE_NUMBER:
+      return {
+        ...state,
+        currentPage: payload.pageNumber,
+      };
+
     case RECEIVE_ARTICLE:
       // eslint-disable-next-line no-case-declarations
       const changingList = [...state.list];
@@ -33,12 +39,6 @@ const articlesReducer = (state = initialState, action)=> {
         list: changingList,
       };
 
-    case CHANGE_PAGE_NUMBER:
-      return {
-        ...state,
-        currentPage: payload.pageNumber,
-      };
-
     case RECEIVE_FAVORITE_CHANGE:
       // eslint-disable-next-line no-case-declarations
       const list = [...state.list];
@@ -49,6 +49,16 @@ const articlesReducer = (state = initialState, action)=> {
       return {
         ...state,
         list,
+      };
+
+    case RECEIVE_AN_ARTICLE_NOT_FROM_THE_LIST:
+      // eslint-disable-next-line no-case-declarations
+      const listForAdded = [...state.list];
+      listForAdded.push(payload.article);
+
+      return {
+        ...state,
+        list: listForAdded,
       };
 
     case CREATE_AN_ARTICLE:

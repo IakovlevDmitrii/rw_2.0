@@ -3,11 +3,17 @@ import { adaptArticle } from '../../../utils/adapt-article';
 
 export const FETCHING_ARTICLE = "FETCHING_ARTICLE";
 export const RECEIVE_ARTICLE = "RECEIVE_ARTICLE";
+export const RECEIVE_AN_ARTICLE_NOT_FROM_THE_LIST = "RECEIVE_AN_ARTICLE_NOT_FROM_THE_LIST";
 
 export const receiveArticle = (article) => ({
   type: RECEIVE_ARTICLE,
   payload: { article },
 });
+
+export const receiveAnArticleNotFromTheList = (article) => ({
+  type: RECEIVE_AN_ARTICLE_NOT_FROM_THE_LIST,
+  payload: { article },
+})
 
 export const requestArticle = (slug) => (dispatch, getState) => {
   const { currentUser } = getState().common;
@@ -23,13 +29,13 @@ export const requestArticle = (slug) => (dispatch, getState) => {
     .then(response => response.json())
     .then(result => {
       const adaptedArticle = adaptArticle(result.article);
-      dispatch(receiveArticle(adaptedArticle));
+      dispatch(receiveAnArticleNotFromTheList(adaptedArticle));
 
       return true;
     })
     // eslint-disable-next-line no-console
     .catch(err => {
-      console.log(`[GET ARTICLE] error ${err.toLocaleString()}`);
+      console.log(`[REQUEST ARTICLE] error ${err.toLocaleString()}`);
       return false;
     })
 };

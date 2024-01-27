@@ -14,10 +14,9 @@ function ArticlePage() {
   const [hasError, setHasError] = useState(false);
   const { list } = useSelector((state) => state.articles);
   const article = list.find((item) => item.slug === slug);
-  const isArticle = !!article.slug;
 
   useEffect(() => {
-    if (isArticle) {
+    if (article) {
       setIsFetching(false);
     } else {
       setIsFetching(true);
@@ -28,7 +27,7 @@ function ArticlePage() {
       setIsFetching(true);
       setHasError(false);
     };
-  }, [dispatch, slug, isArticle]);
+  }, [dispatch, slug, article]);
 
   if (hasError) {
     return <ErrorIndicator />;
