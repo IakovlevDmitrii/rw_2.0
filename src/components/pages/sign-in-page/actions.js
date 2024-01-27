@@ -17,20 +17,20 @@ const signIn = (email, password) => dispatch => {
     }),
   })
     .then(response => response.json())
-    .then(res => { // eslint-disable-line
+    .then(res => {
       const userDetails = res.user;
       const serverErrors = res.errors;
 
       if(userDetails) {
         dispatch(updateUser(userDetails));
-        dispatch(fetchingAuthentication(false))
       }
-      if(serverErrors) {
-        return serverErrors;
-      }
+      dispatch(fetchingAuthentication(false));
+      
+      return serverErrors;
     })
     .catch(err => {
       console.log(`[SIGN IN] error ${err.toLocaleString()}`); // eslint-disable-line
+      dispatch(fetchingAuthentication(false));
     })
 };
 
