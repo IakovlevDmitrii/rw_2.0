@@ -25,7 +25,7 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
       const { articlesCount, articles, errors } = result;
 
       if(errors) {
-        console.log(`[GET ARTICLES] error ${errors.toLocaleString()}`);// eslint-disable-line
+        console.log(`[REQUEST ARTICLES] error ${errors.toLocaleString()}`);// eslint-disable-line
       } else {
         const list = adaptArticles(articles);
 
@@ -36,7 +36,7 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
       return !!articles;
     })
     .catch(err => {
-      console.log(`[GET ARTICLES] error ${err.toLocaleString()}`);// eslint-disable-line
+      console.log(`[REQUEST ARTICLES] error ${err.toLocaleString()}`);// eslint-disable-line
 
       return false;
     })
