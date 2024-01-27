@@ -11,7 +11,7 @@ import styles from './SignInPage.module.scss';
 
 function SignInPage() {
   const dispatch = useDispatch();
-  const isFetching = useSelector((state) => state.common.isFetching);
+  const isFetching = useSelector((state) => state.common.isFetchingAuthentication);
   const isLoggedIn = useSelector((state) => state.common.isLoggedIn);
 
   const {

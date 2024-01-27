@@ -7,6 +7,7 @@ import { REQUEST_TO_REMOVE_ARTICLE } from '../../components/article/actions';
 const initialState = {
   currentUser: {},
   isFetching: false,
+  isFetchingAuthentication: false,
   isLoggedIn: false,
 };
 
@@ -24,7 +25,7 @@ const commonReducer = (state = initialState, action) => {
     case FETCHING_AUTHENTICATION:
       return {
         ...state,
-        isFetching: payload.status,
+        isFetchingAuthentication: payload.status,
       };
 
     case FETCHING_ARTICLE_CREATION:
@@ -41,13 +42,14 @@ const commonReducer = (state = initialState, action) => {
 
     case LOG_OUT:
       return {
+        ...state,
         currentUser: {},
-        isFetching: state.isFetching,
         isLoggedIn: false,
       }
 
     case UPDATE_USER:
       return {
+        ...state,
         currentUser: payload.user,
         isFetching: false,
         isLoggedIn: true,
