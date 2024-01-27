@@ -18,23 +18,18 @@ const editProfile = detailsToChange => (dispatch, getState) => {
       },
     }),
   })
-    .then(response => response.json())
-    // eslint-disable-next-line consistent-return
-    .then(res => {
-      const userDetails = res.user;
-      const serverErrors = res.errors;
-
-      if(userDetails) {
-        dispatch(updateUser(userDetails));
-        return {isUserUpdated: true};
+    .then((response) => response.json())
+    .then((res) => {
+      if(res.user) {
+        dispatch(updateUser(res.user));
       }
+      dispatch(fetchingAuthentication(false));
 
-      if(serverErrors) {
-        return serverErrors;
-      }
+      return res;
     })
     .catch(err => {
       console.log(`[EDIT PROFILE] error ${err.toLocaleString()}`); //eslint-disable-line
+      dispatch(fetchingAuthentication(false));
     })
 };
 

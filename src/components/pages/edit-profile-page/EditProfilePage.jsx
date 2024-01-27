@@ -12,7 +12,7 @@ import styles from './EditProfilePage.module.scss';
 function EditProfilePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isFetching = useSelector((state) => state.common.isFetching);
+  const isFetching = useSelector((state) => state.common.isFetchingAuthentication);
   const currentUser = useSelector((state) => state.common.currentUser);
   const { email, username } = currentUser;
 
@@ -34,21 +34,21 @@ function EditProfilePage() {
     }
 
     dispatch(editProfile(detailsToChange)).then((res) => {
-      const { isUserUpdated, serverErrors } = res;
-
-      if (isUserUpdated) {
+      if (res.user) {
         navigate('/articles');
       }
 
+      const serverErrors = res.errors;
+
       if (serverErrors) {
-        setError('email', {
-          type: 'manual',
-          message: `Email or password ${serverErrors['email or password']}`,
-        });
-        setError('password', {
-          type: 'manual',
-          message: `Email or password ${serverErrors['email or password']}`,
-        });
+        for (const err in serverErrors) {
+          if (Object.prototype.hasOwnProperty.call(serverErrors, err)) {
+            setError(err, {
+              type: 'manual',
+              message: `${err} ${serverErrors[err]}`,
+            });
+          }
+        }
       }
     });
   };
