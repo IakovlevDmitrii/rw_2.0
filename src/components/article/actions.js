@@ -1,5 +1,5 @@
-import API from "../../api.config";
-import { adaptArticle } from "../../utils/adapt-article";
+import API from '../../api.config';
+import { adaptArticle } from '../../utils/adapt-article';
 
 export const RECEIVE_FAVORITE_CHANGE = "RECEIVE_FAVORITE_CHANGE";
 export const REQUEST_TO_REMOVE_ARTICLE = "REQUEST_TO_REMOVE_ARTICLE";
@@ -27,14 +27,18 @@ export const toggleFavorite = (slug, favorited) => (dispatch, getState) => {
     .catch(eee => console.log(`[FAVORITE ARTICLE] error ${eee.toLocaleString()}`)) // eslint-disable-line
 };
 
-export const deleteArticle = slug => (dispatch, getState) => {
+export const requestToRemoveArticle = (status) => (dispatch) => {
+  dispatch({
+    type: REQUEST_TO_REMOVE_ARTICLE,
+    payload: { status },
+  });
+};
+
+export const deleteArticle = (slug) => (dispatch, getState) => {
   const {currentUser} = getState().common;
   const token = currentUser.token || "";
 
-  dispatch({
-    type: REQUEST_TO_REMOVE_ARTICLE,
-    payload: {status: true},
-  });
+  dispatch(requestToRemoveArticle(true));
 
   return fetch(API.ARTICLE.DELETE(slug), {
     method: "DELETE",
@@ -44,14 +48,14 @@ export const deleteArticle = slug => (dispatch, getState) => {
     },
   })
     .then(() => {
-      dispatch({
-        type: REQUEST_TO_REMOVE_ARTICLE,
-        payload: {status: false},
-      });
+      dispatch(requestToRemoveArticle(false));
 
       return true;
     })
     .catch(err => {
       console.log(`[DELETE ARTICLE] error ${err.toLocaleString()}`); // eslint-disable-line
+      dispatch(requestToRemoveArticle(false));
+
+      return false;
     })
 };

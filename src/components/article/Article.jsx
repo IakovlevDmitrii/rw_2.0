@@ -6,44 +6,54 @@ import ReactMarkdown from 'react-markdown';
 import ArticleDescription from '../article-description';
 import ArticleAuthor from '../article-author';
 import Spinner from '../spinner';
+import ErrorIndicator from '../error-indicator';
 import { toggleFavorite, deleteArticle } from './actions';
 import getArticlePropTypes from '../../utils/get-article-prop-types';
 import favoriteTrueImage from './img/fav-true.svg';
 import favoriteFalseImage from './img/fav-false.svg';
+import favoriteFetchingImage from './img/fav-fetch.svg';
 import styles from './Article.module.scss';
 
 export default function Article({ content, fullSize }) {
   const { author, body, createdAt, description, favorited, favoritesCount, slug, tagList } = content;
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isFetching = useSelector((state) => state.common.isFetching);
   const isLoggedIn = useSelector((state) => state.common.isLoggedIn);
   const currentUser = useSelector((state) => state.common.currentUser.username) || {};
   const isMyArticle = author.username === currentUser;
-  const [isFavoriteFetching, setIsFavoriteFetching] = useState(false);
-  const [isFetching, setIsFetching] = useState(false);
+  const [isFetchingFavorite, setIsFetchingFavorite] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => () => {
-    setIsFavoriteFetching(false);
-    setIsFetching(false);
+    setIsFetchingFavorite(false);
+    setHasError(false);
   });
 
   const onFavoriteArticle = () => {
-    setIsFavoriteFetching(true);
+    setIsFetchingFavorite(true);
 
     dispatch(toggleFavorite(slug, favorited)).then(() => {
-      setIsFavoriteFetching(false);
+      setIsFetchingFavorite(false);
     });
   };
 
   const onDeleteArticle = () => {
-    setIsFetching(true);
-
-    dispatch(deleteArticle(slug)).then(() => {
-      setIsFetching(false);
+    dispatch(deleteArticle(slug)).then((res) => {
+      if (!res) {
+        setHasError(true);
+      }
       navigate('/articles');
     });
   };
+
+  if (hasError) {
+    return <ErrorIndicator />
+  }
+
+  if (isFetching) {
+    return <Spinner />
+  }
 
   const header = <h3>{content.title}</h3>;
 
@@ -59,16 +69,24 @@ export default function Article({ content, fullSize }) {
     );
   });
 
-  const imageSrc = favorited ? favoriteTrueImage : favoriteFalseImage;
+  const getSrc = () => {
+    if (isFetchingFavorite) {
+      return favoriteFetchingImage;
+    }
+    if (favorited) {
+      return favoriteTrueImage;
+    }
+    return favoriteFalseImage || '';
+  }
 
-  const image = <img className={styles.favoriteButtonImg} alt="like" src={imageSrc} />;
+  const image = <img className={styles.favoriteButtonImg} alt="like" src={getSrc()} />;
 
   const favoriteImg = isLoggedIn ? (
     <button
       className={styles.favoriteButton}
       type="button"
       onClick={onFavoriteArticle}
-      disabled={!isLoggedIn && isFavoriteFetching}
+      disabled={!isLoggedIn && isFetchingFavorite}
     >
       {image}
     </button>
@@ -100,10 +118,6 @@ export default function Article({ content, fullSize }) {
       <ReactMarkdown>{body}</ReactMarkdown>
     </article>
   );
-
-  if (isFetching) {
-    return <Spinner />;
-  }
 
   return (
     <article className={styles.content}>

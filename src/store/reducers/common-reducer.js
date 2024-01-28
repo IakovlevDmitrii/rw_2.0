@@ -6,9 +6,9 @@ import { REQUEST_TO_REMOVE_ARTICLE } from '../../components/article/actions';
 
 const initialState = {
   currentUser: {},
+  isLoggedIn: false,
   isFetching: false,
   isFetchingAuthentication: false,
-  isLoggedIn: false,
 };
 
 // eslint-disable-next-line default-param-last
