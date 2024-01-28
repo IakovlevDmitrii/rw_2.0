@@ -26,7 +26,6 @@ export default function Article({ content, fullSize }) {
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => () => {
-    setIsFetchingFavorite(false);
     setHasError(false);
   });
 
