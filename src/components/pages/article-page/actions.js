@@ -5,11 +5,6 @@ export const FETCHING_ARTICLE = "FETCHING_ARTICLE";
 export const RECEIVE_ARTICLE = "RECEIVE_ARTICLE";
 export const RECEIVE_AN_ARTICLE_NOT_FROM_THE_LIST = "RECEIVE_AN_ARTICLE_NOT_FROM_THE_LIST";
 
-export const receiveArticle = (article) => ({
-  type: RECEIVE_ARTICLE,
-  payload: { article },
-});
-
 export const receiveAnArticleNotFromTheList = (article) => ({
   type: RECEIVE_AN_ARTICLE_NOT_FROM_THE_LIST,
   payload: { article },
@@ -33,8 +28,8 @@ export const requestArticle = (slug) => (dispatch, getState) => {
 
       return true;
     })
-    // eslint-disable-next-line no-console
     .catch(err => {
+      // eslint-disable-next-line no-console
       console.log(`[REQUEST ARTICLE] error ${err.toLocaleString()}`);
       return false;
     })

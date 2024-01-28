@@ -1,6 +1,5 @@
 import API from '../../../api.config';
 import { adaptArticle } from '../../../utils/adapt-article';
-import { receiveArticle } from '../article-page/actions';
 
 export const CREATE_AN_ARTICLE = "CREATE_AN_ARTICLE";
 
@@ -31,10 +30,8 @@ export const createAnArticle = (content) => (dispatch, getState) => {
 
         dispatch({
           type: CREATE_AN_ARTICLE,
-          payload: {list: articlesList},
+          payload: { list: articlesList },
         });
-
-        dispatch(receiveArticle(articleDetails));
       }
 
       return result
