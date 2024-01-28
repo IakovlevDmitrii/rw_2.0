@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -12,8 +12,8 @@ import styles from './SignInPage.module.scss';
 function SignInPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isFetching = useSelector((state) => state.common.isFetchingAuthentication);
   const isLoggedIn = useSelector((state) => state.common.isLoggedIn);
+  const [isFetching, setIsFetching] = useState(false);
 
   const {
     register,
@@ -23,8 +23,11 @@ function SignInPage() {
   } = useForm({});
 
   const onSubmit = ({ email, password }) => {
+    setIsFetching(true);
+
     dispatch(signIn(email, password)).then((res) => {
       if (res.user) {
+        setIsFetching(false);
         navigate('/articles');
       }
 
@@ -40,6 +43,8 @@ function SignInPage() {
           message: `Email or password ${serverErrors['email or password']}`,
         });
       }
+
+      setIsFetching(false);
     });
   };
 

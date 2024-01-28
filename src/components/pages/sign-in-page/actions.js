@@ -1,10 +1,8 @@
 import API from "../../../api.config";
-import { fetchingAuthentication, updateUser } from "../../../store/actions";
+import { updateUser } from "../../../store/actions";
 
-const signIn = (email, password) => dispatch => {
-  dispatch(fetchingAuthentication(true));
-
-  return fetch(API.AUTHENTICATION.LOGIN(), {
+const signIn = (email, password) => (dispatch) => (
+  fetch(API.AUTHENTICATION.LOGIN(), {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -21,14 +19,12 @@ const signIn = (email, password) => dispatch => {
       if(res.user) {
         dispatch(updateUser(res.user));
       }
-      dispatch(fetchingAuthentication(false));
 
       return res;
     })
     .catch(err => {
       console.log(`[SIGN IN] error ${err.toLocaleString()}`); // eslint-disable-line
-      dispatch(fetchingAuthentication(false));
     })
-};
+);
 
 export default signIn;

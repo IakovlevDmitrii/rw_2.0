@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -12,9 +12,9 @@ import styles from './EditProfilePage.module.scss';
 function EditProfilePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isFetching = useSelector((state) => state.common.isFetchingAuthentication);
   const currentUser = useSelector((state) => state.common.currentUser);
   const { email, username } = currentUser;
+  const [isFetching, setIsFetching] = useState(false);
 
   const {
     register,
@@ -24,6 +24,7 @@ function EditProfilePage() {
   } = useForm();
 
   const onSubmit = (data) => {
+    setIsFetching(true);
     const detailsToChange = {};
 
     // Если в data есть заполненные поля сохраним их в detailsToChange
@@ -35,6 +36,7 @@ function EditProfilePage() {
 
     dispatch(editProfile(detailsToChange)).then((res) => {
       if (res.user) {
+        setIsFetching(false);
         navigate('/articles');
       }
 
@@ -49,6 +51,7 @@ function EditProfilePage() {
             });
           }
         }
+        setIsFetching(false);
       }
     });
   };

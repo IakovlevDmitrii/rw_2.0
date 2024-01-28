@@ -1,5 +1,5 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import signUp from './actions';
@@ -12,7 +12,7 @@ import styles from './SignUpPage.module.scss';
 function SignUpPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isFetching = useSelector((state) => state.common.isFetching);
+  const [isFetching, setIsFetching] = useState(false);
 
   const {
     register,
@@ -23,10 +23,13 @@ function SignUpPage() {
   } = useForm({});
 
   const onSubmit = ({ username, email, password }) => {
+    setIsFetching(true);
+
     dispatch(signUp(username, email, password)).then((res) => {
       const { user, errors } = res; // eslint-disable-line
 
       if (user) {
+        setIsFetching(false);
         navigate('/articles');
       }
 
@@ -39,6 +42,7 @@ function SignUpPage() {
             });
           }
         }
+        setIsFetching(false);
       }
     });
   };

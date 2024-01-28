@@ -1,4 +1,4 @@
-import { FETCHING_AUTHENTICATION, UPDATE_USER } from '../actions';
+import { UPDATE_USER } from '../actions';
 import { LOG_OUT } from '../../components/header/actions';
 import { FETCHING_ARTICLE } from '../../components/pages/article-page/actions';
 import { FETCHING_ARTICLE_CREATION } from '../../components/pages/new-article-page/actions';
@@ -7,7 +7,6 @@ const initialState = {
   currentUser: {},
   isLoggedIn: false,
   isFetching: false,
-  isFetchingAuthentication: false,
 };
 
 // eslint-disable-next-line default-param-last
@@ -19,12 +18,6 @@ const commonReducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: payload.status,
-      };
-
-    case FETCHING_AUTHENTICATION:
-      return {
-        ...state,
-        isFetchingAuthentication: payload.status,
       };
 
     case FETCHING_ARTICLE_CREATION:
@@ -42,10 +35,9 @@ const commonReducer = (state = initialState, action) => {
 
     case UPDATE_USER:
       return {
-        ...state,
         currentUser: payload.user,
-        isFetching: false,
         isLoggedIn: true,
+        isFetching: false,
       };
 
     default:
