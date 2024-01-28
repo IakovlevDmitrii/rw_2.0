@@ -18,10 +18,10 @@ export default function Article({ content, fullSize }) {
   const { author, body, createdAt, description, favorited, favoritesCount, slug, tagList } = content;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isFetching = useSelector((state) => state.common.isFetching);
   const isLoggedIn = useSelector((state) => state.common.isLoggedIn);
   const currentUser = useSelector((state) => state.common.currentUser.username) || {};
   const isMyArticle = author.username === currentUser;
+  const [isFetching, setIsFetching] = useState(false);
   const [isFetchingFavorite, setIsFetchingFavorite] = useState(false);
   const [hasError, setHasError] = useState(false);
 
@@ -38,11 +38,14 @@ export default function Article({ content, fullSize }) {
   };
 
   const onDeleteArticle = () => {
+    setIsFetching(true);
+
     dispatch(deleteArticle(slug)).then((res) => {
       if (!res) {
         setHasError(true);
       }
       navigate('/articles');
+      setIsFetching(false);
     });
   };
 

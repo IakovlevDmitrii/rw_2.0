@@ -2,7 +2,6 @@ import { FETCHING_AUTHENTICATION, UPDATE_USER } from '../actions';
 import { LOG_OUT } from '../../components/header/actions';
 import { FETCHING_ARTICLE } from '../../components/pages/article-page/actions';
 import { FETCHING_ARTICLE_CREATION } from '../../components/pages/new-article-page/actions';
-import { REQUEST_TO_REMOVE_ARTICLE } from '../../components/article/actions';
 
 const initialState = {
   currentUser: {},
@@ -29,12 +28,6 @@ const commonReducer = (state = initialState, action) => {
       };
 
     case FETCHING_ARTICLE_CREATION:
-      return {
-        ...state,
-        isFetching: payload.status,
-      };
-
-    case REQUEST_TO_REMOVE_ARTICLE:
       return {
         ...state,
         isFetching: payload.status,
