@@ -1,14 +1,9 @@
 import API from '../../../api.config';
-import { FETCHING_ARTICLE, RECEIVE_ARTICLE } from '../article-page/actions';
+import { RECEIVE_ARTICLE } from '../article-page/actions';
 import { adaptArticle } from '../../../utils/adapt-article';
 
 const updateArticle = (slug, detailsToChange) => (dispatch, getState) => {
   const { token } = getState().common.currentUser;
-
-  dispatch({
-    type: FETCHING_ARTICLE,
-    payload: {status: true},
-  });
 
   return fetch(API.ARTICLE.UPDATE(slug), {
     method: "PUT",
@@ -30,11 +25,6 @@ const updateArticle = (slug, detailsToChange) => (dispatch, getState) => {
           payload: {article},
         });
       }
-
-      dispatch({
-        type: FETCHING_ARTICLE,
-        payload: {status: false},
-      });
 
       return res;
     })

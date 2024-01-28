@@ -4,7 +4,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Spinner from '../../spinner';
 import ArticleEditor from '../../article-editor';
 import updateArticle from './actions';
-import { FETCHING_ARTICLE } from '../article-page/actions';
 
 function EditArticlePage() {
   const { slug } = useParams();
@@ -12,7 +11,7 @@ function EditArticlePage() {
   const navigate = useNavigate();
   const currentArticle = useSelector((state) => state.articles.list.find((item) => item.slug === slug));
   const currentUser = useSelector((state) => state.common.currentUser);
-  const isFetching = useSelector((state) => state.common.isFetching);
+  const [isFetching, setIsFetching] = useState(false);
   const [hasErrors, setHasErrors] = useState({});
   const [newArticleContent, setNewArticleContent] = useState('');
 
@@ -35,26 +34,20 @@ function EditArticlePage() {
       navigate(`/articles/${slug}`);
     }
 
-    dispatch({
-      type: FETCHING_ARTICLE,
-      payload: { status: false },
-    });
-
     return () => {
       setNewArticleContent('');
-      dispatch({
-        type: FETCHING_ARTICLE,
-        payload: { status: false },
-      });
     };
   }, [dispatch, isMyArticle, navigate, slug]);
 
   const onSubmit = (detailsToChange) => {
+    setIsFetching(true);
+
     dispatch(updateArticle(currentArticle.slug, detailsToChange)).then((res) => {
       const articleDetails = res.article;
       const serverErrors = res.errors;
 
       if (articleDetails) {
+        setIsFetching(false);
         navigate(`/articles/${currentArticle.slug}`);
       }
 
@@ -67,6 +60,7 @@ function EditArticlePage() {
           newArticle.tagList.push({ value: tag });
         });
 
+        setIsFetching(false);
         setNewArticleContent(newArticle);
         setHasErrors(serverErrors);
       }
