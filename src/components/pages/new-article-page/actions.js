@@ -2,15 +2,9 @@ import API from '../../../api.config';
 import { adaptArticle } from '../../../utils/adapt-article';
 import { receiveArticle } from '../article-page/actions';
 
-export const FETCHING_ARTICLE_CREATION = "FETCHING_ARTICLE_CREATION";
 export const CREATE_AN_ARTICLE = "CREATE_AN_ARTICLE";
 
-export const createAnArticle = content => (dispatch, getState) => {
-  dispatch({
-    type: FETCHING_ARTICLE_CREATION,
-    payload: {status: true},
-  });
-
+export const createAnArticle = (content) => (dispatch, getState) => {
   const { currentUser } = getState().common;
   const articlesList = getState().articles.list;
   const token = currentUser.token || "";
@@ -41,11 +35,6 @@ export const createAnArticle = content => (dispatch, getState) => {
         });
 
         dispatch(receiveArticle(articleDetails));
-
-        dispatch({
-          type: FETCHING_ARTICLE_CREATION,
-          payload: {status: false},
-        })
       }
 
       return result

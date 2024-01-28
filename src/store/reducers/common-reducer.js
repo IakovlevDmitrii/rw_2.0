@@ -1,7 +1,6 @@
 import { UPDATE_USER } from '../actions';
 import { LOG_OUT } from '../../components/header/actions';
 import { FETCHING_ARTICLE } from '../../components/pages/article-page/actions';
-import { FETCHING_ARTICLE_CREATION } from '../../components/pages/new-article-page/actions';
 
 const initialState = {
   currentUser: {},
@@ -15,12 +14,6 @@ const commonReducer = (state = initialState, action) => {
 
   switch (type) {
     case FETCHING_ARTICLE:
-      return {
-        ...state,
-        isFetching: payload.status,
-      };
-
-    case FETCHING_ARTICLE_CREATION:
       return {
         ...state,
         isFetching: payload.status,

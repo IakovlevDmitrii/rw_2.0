@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ProtectedRoute from '../../protectedRoute';
 import ArticleEditor from '../../article-editor';
@@ -10,7 +10,7 @@ import reducer from '../articles-page/reducer';
 function NewArticlePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isFetching = useSelector((state) => state.common.isFetching);
+  const [isFetching, setIsFetching] = useState(false);
   const [hasErrors, setHasErrors] = useState({});
 
   const getInitialValues = () => ({
@@ -32,11 +32,14 @@ function NewArticlePage() {
   );
 
   const onSubmit = (newArticleContent) => {
+    setIsFetching(true);
+
     dispatch(createAnArticle(newArticleContent)).then((res) => {
       const articleDetails = res.article;
       const serverErrors = res.errors;
 
       if (articleDetails) {
+        setIsFetching(false);
         navigate(`/articles/${articleDetails.slug}`);
       }
 
@@ -60,6 +63,7 @@ function NewArticlePage() {
           };
         }
 
+        setIsFetching(false);
         setDefaultValues(newDefaultValues);
         setHasErrors(serverErrors);
       }
