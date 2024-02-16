@@ -4,13 +4,13 @@ import { adaptArticles } from '../../../utils/adapt-article';
 export const CHANGE_PAGE_NUMBER = "CHANGE_PAGE_NUMBER";
 export const RECEIVE_ARTICLES = "RECEIVE_ARTICLES";
 
-export const receiveArticles = ({ articlesCount, list }) => ({
+export const receiveArticles = ({articlesCount, list}) => ({
   type: RECEIVE_ARTICLES,
   payload: { articlesCount, list },
 });
 
 export const requestArticles = (limit, page) => (dispatch, getState) => {
-  const { currentUser } = getState().common;
+  const {currentUser} = getState().common;
   const token = currentUser.token || "";
 
   return fetch(API.ARTICLES.SUMMARY(limit, page), {
@@ -22,22 +22,20 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
   })
     .then(response => response.json())
     .then(result => {
-      const { articlesCount, articles, errors } = result;
+      const {articlesCount, articles, errors} = result;
 
       if(errors) {
         console.log(`[REQUEST ARTICLES] error ${errors.toLocaleString()}`);// eslint-disable-line
       } else {
         const list = adaptArticles(articles);
 
-        dispatch(receiveArticles({
-          articlesCount, list }));
+        dispatch(receiveArticles({articlesCount, list}));
       }
 
       return !!articles;
     })
     .catch(err => {
       console.log(`[REQUEST ARTICLES] error ${err.toLocaleString()}`);// eslint-disable-line
-
       return false;
     })
 };
