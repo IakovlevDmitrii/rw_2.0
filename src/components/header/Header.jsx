@@ -20,7 +20,7 @@ function Header() {
         <Link to="/profile">
           <div className={styles.personName}>{currentUser.username}</div>
           <div className={styles.personImage}>
-            <img src={`${currentUser.image}` || `${userImageDefaultSource}`} alt="user's avatar" />
+            <img src={currentUser.image || `${userImageDefaultSource}`} alt="user's avatar" />
           </div>
         </Link>
       </div>
