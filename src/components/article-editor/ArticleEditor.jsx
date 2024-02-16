@@ -4,27 +4,25 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styles from './ArticleEditor.module.scss';
 
-function ArticleEditor({ title, onFormSubmit, defaultValues, hasErrors }) {
+function ArticleEditor({title, onFormSubmit, defaultValues, hasErrors}) {
   const {
     register,
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({ defaultValues });
+  } = useForm({defaultValues});
 
-  const { fields, remove, append } = useFieldArray({
+  const {fields, remove, append} = useFieldArray({
     name: 'tagList',
     control,
   });
 
-  const onArticleCreated = ({ tagList, ...rest }) => {
-    const newArticleContent = {
-      ...rest,
-    };
+  const onArticleCreated = ({tagList, ...rest}) => {
+    const newArticleContent = {...rest};
 
     // Если есть теги, сохраним их в массив tagsListToSend
     const tagsListToSend = [];
-    tagList.forEach(({ value }) => {
+    tagList.forEach(({value}) => {
       if (value) {
         tagsListToSend.push(value);
       }
@@ -37,7 +35,7 @@ function ArticleEditor({ title, onFormSubmit, defaultValues, hasErrors }) {
     onFormSubmit(newArticleContent);
   };
 
-  const getClassNames = (fieldName) =>
+  const getClassNames = fieldName =>
     classNames({
       [styles.error]: errors[fieldName] || hasErrors[fieldName],
     });
@@ -147,7 +145,6 @@ ArticleEditor.defaultProps = {
   defaultValues: {
     tagList: [{ value: '' }],
   },
-
   hasErrors: {
     title: [''],
     description: '',
