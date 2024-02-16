@@ -31,15 +31,15 @@ function NewArticlePage() {
     [initialValues]
   );
 
-  const onSubmit = (newArticleContent) => {
+  const onSubmit = newArticleContent => {
     setIsFetching(true);
 
-    dispatch(createAnArticle(newArticleContent)).then((res) => {
+    dispatch(createAnArticle(newArticleContent)).then(res => {
       const articleDetails = res.article;
       const serverErrors = res.errors;
+      setIsFetching(false);
 
       if (articleDetails) {
-        setIsFetching(false);
         navigate(`/articles/${articleDetails.slug}`);
       }
 
@@ -49,12 +49,12 @@ function NewArticlePage() {
         // tagList в newArticleData это массив строк вида ['a', 'b']
         // а в defaultValues надо сохранить tagList в виде [ {value: 'a'}, {value: 'b'} ]
         if (newArticleContent.tagList) {
-          const { tagList, ...rest } = newArticleContent;
-          newDefaultValues = { ...rest };
+          const {tagList, ...rest} = newArticleContent;
+          newDefaultValues = {...rest};
 
           newDefaultValues.tagList = [];
           tagList.forEach((tag) => {
-            newDefaultValues.tagList.push({ value: tag });
+            newDefaultValues.tagList.push({value: tag});
           });
         } else {
           newDefaultValues = {
@@ -63,7 +63,6 @@ function NewArticlePage() {
           };
         }
 
-        setIsFetching(false);
         setDefaultValues(newDefaultValues);
         setHasErrors(serverErrors);
       }
@@ -86,4 +85,4 @@ function NewArticlePage() {
   );
 }
 
-export default connect(null, { articles: reducer })(NewArticlePage);
+export default connect(null, {articles: reducer})(NewArticlePage);
