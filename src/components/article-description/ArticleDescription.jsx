@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './ArticleDescription.module.scss';
 
-function ArticleDescription(props) {
-  const { description, favoriteImg, favoritesCount, tags, title } = props;
+function ArticleDescription({description, favoriteImg, favoritesCount, tags, title}) {
 
   return (
     <article className={styles.description}>
