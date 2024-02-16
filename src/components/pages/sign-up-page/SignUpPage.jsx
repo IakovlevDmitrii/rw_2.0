@@ -22,14 +22,14 @@ function SignUpPage() {
     watch,
   } = useForm({});
 
-  const onSubmit = ({ username, email, password }) => {
+  const onSubmit = ({username, email, password}) => {
     setIsFetching(true);
 
-    dispatch(signUp(username, email, password)).then((res) => {
-      const { user, errors } = res; // eslint-disable-line
+    dispatch(signUp(username, email, password)).then(res => {
+      const {user, errors} = res; // eslint-disable-line
+      setIsFetching(false);
 
       if (user) {
-        setIsFetching(false);
         navigate('/articles');
       }
 
@@ -42,7 +42,6 @@ function SignUpPage() {
             });
           }
         }
-        setIsFetching(false);
       }
     });
   };
@@ -73,8 +72,8 @@ function SignUpPage() {
     },
   };
 
-  const formFields = formsConfig.singUp.map((fieldDetails) => {
-    const { name } = fieldDetails;
+  const formFields = formsConfig.singUp.map(fieldDetails => {
+    const {name} = fieldDetails;
     const addedFieldDetails = fieldDetails;
 
     if (name === 'agreement') {
