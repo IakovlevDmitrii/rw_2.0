@@ -14,12 +14,12 @@ import favoriteFalseImage from './img/fav-false.svg';
 import favoriteFetchingImage from './img/fav-fetch.svg';
 import styles from './Article.module.scss';
 
-export default function Article({ content, fullSize }) {
-  const { author, body, createdAt, description, favorited, favoritesCount, slug, tagList } = content;
+export default function Article({content, fullSize}) {
+  const {author, body, createdAt, description, favorited, favoritesCount, slug, tagList} = content;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isLoggedIn = useSelector((state) => state.common.isLoggedIn);
-  const currentUser = useSelector((state) => state.common.currentUser.username) || {};
+  const isLoggedIn = useSelector(state => state.common.isLoggedIn);
+  const currentUser = useSelector(state => state.common.currentUser.username) || {};
   const isMyArticle = author.username === currentUser;
   const [isFetching, setIsFetching] = useState(false);
   const [isFetchingFavorite, setIsFetchingFavorite] = useState(false);

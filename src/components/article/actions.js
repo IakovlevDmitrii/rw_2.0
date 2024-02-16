@@ -4,7 +4,7 @@ import { adaptArticle } from '../../utils/adapt-article';
 export const RECEIVE_FAVORITE_CHANGE = "RECEIVE_FAVORITE_CHANGE";
 
 export const toggleFavorite = (slug, favorited) => (dispatch, getState) => {
-  const { currentUser } = getState().common;
+  const {currentUser} = getState().common;
   const token = currentUser.token || "";
 
   return fetch(API.ARTICLE.FAVORITE(slug), {
@@ -18,12 +18,12 @@ export const toggleFavorite = (slug, favorited) => (dispatch, getState) => {
     .then(result => {
       dispatch({
         type: RECEIVE_FAVORITE_CHANGE,
-        payload: {article: adaptArticle(result.article)}
+        payload: { article: adaptArticle(result.article) }
       })
 
       return true;
     })
-    .catch(eee => console.log(`[FAVORITE ARTICLE] error ${eee.toLocaleString()}`)) // eslint-disable-line
+    .catch(err => console.log(`[FAVORITE ARTICLE] error ${err.toLocaleString()}`)) // eslint-disable-line
 };
 
 export const deleteArticle = (slug) => (dispatch, getState) => {
