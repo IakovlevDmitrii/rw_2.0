@@ -1,4 +1,4 @@
-const saveToLocalStorage = (state) => {
+const saveToLocalStorage = state => {
   try {
     const serialisedState = JSON.stringify(state);
 

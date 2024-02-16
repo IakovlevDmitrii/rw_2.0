@@ -1,4 +1,4 @@
-const required = (name) => ({
+const required = name => ({
   required: `${name} is required`,
 });
 
