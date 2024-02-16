@@ -16,7 +16,7 @@ function FormField({
   id,
   autocomplete,
 }) {
-  const getSubInput = (inputName) => errors[inputName] && <span>{errors[inputName].message}</span>;
+  const getSubInput = inputName => errors[inputName] && <span>{errors[inputName].message}</span>;
 
   const elements = {
     label: <label htmlFor={name}>{label}</label>,
