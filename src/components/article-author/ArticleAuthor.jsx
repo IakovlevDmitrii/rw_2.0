@@ -4,15 +4,13 @@ import PropTypes from 'prop-types';
 import attentionImageSrc from './img/attention.svg';
 import styles from './ArticleAuthor.module.scss';
 
-function ArticleAuthor(props) {
-  const { createdAt = '', editable, image, onDeleteArticle, username } = props;
-
+function ArticleAuthor({createdAt = '', editable, image, onDeleteArticle, username}) {
   const [isPopUpOpen, setIsPopUpOpen] = useState(false);
 
   const popUp = (
     <div className={styles.popUp}>
       <div className={styles.popUpText}>
-        <img src={attentionImageSrc} alt="attention" />
+        <img src={`${attentionImageSrc}`} alt="attention" />
         <span>Are you sure to delete this article?</span>
       </div>
 
