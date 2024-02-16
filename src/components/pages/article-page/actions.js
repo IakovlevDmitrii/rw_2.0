@@ -5,13 +5,13 @@ export const FETCHING_ARTICLE = "FETCHING_ARTICLE";
 export const RECEIVE_ARTICLE = "RECEIVE_ARTICLE";
 export const RECEIVE_AN_ARTICLE_NOT_FROM_THE_LIST = "RECEIVE_AN_ARTICLE_NOT_FROM_THE_LIST";
 
-export const receiveAnArticleNotFromTheList = (article) => ({
+export const receiveAnArticleNotFromTheList = article => ({
   type: RECEIVE_AN_ARTICLE_NOT_FROM_THE_LIST,
   payload: { article },
-})
+});
 
-export const requestArticle = (slug) => (dispatch, getState) => {
-  const { currentUser } = getState().common;
+export const requestArticle = slug => (dispatch, getState) => {
+  const {currentUser} = getState().common;
   const token = currentUser.token || "";
 
   return fetch(API.ARTICLE.GET(slug), {
@@ -25,7 +25,6 @@ export const requestArticle = (slug) => (dispatch, getState) => {
     .then(result => {
       const adaptedArticle = adaptArticle(result.article);
       dispatch(receiveAnArticleNotFromTheList(adaptedArticle));
-
       return true;
     })
     .catch(err => {

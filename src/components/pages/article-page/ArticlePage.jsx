@@ -8,19 +8,19 @@ import { requestArticle } from './actions';
 import styles from './ArticlePage.module.scss';
 
 function ArticlePage() {
-  const { slug } = useParams();
+  const {slug} = useParams();
   const dispatch = useDispatch();
   const [isFetching, setIsFetching] = useState(true);
   const [hasError, setHasError] = useState(false);
-  const { list } = useSelector((state) => state.articles);
-  const article = list.find((item) => item.slug === slug);
+  const {list} = useSelector(state => state.articles);
+  const article = list.find(item => item.slug === slug);
 
   useEffect(() => {
     if (article) {
       setIsFetching(false);
     } else {
       setIsFetching(true);
-      dispatch(requestArticle(slug)).then((res) => (res ? setIsFetching(false) : setHasError(true)));
+      dispatch(requestArticle(slug)).then(res => res ? setIsFetching(false) : setHasError(true));
     }
 
     return () => {
