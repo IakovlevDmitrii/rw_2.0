@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './ErrorIndicator.module.scss';
 
-const { section, container, content, title } = styles;
+const {section, container, content, title} = styles;
 
-function ErrorIndicator({ errorMessage }) {
+function ErrorIndicator({errorMessage}) {
   return (
     <section className={section}>
       <div className={container}>
