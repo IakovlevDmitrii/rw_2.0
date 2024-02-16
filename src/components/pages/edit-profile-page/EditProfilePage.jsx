@@ -12,8 +12,8 @@ import styles from './EditProfilePage.module.scss';
 function EditProfilePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const currentUser = useSelector((state) => state.common.currentUser);
-  const { email, username } = currentUser;
+  const currentUser = useSelector(state => state.common.currentUser);
+  const {email, username} = currentUser;
   const [isFetching, setIsFetching] = useState(false);
 
   const {
@@ -23,7 +23,7 @@ function EditProfilePage() {
     setError,
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = data => {
     setIsFetching(true);
     const detailsToChange = {};
 
@@ -34,9 +34,10 @@ function EditProfilePage() {
       }
     }
 
-    dispatch(editProfile(detailsToChange)).then((res) => {
+    dispatch(editProfile(detailsToChange)).then(res => {
+      setIsFetching(false);
+
       if (res.user) {
-        setIsFetching(false);
         navigate('/articles');
       }
 
@@ -51,7 +52,6 @@ function EditProfilePage() {
             });
           }
         }
-        setIsFetching(false);
       }
     });
   };
@@ -75,8 +75,8 @@ function EditProfilePage() {
     },
   };
 
-  const formFields = formsConfig.editProfile.map((fieldDetails) => {
-    const { name } = fieldDetails;
+  const formFields = formsConfig.editProfile.map(fieldDetails => {
+    const {name} = fieldDetails;
     const addedFieldDetails = fieldDetails;
 
     if (name === 'username') {

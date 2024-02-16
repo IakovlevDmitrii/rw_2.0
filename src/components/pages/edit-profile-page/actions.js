@@ -2,7 +2,7 @@ import API from '../../../api.config';
 import { updateUser } from '../../../store/actions';
 
 const editProfile = detailsToChange => (dispatch, getState) => {
-  const { token } = getState().common.currentUser;
+  const {token} = getState().common.currentUser;
 
   return fetch(API.AUTHENTICATION.EDIT(), {
     method: "PUT",
@@ -11,17 +11,14 @@ const editProfile = detailsToChange => (dispatch, getState) => {
       Authorization: `Token ${token}`,
     },
     body: JSON.stringify({
-      user: {
-        ...detailsToChange,
-      },
+      user: {...detailsToChange},
     }),
   })
-    .then((response) => response.json())
-    .then((res) => {
-      if(res.user) {
+    .then(response => response.json())
+    .then(res => {
+      if (res.user) {
         dispatch(updateUser(res.user));
       }
-
       return res;
     })
     .catch(err => {
