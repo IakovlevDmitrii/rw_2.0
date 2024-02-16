@@ -15,12 +15,12 @@ export default class ErrorBoundary extends Component {
   }
 
   render() {
-    const { hasError } = this.state;
+    const {hasError} = this.state;
     if (hasError) {
       return <ErrorIndicator errorMessage={hasError} />;
     }
 
-    const { children } = this.props;
+    const {children} = this.props;
     return children;
   }
 }
