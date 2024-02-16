@@ -10,7 +10,7 @@ const initialState = {
 
 // eslint-disable-next-line default-param-last
 const commonReducer = (state = initialState, action) => {
-  const { payload, type } = action;
+  const {payload, type} = action;
 
   switch (type) {
     case FETCHING_ARTICLE:
