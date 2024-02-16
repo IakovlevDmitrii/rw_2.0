@@ -12,7 +12,7 @@ import styles from './SignInPage.module.scss';
 function SignInPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isLoggedIn = useSelector((state) => state.common.isLoggedIn);
+  const isLoggedIn = useSelector(state => state.common.isLoggedIn);
   const [isFetching, setIsFetching] = useState(false);
 
   const {
@@ -22,12 +22,14 @@ function SignInPage() {
     setError,
   } = useForm({});
 
-  const onSubmit = ({ email, password }) => {
+  const onSubmit = ({email, password}) => {
     setIsFetching(true);
 
-    dispatch(signIn(email, password)).then((res) => {
+    dispatch(signIn(email, password)).then(res => {
+      setIsFetching(false);
+
       if (res.user) {
-        setIsFetching(false);
+        // setIsFetching(false);
         navigate('/articles');
       }
 
@@ -44,7 +46,7 @@ function SignInPage() {
         });
       }
 
-      setIsFetching(false);
+      // setIsFetching(false);
     });
   };
 
@@ -59,7 +61,7 @@ function SignInPage() {
     },
   };
 
-  const formFields = formsConfig.singIn.map((fieldDetails) => (
+  const formFields = formsConfig.singIn.map(fieldDetails => (
     <FormField
       {...fieldDetails}
       register={register}

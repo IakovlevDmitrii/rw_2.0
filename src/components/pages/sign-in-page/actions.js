@@ -1,7 +1,7 @@
 import API from "../../../api.config";
 import { updateUser } from "../../../store/actions";
 
-const signIn = (email, password) => (dispatch) => (
+const signIn = (email, password) => dispatch => (
   fetch(API.AUTHENTICATION.LOGIN(), {
     method: "POST",
     headers: {
@@ -16,10 +16,9 @@ const signIn = (email, password) => (dispatch) => (
   })
     .then(response => response.json())
     .then(res => {
-      if(res.user) {
+      if (res.user) {
         dispatch(updateUser(res.user));
       }
-
       return res;
     })
     .catch(err => {
