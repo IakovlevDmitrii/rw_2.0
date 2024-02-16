@@ -1,11 +1,9 @@
 import React from 'react';
 import { Pagination } from 'antd';
 import PropTypes from 'prop-types';
-
 import styles from './Pagination.module.scss';
 
-function PaginationBlock(props) {
-  const { current, onChange, total } = props;
+function PaginationBlock({current, onChange, total}) {
 
   return (
     <div className={styles.pagination}>
