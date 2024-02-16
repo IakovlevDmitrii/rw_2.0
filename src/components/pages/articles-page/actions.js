@@ -24,7 +24,7 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
     .then(result => {
       const {articlesCount, articles, errors} = result;
 
-      if(errors) {
+      if (errors) {
         console.log(`[REQUEST ARTICLES] error ${errors.toLocaleString()}`);// eslint-disable-line
       } else {
         const list = adaptArticles(articles);

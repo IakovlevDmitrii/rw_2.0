@@ -3,7 +3,8 @@ import { RECEIVE_ARTICLE } from '../article-page/actions';
 import { adaptArticle } from '../../../utils/adapt-article';
 
 const updateArticle = (slug, detailsToChange) => (dispatch, getState) => {
-  const { token } = getState().common.currentUser;
+  const {currentUser} = getState().common;
+  const token = currentUser.token || "";
 
   return fetch(API.ARTICLE.UPDATE(slug), {
     method: "PUT",
@@ -19,13 +20,12 @@ const updateArticle = (slug, detailsToChange) => (dispatch, getState) => {
     .then(res => {
       const article = adaptArticle(res.article);
 
-      if(article) {
+      if (article) {
         dispatch({
           type: RECEIVE_ARTICLE,
-          payload: {article},
+          payload: { article },
         });
       }
-
       return res;
     })
     .catch(err => {
