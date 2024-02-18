@@ -31,7 +31,6 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
 
         dispatch(receiveArticles({articlesCount, list}));
       }
-
       return !!articles;
     })
     .catch(err => {
