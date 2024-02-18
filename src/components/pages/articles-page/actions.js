@@ -21,23 +21,25 @@ export const requestArticles = (limit, page) => (dispatch, getState) => {
     },
   })
     .then(response => response.json())
-    .then(result => {
-      const {articlesCount, articles, errors} = result;
+    .then(
+      resolve => {
+        const {articlesCount, articles, errors} = resolve;
 
-      if (errors) {
-        console.log(`[REQUEST ARTICLES] error ${errors.toLocaleString()}`);// eslint-disable-line
-      } else {
-        const list = adaptArticles(articles);
+        if (errors) {
+          console.log(`[REQUEST ARTICLES] error ${errors.toLocaleString()}`);// eslint-disable-line
+        } else {
+          const list = adaptArticles(articles);
 
-        dispatch(receiveArticles({articlesCount, list}));
+          dispatch(receiveArticles({articlesCount, list}));
+        }
+        return !!articles;
+      },
+
+      reject => {
+        console.log(`[REQUEST ARTICLES] error ${reject.toLocaleString()}`);// eslint-disable-line
+        return false;
       }
-
-      return !!articles;
-    })
-    .catch(err => {
-      console.log(`[REQUEST ARTICLES] error ${err.toLocaleString()}`);// eslint-disable-line
-      return false;
-    })
+    )
 };
 
 export const changePageNumber = pageNumber => dispatch => {
